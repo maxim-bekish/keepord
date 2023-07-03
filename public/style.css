@@ -1,3 +1,4 @@
+
 html,
 body,
 div,
@@ -83,8 +84,8 @@ video {
   padding: 0;
   border: 0;
   font-family: "Inter";
-  font-size: 14px;
-
+  font-size: 16px;
+line-height: 150%;
   font-weight: 400;
   vertical-align: baseline;
 }

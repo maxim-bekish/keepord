@@ -1,5 +1,5 @@
 import styles from "./first_page.module.scss";
-import { HandySvg } from "handy-svg";
+// import { HandySvg } from "handy-svg";
 import iconSrc from "./../../svg/animation.svg";
 import { motion } from "framer-motion";
 let width = document.body.clientWidth;
@@ -13,11 +13,11 @@ function First_page() {
         className={styles.firstPage__leftWindow}
       >
         <div className={styles.svg}>
-          <HandySvg src={iconSrc} className="icon" width="350" height="350" />
+          <img src={iconSrc} alt=""   />
         </div>
       </motion.div>
       <div className={styles.firstPage__rightWindow}>
-        <form className={styles.rightWindow__Form} action="#">
+        <section className={styles.rightWindow__Form}>
           <h2>
             Добро пожаловать в Систему <br /> управления ресурсами
           </h2>
@@ -34,7 +34,7 @@ function First_page() {
           <a href="#" className={styles.a}>
             Продолжить без авторизации
           </a>
-        </form>
+        </section>
       </div>
     </div>
   );
