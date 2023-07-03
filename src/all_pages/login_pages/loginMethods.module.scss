@@ -1,0 +1,14 @@
+@import "../../color_style.scss";
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 3.12rem;
+  button {
+    height: 3.75rem;
+    background-color: $color-3blur;
+    padding: 1.25rem;
+    border-radius: 0.625rem;
+    border: 0;
+    color: $color-4dark-green;
+  }
+}

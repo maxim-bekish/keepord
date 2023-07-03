@@ -85,7 +85,7 @@ video {
   font-family: "Inter";
   font-size: 14px;
 
-	font-weight: 400;
+  font-weight: 400;
   vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
@@ -102,9 +102,7 @@ nav,
 section {
   display: block;
 }
-body{
-  background: #f2ffe3;
-}
+
 ol,
 ul {
   list-style: none;
@@ -123,4 +121,14 @@ q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+button {
+  cursor: pointer;
+}
+input {
+  padding: 1rem 1.25rem;
+ 
+}
+input::placeholder{
+   font-size: 1.375rem;
 }
