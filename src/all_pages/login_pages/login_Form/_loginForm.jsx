@@ -1,21 +1,21 @@
 import { TextField } from "@mui/material";
 import st from "./loginForm.module.scss";
 import { useForm } from "react-hook-form";
-import { warning } from "framer-motion";
+import InputEnter from "../../inputEnter";
+
 let color = {
   green: "success",
   red: "warning",
 };
-let x = true;
 
-function LoginForm() {
+function LoginForm(props) {
   const {
     register,
     formState: { errors, isValid },
     handleSubmit,
     reset,
   } = useForm({
-    mode: "onBlur",
+    mode: "all",
   });
   const onSubmit = (data) => {
     console.log(data);
@@ -24,44 +24,41 @@ function LoginForm() {
 
   return (
     <form className={st.pagesLeft} onSubmit={handleSubmit(onSubmit)} action="#">
-      <h2>Войти в профиль</h2>
+      <h2>{props.props.title}</h2>
       <div className={st.form}>
-        <div >
+        <div>
           <TextField
             {...register("keyLogin", {
-              required: "Заполните поля",
+              required: true,
               minLength: {
                 value: 5,
-                message: `Нужно ввести минимум 5 символов`,
-                x: "true",
+                message: "Нужно ввести минимум 5 символов",
               },
             })}
-            id="www"
             label="Логин"
             variant="outlined"
             className={st.inputForm}
-            color={x ? color.green : color.red} //сделать проверку to_do
+            color={color.green} //сделать проверку to_do
             type="text"
           />
 
           {errors?.keyLogin && (
-            <p className={st.p}>{errors?.keyLogin?.message}</p>
+            <p className={st.p}>{errors?.keyLogin.message}</p>
           )}
         </div>
+
         <div>
           <TextField
             {...register("keyPassword", {
-              required: "Заполните поля",
               minLength: {
                 value: 5,
                 message: `Нужно ввести минимум 5 символов`,
-                x: "true",
               },
             })}
             variant="outlined"
             label="Пароль"
             className={st.inputForm}
-            color={x ? color.green : color.red}
+            color={color.green}
             type="text"
           />
           {errors?.keyPassword && (

@@ -1,18 +1,14 @@
-import LoginMethod from "./_loginMethods";
+import LoginMethod from "../login_Methods/_loginMethods";
+import LoginForm from "../login_Form/_loginForm";
+import LoginMedium from "../login_Medium/_loginMedium";
 import st from "./login_pages.module.scss";
-
-import LoginForm from "./_loginForm";
 
 function Login_pages() {
   return (
     <div className={st.login_pages}>
       <LoginForm />
-      <div className={st.pagesMedium}>
-        <hr />
-        <span>или</span>
-        <hr />
-      </div>
-      <LoginMethod />
+      <LoginMedium />
+      <LoginMethod props={{ titel: "Войти" }} />
     </div>
   );
 }
