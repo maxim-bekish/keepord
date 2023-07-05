@@ -1,18 +1,19 @@
 import { useState } from "react";
-import st from "./_Chekebox.module.scss";
+import st from "./_Checkbox.module.scss";
 import ok from "./../svg/ok.svg";
 
 
 
-function Chekebox() {
+
+function _Checkbox() {
   const [www, setWww] = useState(true);
-let x;
+  let x;
   if (www) {
-    x = <img src={ok} className={st.img} />;
+    x = <img src={ok} alt="" className={st.img} />;
   } else {
     x = "";
   }
-  console.log(x);
+
   return (
     <div className={st.wrapper}>
       <label className={st.label}>
@@ -23,11 +24,11 @@ let x;
           className={st.input}
         />
         Запомнить меня
-        <div className={st.bordiv}></div>
+        <div className={st.checkedBox}></div>
         {x}
       </label>
     </div>
   );
 }
 
-export default Chekebox;
+export default _Checkbox;

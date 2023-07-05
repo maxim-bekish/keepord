@@ -1,19 +1,14 @@
 import { TextField } from "@mui/material";
 import arrow from "./../../../svg/arrows_button.svg";
-import st from "./rigistration_form.module.scss";
+import st from "./registration_form.module.scss";
 import { useForm } from "react-hook-form";
 
-import Chekebox from "../../_Chekebox";
+import Checkbox from "../../_Checkbox";
 
 let color = {
   green: "success",
   red: "warning",
 };
-
-
-
- 
-
 
 export default function Registration_form(props) {
   const {
@@ -126,7 +121,8 @@ export default function Registration_form(props) {
             </p>
           )}
         </div>
-        <Chekebox />
+   
+        {<Checkbox />}
       </div>
       <button disabled={!isValid} type="submit">
         Продолжить

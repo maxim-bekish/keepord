@@ -14,13 +14,13 @@
     display: flex;
     margin-left: 35px;
     &:hover {
-      .bordiv {
+      .checkedBox {
         background-color: $color-grey;
       }
     }
   }
 
-  .bordiv {
+  .checkedBox {
     border: 1px solid green;
     border-radius: 5px;
     box-sizing: border-box;

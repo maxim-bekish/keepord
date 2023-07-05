@@ -1,4 +1,4 @@
-import Registration_form from "./registration_form/_Registration_Form";
+import RegistrationForm from "./registration_form/_Registration_Form";
 import LoginMedium from "../login_pages/login_Medium/_loginMedium";
 import LoginMethod from "../login_pages/login_Methods/_loginMethods";
 import st from "./registration_page.module.scss";
@@ -32,7 +32,7 @@ function Registration_page() {
   return (
     <div className={st.registration_form_wrapper}>
       <div className={st.registration_form}>
-        <Registration_form
+        <RegistrationForm
           props={{
             database,
             title: "Создать",
