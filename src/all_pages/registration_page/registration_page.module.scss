@@ -1,10 +1,14 @@
+.registration_form_wrapper {
+  max-width: 1200px;
+  margin: 200px auto;
 
 
-.login_pages {
+
+  .registration_form {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 5rem;
-  height: 100vh;
+  align-items: start;
+  gap: 83px;
 }
 
+}

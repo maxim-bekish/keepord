@@ -1,14 +1,15 @@
 import { TextField } from "@mui/material";
+// import InputEnter from "../../inputEnter";
+import arrow from './../../../svg/arrows_button.svg'
 import st from "./loginForm.module.scss";
 import { useForm } from "react-hook-form";
-import InputEnter from "../../inputEnter";
 
 let color = {
   green: "success",
   red: "warning",
 };
 
-function LoginForm(props) {
+function LoginForm(  props ) {
   const {
     register,
     formState: { errors, isValid },
@@ -21,54 +22,58 @@ function LoginForm(props) {
     console.log(data);
     reset();
   };
-
   return (
     <form className={st.pagesLeft} onSubmit={handleSubmit(onSubmit)} action="#">
-      <h2>{props.props.title}</h2>
-      <div className={st.form}>
-        <div>
-          <TextField
-            {...register("keyLogin", {
-              required: true,
-              minLength: {
-                value: 5,
-                message: "Нужно ввести минимум 5 символов",
-              },
-            })}
-            label="Логин"
-            variant="outlined"
-            className={st.inputForm}
-            color={color.green} //сделать проверку to_do
-            type="text"
-          />
+      <a className={st.down} href="/">
+        <img src={arrow} alt="arrow" />
+      </a>
 
-          {errors?.keyLogin && (
-            <p className={st.p}>{errors?.keyLogin.message}</p>
-          )}
-        </div>
+      <h2>{props.props.title} профиль</h2>
 
-        <div>
-          <TextField
-            {...register("keyPassword", {
-              minLength: {
-                value: 5,
-                message: `Нужно ввести минимум 5 символов`,
-              },
-            })}
-            variant="outlined"
-            label="Пароль"
-            className={st.inputForm}
-            color={color.green}
-            type="text"
-          />
-          {errors?.keyPassword && (
-            <p className={st.p}>{errors?.keyPassword?.message}</p>
-          )}
-        </div>
-        <div>
-          <input type="checkbox" />
-          <span>Запомнить меня</span>
-        </div>
+      <div>
+        <TextField
+          {...register(props.props.database.login.key, {
+            required: true,
+            minLength: {
+              value: props.props.database.login.value,
+              message: props.props.database.login.message,
+            },
+          })}
+          label={props.props.database.login.label}
+          variant="outlined"
+          className={st.inputForm}
+          color={color.green} //сделать проверку to_do
+          type="text"
+        />
+
+        {errors[props.props.database.login.key] && (
+          <p className={st.p}>
+            {errors[props.props.database.login.key].message}
+          </p>
+        )}
+      </div>
+
+      <div>
+        <TextField
+          {...register(props.props.database.password.key, {
+            required: true,
+            minLength: {
+              value: props.props.database.password.value,
+              message: props.props.database.password.message,
+            },
+          })}
+          label={props.props.database.password.label}
+          variant="outlined"
+          className={st.inputForm}
+          color={color.green} //сделать проверку to_do
+          type="text"
+        />
+
+        {errors[props.props.database.password.key] && (
+          <p className={st.p}>
+            {errors[props.props.database.password.key].message}
+          </p>
+        )}
       </div>
       <button disabled={!isValid} type="submit">
         Продолжить

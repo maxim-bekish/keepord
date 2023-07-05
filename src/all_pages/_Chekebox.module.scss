@@ -1,0 +1,65 @@
+@import "./../color_style.scss";
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+
+  .xxx {
+    display: none;
+  }
+  .label {
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    margin-left: 35px;
+    &:hover {
+      .bordiv {
+        background-color: $color-grey;
+      }
+    }
+  }
+
+  .bordiv {
+    border: 1px solid green;
+    border-radius: 5px;
+    box-sizing: border-box;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    margin-left: -36px;
+  }
+  .input {
+    cursor: pointer;
+    opacity: 0;
+    position: absolute;
+  }
+  // input:checked {
+  //   & + .label::before {
+  //     content: "✓";
+  //     color: green;
+  //     display: flex;
+  //     justify-content: center;
+  //     align-items: center;
+  //     width: 30px;
+  //     height: 30px;
+  //   }
+  // }
+
+  // .label::before {
+  //   content: "";
+  //   border: 1px solid green;
+  //   height: 26px;
+  //   width: 26px;
+
+  //   border-radius: 7px;
+  //   margin-right: 10px;
+  // }
+}
+.img {
+  box-sizing: border-box;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  margin-left: -36px;
+}

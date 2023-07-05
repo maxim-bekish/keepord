@@ -1,41 +1,38 @@
 import { TextField } from "@mui/material";
+// import st from "./loginForm.module.scss";
+import { useForm } from "react-hook-form";
 
-// import { useForm } from "react-hook-form";
+let color = {
+  green: "success",
+  red: "warning",
+};
 
-// let color = {
-//   green: "success",
-//   red: "warning",
-// };
-
-function InputEnter(props) {
-  // let x=props.props.key
-  // console.log(x)
-  // const {
-  //   register,
-  //   formState: { errors },
-  // } = useForm({
-  //   mode: "all",
-  // });
+function InputEnter({ formKey }) {
+  const {
+    register,
+    formState: { errors },
+  } = useForm({
+    mode: "all",
+  });
 
   return (
-    // <div>
-    //   <TextField
-    //     {...register(x, {
-    //       required: true,
-    //       minLength: {
-    //         value: 5,
-    //         message: "Нужно ввести минимум 5 символов",
-    //       },
-    //     })}
-    //     label="Логин"
-    //     variant="outlined"
-    //     className={st.inputForm}
-    //     color="success" //сделать проверку to_do
-    //   />
-    //   {errors?.x && <p>{errors?.x.message}</p>}
-    // </div>
     <div>
-      <input type="login" className="input" placeholder="Login" id="input" />
+      <TextField
+        {...register(formKey, {
+          required: true,
+          minLength: {
+            value: 5,
+            message: "Нужно ввести минимум 5 символов",
+          },
+        })}
+        label="Логин"
+        variant="outlined"
+        // className={st.inputForm}
+        color={color.green} //сделать проверку to_do
+        type="text"
+      />
+
+      {errors[formKey] && <p> {errors[formKey].message} </p>}
     </div>
   );
 }

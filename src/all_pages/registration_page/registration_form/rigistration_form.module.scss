@@ -1,5 +1,7 @@
 @import "../../../color_style.scss";
 
+
+
 .pagesLeft {
   display: flex;
   flex-direction: column;
@@ -29,6 +31,8 @@
     width: 100%;
     div {
       color: $color-4dark-green;
+      border-radius: 10px;
+      height: 60px;
       &:hover {
         fieldset {
           border-color: $color-4dark-green;
