@@ -1,11 +1,10 @@
 @import "../../../color_style.scss";
 
-
-
 .login_pages {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 5rem;
-  height: 100vh;
+  margin: 200px auto 0 auto;
+  max-width: 1200px;
+  align-items: flex-start;
+  gap: 83px;
 }

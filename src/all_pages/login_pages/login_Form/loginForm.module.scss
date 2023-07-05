@@ -8,16 +8,24 @@
   justify-content: center;
   max-width: 500px;
   width: 100%;
+.inputForm{
+
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  height: 100%;
+}
+  div {
+    width: 100%;
+    height: 60px;
+    border-radius: 10px;
+  }
+
   h2 {
     font-size: 1.75rem;
     color: $color-black;
   }
-  .form {
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
-    width: 100%;
-  }
+
   .p {
     margin-top: 6.5px;
     color: #f47373;
@@ -26,22 +34,21 @@
   }
 
   .inputForm {
-    width: 100%;
     div {
-      color: $color-4dark-green;
+      // color: $color-4dark-green;
       &:hover {
         fieldset {
-          border-color: $color-4dark-green;
+          // border-color: $color-4dark-green;
         }
       }
     }
     label {
       // placeholder
-      color: $color-4dark-green;
+      // color: $color-4dark-green;
     }
     fieldset {
-      border-color: $color-4dark-green;
-      border: 2px solid $color-4dark-green;
+      // border-color: $color-4dark-green;
+      // border: 2px solid $color-4dark-green;
     }
   }
 

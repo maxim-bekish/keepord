@@ -6,9 +6,9 @@ import ok from "./../svg/ok.svg";
 
 
 function _Checkbox() {
-  const [www, setWww] = useState(true);
+  const [check, setCheck] = useState(true);
   let x;
-  if (www) {
+  if (check) {
     x = <img src={ok} alt="" className={st.img} />;
   } else {
     x = "";
@@ -19,8 +19,8 @@ function _Checkbox() {
       <label className={st.label}>
         <input
           type="checkbox"
-          onChange={() => setWww(!www)}
-          checked={www}
+          onChange={() => setCheck(!check)}
+          checked={check}
           className={st.input}
         />
         Запомнить меня
