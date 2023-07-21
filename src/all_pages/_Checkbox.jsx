@@ -23,7 +23,6 @@ function _Checkbox() {
         Запомнить меня
         <div className={st.checkedBox}></div>
         {x}
-        {console.log("test")}
       </label>
     </div>
   );
