@@ -19,12 +19,7 @@ const database = {
 function Login_pages() {
   return (
     <div className={st.login_pages}>
-      <LoginForm
-        props={{
-          database,
-          title: "Войти в",
-        }}
-      />
+      <LoginForm database={database} title={"Войти в"} />
       <LoginMedium />
       <LoginMethod props={{ title: "Войти" }} />
     </div>

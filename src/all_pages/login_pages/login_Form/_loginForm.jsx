@@ -1,81 +1,55 @@
-import { TextField } from "@mui/material";
 import arrow from "./../../../svg/arrows_button.svg";
 import st from "./loginForm.module.scss";
 import { useForm } from "react-hook-form";
-import Checkbox from "./../../_Checkbox";
-import { useState } from "react";
+import Checkbox from "../../_Checkbox";
+import InputHelper from "./../../_InputHelp";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
-function LoginForm(props) {
-  let [colors, setColors] = useState("success");
-  console.log(colors);
+const SignUpSchema = yup.object().shape({
+  login: yup.string().email("Введите верный email").required("Обязательно"),
+  password: yup.string().min(5, "min 5").required("Обязательно"),
+});
+export default function LoginForm(props) {
   const {
     register,
-    formState: { errors, isValid },
     handleSubmit,
     reset,
+    formState: { errors, isValid },
   } = useForm({
+    resolver: yupResolver(SignUpSchema),
     mode: "all",
   });
+
   const onSubmit = (data) => {
     console.log(data);
+
     reset();
   };
+
   return (
     <form className={st.pagesLeft} onSubmit={handleSubmit(onSubmit)} action="#">
       <a className={st.down} href="/">
         <img src={arrow} alt="arrow" />
       </a>
 
-      <h2>{props.props.title} профиль</h2>
-      <div className={st.inputForm}>
-        <div>
-          <TextField
-            {...register(props.props.database.login.key, {
-              required: true,
-              minLength: {
-                value: props.props.database.login.value,
-                message: props.props.database.login.message,
-              },
-            })}
-            label={props.props.database.login.label}
-            variant="outlined"
-            className={st.inputForm}
-            color={colors} //сделать проверку to_do
-            type="text"
-          />
+      <h2>{props.title} профиль</h2>
 
-          {errors[props.props.database.login.key] && (
-            <>
-              {() => setColors("warning")}
-              <p className={st.p}>
-                {errors[props.props.database.login.key].message}
-              </p>
-            </>
-          )}
-        </div>
+      <div className={st.form}>
+        <InputHelper
+          register={register}
+          errors={errors}
+          fieldName="login"
+          label="Логин"
+        />
+        <InputHelper
+          register={register}
+          errors={errors}
+          type="password"
+          fieldName="password"
+          label="Пароль"
+        />
 
-        <div>
-          <TextField
-            {...register(props.props.database.password.key, {
-              required: true,
-              minLength: {
-                value: props.props.database.password.value,
-                message: props.props.database.password.message,
-              },
-            })}
-            label={props.props.database.password.label}
-            variant="outlined"
-            className={st.inputForm}
-            color={colors} //сделать проверку to_do
-            type="text"
-          />
-
-          {errors[props.props.database.password.key] && (
-            <p className={st.p}>
-              {errors[props.props.database.password.key].message}
-            </p>
-          )}
-        </div>
         <Checkbox />
       </div>
       <button disabled={!isValid} type="submit">
@@ -84,5 +58,3 @@ function LoginForm(props) {
     </form>
   );
 }
-
-export default LoginForm;

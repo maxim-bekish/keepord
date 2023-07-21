@@ -1,0 +1,36 @@
+@import "../color_style.scss";
+
+.inputForm {
+  width: 100%;
+
+  div {
+    border-radius: 10px;
+    height: 60px;
+    &:hover {
+      fieldset {
+        border-style: solid;
+        border-width: 2px;
+      }
+    }
+  }
+  label {
+    // placeholder
+    border-color: $color-4dark-green;
+  }
+  fieldset {
+    border-style: solid;
+    border-width: 2px;
+    border-color: $color-4dark-green;
+    // border: 2px solid
+    &:hover {
+      color: red;
+    }
+  }
+}
+
+.p {
+  margin-top: 6.5px;
+  color: #f47373;
+  font-size: 0.75rem;
+  position: absolute;
+}

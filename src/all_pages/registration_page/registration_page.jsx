@@ -32,14 +32,9 @@ function Registration_page() {
   return (
     <div className={st.registration_form_wrapper}>
       <div className={st.registration_form}>
-        <RegistrationForm
-          props={{
-            database,
-            title: "Создать",
-          }}
-        />
+        <RegistrationForm database={database} title={"Создать"} />
         <LoginMedium />
-        <LoginMethod props={{ title: "Создать профиль" }} />
+        <LoginMethod title={"Создать профиль"} />
       </div>
     </div>
   );

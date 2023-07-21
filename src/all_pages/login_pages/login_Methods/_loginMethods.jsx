@@ -4,7 +4,7 @@ function LoginMethod(props) {
 
   return (
     <div className={st.pagesRight}>
-      <h5>{props.props.title} с помощью</h5>
+      <h5>{props.title} с помощью</h5>
       <div className={st.buttons}>
         <button>
           <a href="#">Google</a>
