@@ -29,6 +29,7 @@ function _Checkbox() {
       </label>
     </div>
   );
+  
 }
 
 export default _Checkbox;
