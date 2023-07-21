@@ -2,9 +2,6 @@ import { useState } from "react";
 import st from "./_Checkbox.module.scss";
 import ok from "./../svg/ok.svg";
 
-
-
-
 function _Checkbox() {
   const [check, setCheck] = useState(true);
   let x;
@@ -26,10 +23,10 @@ function _Checkbox() {
         Запомнить меня
         <div className={st.checkedBox}></div>
         {x}
+        {console.log("test")}
       </label>
     </div>
   );
-  
 }
 
 export default _Checkbox;
