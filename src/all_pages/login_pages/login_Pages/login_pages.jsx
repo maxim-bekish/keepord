@@ -2,6 +2,7 @@ import LoginMethod from "../login_Methods/_loginMethods";
 import LoginForm from "../login_Form/_loginForm";
 import LoginMedium from "../login_Medium/_loginMedium";
 import st from "./login_pages.module.scss";
+
 const database = {
   login: {
     key: "keyLogin",
@@ -19,9 +20,10 @@ const database = {
 function Login_pages() {
   return (
     <div className={st.login_pages}>
-      <LoginForm database={database} title={"Войти в"} />
-      <LoginMedium />
-      <LoginMethod props={{ title: "Войти" }} />
+      {console.log("heeeeeeeeeeeeeeeee")}
+         <LoginForm database={database} title={"Войти в"} />
+   <LoginMedium /> 
+      <LoginMethod title={"Войти"} />
     </div>
   );
 }

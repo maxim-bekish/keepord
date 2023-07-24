@@ -9,11 +9,12 @@ export default function InputHelper({
   minValue,
   errorMessage,
 }) {
-  // const { field } = useController(props);
+
 
   return (
     <div>
       <TextField
+     
         {...register(fieldName, {
           minLength: {
             value: minValue,
@@ -27,6 +28,7 @@ export default function InputHelper({
         error={Boolean(errors[fieldName]?.message)}
       />
       {errors[fieldName] && <p className={st.p}>{errors[fieldName].message}</p>}
+
     </div>
   );
 }

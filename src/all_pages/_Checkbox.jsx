@@ -2,6 +2,9 @@ import { useState } from "react";
 import st from "./_Checkbox.module.scss";
 import ok from "./../svg/ok.svg";
 
+
+
+
 function _Checkbox() {
   const [check, setCheck] = useState(true);
   let x;
@@ -26,6 +29,7 @@ function _Checkbox() {
       </label>
     </div>
   );
+  
 }
 
 export default _Checkbox;

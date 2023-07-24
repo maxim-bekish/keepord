@@ -50,25 +50,25 @@ export default function Registration_form(props) {
           register={register}
           errors={errors}
           fieldName="firstName"
-          label="Name"
+          label="Имя пользователя"
         />
         <InputHelper
           register={register}
           errors={errors}
           fieldName="login"
-          label="login"
+          label="Электронная почта"
         />
         <InputHelper
           register={register}
           errors={errors}
           fieldName="password"
-          label="Password"
+          label="Пароль "
         />
         <InputHelper
           register={register}
           errors={errors}
           fieldName="confirmPassword"
-          label="Confirm Password"
+          label="Подтверждение пароля "
         />
         {/* <div>
           <TextField
