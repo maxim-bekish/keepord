@@ -8,7 +8,7 @@ import * as yup from "yup";
 
 function cod() {
   const now = new Date();
-  return (cod = `${now.getFullYear()}.${now.getMonth()}.${now.getDate()}.${now.getHours()}.${now.getMinutes()}.${now.getSeconds()}`);
+  return `${now.getFullYear()}.${now.getMonth()}.${now.getDate()}.${now.getHours()}.${now.getMinutes()}.${now.getSeconds()}`;
 }
 const SignUpSchema = yup.object().shape({
   firstName: yup.string().min(5, "min 5").required("Обязательно"),
