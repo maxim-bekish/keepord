@@ -1,9 +1,6 @@
 import styles from "./first_page.module.scss";
-// import { BrowserRouter, Route, Routes } from "react-router-dom";
 import iconSrc from "./../../svg/animation.svg";
 import { motion } from "framer-motion";
-// import Login_pages from "./../login_pages/login_pages/login_pages";
-// import Registration_page from "./../registration_page/registration_page";
 
 let width = document.body.clientWidth;
 function First_page() {

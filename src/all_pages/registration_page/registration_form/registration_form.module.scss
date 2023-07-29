@@ -39,10 +39,8 @@
       border-color: $color-4dark-green;
     }
     fieldset {
-      border-style: solid;
-      border-width: 2px;
-      border-color: $color-4dark-green;
-      // border: 2px solid
+
+    border: 2px solid $color-4dark-green;
       &:hover {
         color: red;
       }
