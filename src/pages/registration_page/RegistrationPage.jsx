@@ -1,6 +1,6 @@
-import RegistrationForm from "./registration_form/RegistrationForm";
-import LoginMedium from "../login_pages/login_Medium/LoginMedium";
-import LoginMethod from "../login_pages/login_Methods/LoginMethods";
+import RegistrationForm from "./RegistrationForm/RegistrationForm";
+
+import LoginMethod from "../login_pages/LoginMethods/LoginMethods";
 import st from "./registration_page.module.scss";
 const database = {
   name: {
@@ -33,7 +33,11 @@ function Registration_page() {
     <div className={st.registration_form_wrapper}>
       <div className={st.registration_form}>
         <RegistrationForm database={database} title={"Создать"} />
-        <LoginMedium />
+        <div className={st.pagesMedium}>
+          <hr />
+          <span>или</span>
+          <hr />
+        </div>
         <LoginMethod title={"Создать профиль"} />
       </div>
     </div>

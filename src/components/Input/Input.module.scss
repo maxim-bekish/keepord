@@ -1,4 +1,4 @@
-@import "../color_style.scss";
+@import "src/color_style.scss";
 
 .inputForm {
   width: 100%;
@@ -20,14 +20,14 @@
   fieldset {
     border: 2px solid $color-4dark-green;
     &:hover {
-      color: red;
+      color: $color-error;
     }
   }
 }
 
 .p {
   margin-top: 6.5px;
-  color: #f47373;
+  color: $color-error;
   font-size: 0.75rem;
   position: absolute;
 }

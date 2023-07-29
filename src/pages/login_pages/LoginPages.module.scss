@@ -1,5 +1,13 @@
-@import "../../../color_style.scss";
+@import "../../color_style.scss";
 
+.login_pages {
+  display: flex;
+  justify-content: center;
+  margin: 200px auto 0 auto;
+  max-width: 1200px;
+  align-items: flex-start;
+  gap: 83px;
+}
 .pagesMedium {
   display: flex;
   flex-direction: column;

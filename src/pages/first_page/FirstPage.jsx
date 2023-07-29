@@ -1,5 +1,5 @@
-import styles from "./first_page.module.scss";
-import iconSrc from "./../../svg/animation.svg";
+import styles from "./FirstPage.module.scss";
+import iconSrc from "./../../img/svg/animation.svg";
 import { motion } from "framer-motion";
 
 let width = document.body.clientWidth;

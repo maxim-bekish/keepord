@@ -1,7 +1,7 @@
-import LoginMethod from "./login_Methods/LoginMethods"
-import LoginForm from "./login_Form/LoginForm";
-import LoginMedium from "./login_Medium/LoginMedium";
-import st from "./login_pages.module.scss";
+import LoginMethod from "./LoginMethods/LoginMethods";
+import LoginForm from "./LoginForm/LoginForm";
+
+import st from "./LoginPages.module.scss";
 
 const database = {
   login: {
@@ -21,7 +21,11 @@ function Login_pages() {
   return (
     <div className={st.login_pages}>
       <LoginForm database={database} title={"Войти в"} />
-      <LoginMedium />
+      <div className={st.pagesMedium}>
+        <hr />
+        <span>или</span>
+        <hr />
+      </div>
       <LoginMethod title={"Войти"} />
     </div>
   );

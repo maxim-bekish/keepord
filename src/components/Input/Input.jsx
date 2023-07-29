@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
-import st from "./../all_pages/inputHelper.module.scss";
+import st from "./Input.module.scss";
 
-export default function InputHelper({ register, fieldName, label, errors }) {
+export default function Input({ register, fieldName, label, errors }) {
   return (
     <div>
       <TextField

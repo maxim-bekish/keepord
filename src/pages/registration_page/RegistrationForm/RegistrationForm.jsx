@@ -1,8 +1,8 @@
-import arrow from "./../../../svg/arrows_button.svg";
+import arrow from "./../../../img/svg/arrows_button.svg";
 import st from "./registration_form.module.scss";
 import { useForm } from "react-hook-form";
-import Checkbox from "../../Checkbox";
-import InputHelper from "../../InputHelp";
+import Checkbox from "../../../components/Checkbox/Checkbox";
+import Input from "../../../components/Input/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -31,35 +31,35 @@ export default function Registration_form(props) {
   });
   const onSubmit = (data) => {
     data.cod = cod();
-    console.log(data);
+
     reset();
   };
   return (
-    <form className={st.pagesLeft} onSubmit={handleSubmit(onSubmit)} action="#">
+    <form className={st.pagesLeft} onSubmit={handleSubmit(onSubmit)}>
       <a className={st.down} href="/">
         <img src={arrow} alt="arrow" />
       </a>
       <h2>{props.title} профиль</h2>
       <div className={st.form}>
-        <InputHelper
+        <Input
           register={register}
           errors={errors}
           fieldName="firstName"
           label="Имя пользователя"
         />
-        <InputHelper
+        <Input
           register={register}
           errors={errors}
           fieldName="login"
           label="Электронная почта"
         />
-        <InputHelper
+        <Input
           register={register}
           errors={errors}
           fieldName="password"
           label="Пароль "
         />
-        <InputHelper
+        <Input
           register={register}
           errors={errors}
           fieldName="confirmPassword"

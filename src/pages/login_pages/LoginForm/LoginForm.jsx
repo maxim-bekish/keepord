@@ -1,15 +1,18 @@
-import arrow from "./../../../svg/arrows_button.svg";
-import st from "./loginForm.module.scss";
+import arrow from "./../../../img/svg/arrows_button.svg";
+import st from "./LoginForm.module.scss";
 import { useForm } from "react-hook-form";
-import Checkbox from "../../Checkbox";
-import InputHelper from "../../InputHelp";
+import Checkbox from "../../../components/Checkbox/Checkbox";
+import Input from "../../../components/Input/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+// import { useState } from "react";
+import {  useNavigate } from "react-router-dom";
 
 const SignUpSchema = yup.object().shape({
   login: yup.string().email("Введите верный email").required("Обязательно"),
   password: yup.string().min(5, "min 5").required("Обязательно"),
 });
+
 export default function LoginForm(props) {
   const {
     register,
@@ -20,9 +23,12 @@ export default function LoginForm(props) {
     resolver: yupResolver(SignUpSchema),
     mode: "all",
   });
-
+  const navigate = useNavigate();
   const onSubmit = (data) => {
     console.log(data);
+
+    // localStorage.setItem("isLogin", 'true');
+    navigate("/loveNastasia");
 
     reset();
   };
@@ -36,13 +42,14 @@ export default function LoginForm(props) {
       <h2>{props.title} профиль</h2>
 
       <div className={st.form}>
-        <InputHelper
+        <Input
+       
           register={register}
           errors={errors}
           fieldName="login"
           label="Логин"
         />
-        <InputHelper
+        <Input
           register={register}
           errors={errors}
           type="password"

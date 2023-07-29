@@ -1,11 +1,11 @@
 import { useState } from "react";
-import st from "./_Checkbox.module.scss";
-import ok from "./../svg/ok.svg";
+import st from "./Checkbox.module.scss";
+import ok from "./../../img/svg/ok.svg";
 
 
 
 
-function _Checkbox() {
+function Checkbox() {
   const [check, setCheck] = useState(true);
   let x;
   if (check) {
@@ -32,4 +32,4 @@ function _Checkbox() {
   
 }
 
-export default _Checkbox;
+export default Checkbox;
