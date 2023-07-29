@@ -1,14 +1,12 @@
-@import "./../../color_style.scss";
-.registration_form_wrapper {
-  max-width: 1200px;
-  margin: 200px auto;
+@import "../../ColorStyle.scss";
 
-  .registration_form {
-    display: flex;
-    justify-content: center;
-    align-items: start;
-    gap: 83px;
-  }
+.login_pages {
+  display: flex;
+  justify-content: center;
+  margin: 200px auto 0 auto;
+  max-width: 1200px;
+  align-items: flex-start;
+  gap: 83px;
 }
 .pagesMedium {
   display: flex;

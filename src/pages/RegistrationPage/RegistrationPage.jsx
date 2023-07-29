@@ -1,7 +1,6 @@
-import RegistrationForm from "./RegistrationForm/RegistrationForm";
-
-import LoginMethod from "../login_pages/LoginMethods/LoginMethods";
-import st from "./registration_page.module.scss";
+import RegistrationForm from "./../../components/RegistrationForm/RegistrationForm";
+import Method from "../../components/Method/Methods";
+import st from "./RegistrationPage.module.scss";
 const database = {
   name: {
     key: "keyName",
@@ -38,7 +37,10 @@ function Registration_page() {
           <span>или</span>
           <hr />
         </div>
-        <LoginMethod title={"Создать профиль"} />
+        <Method
+          title={"Создать профиль"}
+          text={"У вас уже есть профиль на сайте?"}
+        />
       </div>
     </div>
   );

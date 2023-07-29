@@ -1,5 +1,5 @@
-import LoginMethod from "./LoginMethods/LoginMethods";
-import LoginForm from "./LoginForm/LoginForm";
+import Method from "../../components/Method/Methods";
+import LoginForm from "./../../components/LoginForm/LoginForm";
 
 import st from "./LoginPages.module.scss";
 
@@ -26,7 +26,7 @@ function Login_pages() {
         <span>или</span>
         <hr />
       </div>
-      <LoginMethod title={"Войти"} />
+      <Method title={"Войти"} text={" Еще не зарегестрированны?"} />
     </div>
   );
 }

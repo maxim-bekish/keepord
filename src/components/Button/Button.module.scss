@@ -1,0 +1,21 @@
+@import './../../ColorStyle.scss';
+button {
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    height: 60px;
+    background: $color-3blur;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 0;
+    color: $color-3green;
+    font-size: 1.125rem;
+    font-weight: 600;
+    &:disabled {
+      color: $color-dark-grey;
+      background: $color-grey;
+      border: 0px;
+    }
+  }
