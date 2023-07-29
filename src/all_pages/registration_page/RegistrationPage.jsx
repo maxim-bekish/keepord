@@ -1,6 +1,6 @@
-import RegistrationForm from "./registration_form/_Registration_Form";
-import LoginMedium from "../login_pages/login_Medium/_loginMedium";
-import LoginMethod from "../login_pages/login_Methods/_loginMethods";
+import RegistrationForm from "./registration_form/RegistrationForm";
+import LoginMedium from "../login_pages/login_Medium/LoginMedium";
+import LoginMethod from "../login_pages/login_Methods/LoginMethods";
 import st from "./registration_page.module.scss";
 const database = {
   name: {

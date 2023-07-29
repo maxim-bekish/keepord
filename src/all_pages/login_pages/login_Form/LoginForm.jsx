@@ -1,8 +1,8 @@
 import arrow from "./../../../svg/arrows_button.svg";
 import st from "./loginForm.module.scss";
 import { useForm } from "react-hook-form";
-import Checkbox from "../../_Checkbox";
-import InputHelper from "./../../_InputHelp";
+import Checkbox from "../../Checkbox";
+import InputHelper from "../../InputHelp";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -28,7 +28,7 @@ export default function LoginForm(props) {
   };
 
   return (
-    <form className={st.pagesLeft} onSubmit={handleSubmit(onSubmit)} action="#">
+    <form className={st.pagesLeft} onSubmit={handleSubmit(onSubmit)}>
       <a className={st.down} href="/">
         <img src={arrow} alt="arrow" />
       </a>

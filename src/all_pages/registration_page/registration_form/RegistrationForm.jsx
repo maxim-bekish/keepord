@@ -1,8 +1,8 @@
 import arrow from "./../../../svg/arrows_button.svg";
 import st from "./registration_form.module.scss";
 import { useForm } from "react-hook-form";
-import Checkbox from "../../_Checkbox";
-import InputHelper from "../../_InputHelp";
+import Checkbox from "../../Checkbox";
+import InputHelper from "../../InputHelp";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -29,22 +29,17 @@ export default function Registration_form(props) {
     resolver: yupResolver(SignUpSchema),
     mode: "all",
   });
-
   const onSubmit = (data) => {
     data.cod = cod();
     console.log(data);
-
     reset();
   };
-  // { console.log(props.database.name.key);}
   return (
     <form className={st.pagesLeft} onSubmit={handleSubmit(onSubmit)} action="#">
       <a className={st.down} href="/">
         <img src={arrow} alt="arrow" />
       </a>
-
       <h2>{props.title} профиль</h2>
-      {/* {console.log(props.props.database)} */}
       <div className={st.form}>
         <InputHelper
           register={register}
