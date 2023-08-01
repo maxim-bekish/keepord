@@ -13,7 +13,7 @@
   a {
     font-size: 1rem;
 
-    color: $color-3green;
+    color: $colorGreen;
     text-decoration: none;
   }
   .buttons {
@@ -27,8 +27,8 @@
       background-color: $color0;
       padding: 20px;
       border-radius: 10px;
-      border: 2px solid $color-4dark-green;
-      color: $color-4dark-green;
+      border: 2px solid $colorDarkGreen;
+      color: $colorDarkGreen;
       display: flex;
       align-items: center;
       justify-content: center;

@@ -15,19 +15,19 @@
   }
   label {
     // placeholder
-    border-color: $color-4dark-green;
+    border-color: $colorDarkGreen;
   }
   fieldset {
-    border: 2px solid $color-4dark-green;
+    border: 2px solid $colorDarkGreen;
     &:hover {
-      color: $color-error;
+      color: $colorError;
     }
   }
 }
 
 .p {
   margin-top: 6.5px;
-  color: $color-error;
+  color: $colorError;
   font-size: 0.75rem;
   position: absolute;
 }

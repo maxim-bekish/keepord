@@ -5,16 +5,16 @@
   grid-template-rows: 1fr;
   height: 100vh;
 
-  background: $color-base;
+  background: $colorBase;
 
   .firstPage__leftWindow {
-    background: $color-base;
+    background: $colorBase;
     display: flex;
     align-items: center;
     justify-content: center;
   }
   .firstPage__rightWindow {
-    background: $color_white;
+    background: $colorWhite;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,13 +33,13 @@
         flex-direction: column;
         gap: 3.12rem;
         span {
-          color: $color-black;
+          color: $colorBlack;
           font-size: 1.375rem;
           line-height: 150%;
         }
         button {
           a {
-            color: $color-4dark-green;
+            color: $colorDarkGreen;
             text-decoration: none;
           }
           cursor: pointer;
@@ -57,7 +57,7 @@
           border: 0;
           border-radius: 0.625rem;
 
-          background: $color-3blur;
+          background: $colorBlur;
         }
       }
       .a {
@@ -65,7 +65,7 @@
         font-size: 1rem;
         line-height: 150%;
         letter-spacing: 0.05rem;
-        color: $color-3green;
+        color: $colorGreen;
       }
     }
   }

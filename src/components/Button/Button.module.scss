@@ -4,18 +4,18 @@ button {
     display: flex;
     width: 100%;
     height: 60px;
-    background: $color-3blur;
+    background: $colorBlur;
     padding: 20px;
     justify-content: center;
     align-items: center;
     border-radius: 10px;
     border: 0;
-    color: $color-3green;
+    color: $colorGreen;
     font-size: 1.125rem;
     font-weight: 600;
     &:disabled {
-      color: $color-dark-grey;
-      background: $color-grey;
+      color: $colorDarkGrey;
+      background: $colorGrey;
       border: 0px;
     }
   }
