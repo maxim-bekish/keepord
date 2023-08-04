@@ -25,15 +25,15 @@ function First_page() {
             <div className={styles.form__buttons}>
               <div>
                 <span>У Вас уже есть профиль?</span>
-                <button>
-                  <a href="/login">Войти</a>
-                </button>
+                <a className={styles.aa} href="/login">
+                  Войти
+                </a>
               </div>
               <div>
                 <span>Еще не зарегистрированы?</span>
-                <button>
-                  <a href="/registration">Зарегистрироваться</a>
-                </button>
+                <a className={styles.aa} href="/registration">
+                  Зарегистрироваться
+                </a>
               </div>
             </div>
             <a href="#" className={styles.a}>
