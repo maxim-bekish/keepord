@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-let url1 = "https://rms2022.pythonanywhere.com/users/api/token/";
+// let url1 = "https://rms2022.pythonanywhere.com/users/api/token/";
 let url2 = "https://rms2022.pythonanywhere.com/users/sign_in/";
 const SignUpSchema = yup.object().shape({
   email: yup.string().email("Введите верный email").required("Обязательно"),
@@ -27,32 +27,23 @@ export default function LoginForm(props) {
   const [err, setErr] = useState("");
   const navigate = useNavigate();
   const onSubmit = (event) => {
-    fetch(url1, {
+    fetch(url2, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
       },
       body: JSON.stringify(event),
-    })
-      .then((response) => {
-        try {
-          return response.json();
-        } catch (err) {
-          console.log(err + "err");
-        }
-      })
-      .then((result) => {
-        if (result.access === undefined) {
-          setErr("не верные логин или пароль данные");
-          document.cookie = "access= ; expires=-1";
-          document.cookie = "refresh= ; expires=-1";
-        } else {
-          navigate("/home");
-          setErr("");
-          document.cookie = `access = ${result.access}`;
-          document.cookie = `refresh = ${result.refresh}`;
-        }
-      });
+    }).then((response) => {
+      if (response.status === 200) {
+        navigate("/home");
+        setErr("");
+      } else {
+        console.log(response.status);
+        setErr(
+          `не верные логин или пароль `
+        );
+      }
+    });
 
     reset();
   };
@@ -80,7 +71,9 @@ export default function LoginForm(props) {
           fieldName="password"
           label="Пароль"
         />
-        <p>{err}</p>
+        <p>
+          {err} <br />login: user1@example.com <br />Password:1234
+        </p>
         <Checkbox />
       </div>
       <button disabled={!isValid} type="submit">
