@@ -6,7 +6,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap:95px;
+  gap: 95px;
 }
 
 .buttonAdd {
@@ -74,7 +74,10 @@
   background-color: $color0;
   border-radius: 10px;
   border: 2px solid $colorDarkGreen;
-  color: $colorBlack;
-  font-size: 1.125rem;
-  line-height: 150%;
+  a {
+    font-size: 1.125rem;
+    line-height: 150%;
+    text-decoration: none;
+    color: $colorBlack;
+  }
 }
