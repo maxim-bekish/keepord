@@ -19,7 +19,7 @@
 }
 .wrapper {
   display: flex;
-  gap: 100px;
+color: rgba(30, 167, 30, 0.964);
 }
 .input {
   font-family: "Inter";
@@ -45,6 +45,12 @@
   box-sizing: border-box;
   color: $colorBlack;
   font-size: 1.375rem;
+  // &:nth-child(3){
+  //  border-radius: 6px;
+  //     border: 1px solid red !important;
+
+    
+  // }
 }
 // .select {
 //   display: flex;
@@ -67,6 +73,7 @@ form {
 }
 .select.isActive .selectBody {
 display: block;
+color:#1ea71e
 }
 .select {
   width: 250px;
@@ -81,7 +88,7 @@ display: block;
     .selectCurrent {
       font-size: 18px;
       line-height: 24px;
-      padding: 8px;
+          padding: 8px;
     }
     .selectIcon {
       align-items: center;

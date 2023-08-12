@@ -8,7 +8,7 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { axios } from "axios";
-// let url1 = "https://rms2022.pythonanywhere.com/users/api/token/";
+let url1 = "https://rms2022.pythonanywhere.com/users/api/token/";
 let url2 = "https://rms2022.pythonanywhere.com/users/sign_in/";
 const SignUpSchema = yup.object().shape({
   email: yup.string().email("Введите верный email").required("Обязательно"),
@@ -31,23 +31,25 @@ export default function LoginForm(props) {
 
   
   const  onSubmit = (event) => {
-    fetch(url2, {
+    fetch(url1, {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
       },
       body: JSON.stringify(event),
-    }).then((response) => {
-      if (response.status === 200) {
-        navigate("/home");
-        setErr("");
-      } else {
-        console.log(response.status);
-        setErr(
-          `не верные логин или пароль `
-        );
-      }
-    });
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          navigate("/home");
+          setErr("");
+    
+    
+        } else {
+          console.log(response.status);
+          setErr(`не верные логин или пароль `);
+        }
+      })
+     
 
     reset();
   };

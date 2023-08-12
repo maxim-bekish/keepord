@@ -1,37 +1,46 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import st from "./AddObject.module.scss";
-import iconImg from "./../../img/svg/iconAddImg.svg";
-import Select from "react-select";
+import { useForm } from "react-hook-form";
+import {PictureTwoTone   } from "@ant-design/icons";
+import { ConfigProvider, Select,Upload } from "antd";
+
 
 const options = [
-  {
-    value: "cloth",
-    label: "cloth",
-  },
-  {
-    value: "trash",
-    label: "trash",
-  },
-  {
-    value: "technique",
-    label: "technique",
-  },
+  { value: "jack", label: "Jack" },
+  { value: "lucy", label: "Lucy" },
+  { value: "Yiminghe", label: "yiminghe" },
+  { value: "disabled", label: "Disabled" },
+  { value: "jack1", label: "Jack" },
+  { value: "lucy1", label: "Lucy" },
+  { value: "Yiminghe1", label: "yiminghe" },
+  { value: "disabled1", label: "Disabled" },
 ];
+
+
+
+
+
+
+
+  const  onSubmit = (event) => {
+    console.log(event)
+  }
 export default function AddObject() {
-  const filePicker = useRef(null);
-  const [img, setImg] = useState(null);
 
-  const photo = (e) => {
-    setImg(e.target.files);
-    console.log(img);
-  };
 
-  const handlePick = () => {
-    filePicker.current.click();
-  };
+
+  const [fileList, setFileList] = useState([]);
+  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  const uploadButton = (
+    <div>
+      <PictureTwoTone  style={{ fontSize: "32px" }} />
+      <div>Загрузить</div>
+    </div>
+  );
+
+
   return (
     <>
-      <header></header>
       <form className={st.form}>
         <div className={st.wrapper}>
           <label className={st.text} htmlFor="name">
@@ -44,50 +53,71 @@ export default function AddObject() {
           <label className={st.text} htmlFor="categories">
             Категория
           </label>
-          {/* <div className={st.select}>
-            <select className={st.input} name="categories" id="">
-              <option className={st.option} value="">
-                одежда
-              </option>
-              <option className={st.option} value="">
-                хлам
-              </option>
-              <option className={st.option} value="">
-                чулан
-              </option>
-            </select>
-          </div> */}
-          <div className={`${st.select} ${st.isActive}`}>
-            <div className={st.selectHeader}>
-              <span className={st.selectCurrent}>value 1</span>
-              <div className={st.selectIcon}>&times;</div>
-            </div>
-            <div className={st.selectBody}>
-              <div className={st.selectItem}>value 1</div>
-              <div className={st.selectItem}>value 2</div>
-              <div className={st.selectItem}>value 3</div>
-              <div className={st.selectItem}>value 4</div>
-              <div className={st.selectItem}>value 5</div>
-            </div>
-          </div>
-          {/* <Select className={st.selectttt} options={options} /> */}
+
+          <ConfigProvider
+            theme={{
+              components: {
+                Select: {
+                  colorBorder: `#3c6255`,
+                  colorPrimary: "#3c6255",
+                  controlHeight: 66,
+                  fontSize: 22,
+                  colorIcon: "rgba(30, 167, 30)",
+                  fontSizeIcon: 20,
+                  borderRadius: 10,
+                  lineWidth: 1,
+                  colorPrimaryTextActive: "none",
+                  algorithm: true, // Enable algorithm
+                },
+              },
+            }}
+          >
+            <Select
+              defaultValue="места"
+              style={{ width: 500 }}
+              // onChange={handleChange}
+              options={[
+                { value: "jack", label: "Гараж" },
+                { value: "lucy", label: "Дом" },
+                { value: "Yiminghe", label: "Погреб" },
+                { value: "disabled", label: "Балкон" },
+                { value: "jack1", label: "дача" },
+                { value: "lucy1", label: "вон" },
+                { value: "Yiminghe1", label: "тд" },
+                { value: "disabled1", label: "тп" },
+              ]}
+            />
+          </ConfigProvider>
         </div>
 
         <div className={st.wrapper}>
           <label className={st.text} htmlFor="storage">
             Место хранения
           </label>
-          {/* <div className={st.select}>
-            <select
-              className={`${st.select}  ${st.input}`}
-              name="storage"
-              id=""
-            >
-              <option value="">гараж</option>
-              <option value="">дом</option>
-              <option value="">чулан</option>
-            </select>
-          </div> */}
+          <ConfigProvider
+            theme={{
+              components: {
+                Select: {
+                  colorBorder: `#3c6255`,
+                  colorPrimary: "#3c6255",
+                  controlHeight: 66,
+                  fontSizeIcon: 20,
+                  fontSize: 22,
+                  borderRadius: 10,
+                  lineWidth: 1,
+                  colorPrimaryTextActive: "none",
+                  algorithm: true, // Enable algorithm
+                },
+              },
+            }}
+          >
+            <Select
+              defaultValue="lucy"
+              style={{ width: 500 }}
+              // onChange={handleChange}
+              options={options}
+            />
+          </ConfigProvider>
         </div>
 
         <div className={st.wrapper}>
@@ -101,16 +131,16 @@ export default function AddObject() {
           <label className={st.text} htmlFor="photos">
             Фотографии *
           </label>
-          <img onClick={handlePick} src={iconImg} alt="img" />
-          <input
-            className={st.hidden}
-            type="file"
-            ref={filePicker}
-            onChange={photo}
-            accept="image/*"
-            id="photos"
+
+          <Upload
+            action="https://run.mocky.io/v3/0662a897-e2af-4141-ad0d-a85c21309918"
+            listType="picture-card"
             multiple
-          />
+            fileList={fileList}
+            onChange={handleChange}
+          >
+            {fileList.length >= 8 ? null : uploadButton}
+          </Upload>
         </div>
 
         <button>Отправить</button>
