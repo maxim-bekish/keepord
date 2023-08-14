@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { axios } from "axios";
 let url1 = "https://rms2022.pythonanywhere.com/users/api/token/";
-let url2 = "https://rms2022.pythonanywhere.com/users/sign_in/";
+// let url2 = "https://rms2022.pythonanywhere.com/users/sign_in/"; убрать
 const SignUpSchema = yup.object().shape({
   email: yup.string().email("Введите верный email").required("Обязательно"),
   password: yup.string().min(4, "min 4").required("Обязательно"),
@@ -28,9 +28,7 @@ export default function LoginForm(props) {
   const [err, setErr] = useState("");
   const navigate = useNavigate();
 
-
-  
-  const  onSubmit = (event) => {
+  const onSubmit = (event) => {
     fetch(url1, {
       method: "POST",
       headers: {
@@ -38,20 +36,17 @@ export default function LoginForm(props) {
       },
       body: JSON.stringify(event),
     })
-      .then((response) => {
-        if (response.status === 200) {
-          navigate("/home");
-          setErr("");
+      .then((response) => response.json())
     
-    
-        } else {
-          console.log(response.status);
-          setErr(`не верные логин или пароль `);
-        }
-      })
-     
+      .then((result) => console.log(result))
 
-    reset();
+    // try {
+    //   setErr("");
+    // } catch (error) {
+    //   setErr(``);
+    // }
+
+    // reset();
   };
 
   return (
@@ -78,7 +73,9 @@ export default function LoginForm(props) {
           label="Пароль"
         />
         <p>
-          {err} <br />login: user1@example.com <br />Password:1234
+          {err} <br />
+          login: user1@example.com <br />
+          Password:1234
         </p>
         <Checkbox />
       </div>

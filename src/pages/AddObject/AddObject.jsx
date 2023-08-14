@@ -1,55 +1,64 @@
 import React, { useState } from "react";
-import st from "./AddObject.module.scss";
 import { useForm } from "react-hook-form";
-import {PictureTwoTone   } from "@ant-design/icons";
-import { ConfigProvider, Select,Upload } from "antd";
+import st from "./AddObject.module.scss";
+import { PictureOutlined } from "@ant-design/icons";
+import { ConfigProvider, Select, Upload } from "antd";
+import Button from "./../../components/Button/Button";
 
+const urlCategories = "https://rms2022.pythonanywhere.com/categoris/";
+const optionsCategories = [];
+fetch(urlCategories)
+  .then((response) => response.json())
+  .then((result) =>
+    sessionStorage.setItem("categories", JSON.stringify(result))
+  );
 
-const options = [
-  { value: "jack", label: "Jack" },
-  { value: "lucy", label: "Lucy" },
-  { value: "Yiminghe", label: "yiminghe" },
-  { value: "disabled", label: "Disabled" },
-  { value: "jack1", label: "Jack" },
-  { value: "lucy1", label: "Lucy" },
-  { value: "Yiminghe1", label: "yiminghe" },
-  { value: "disabled1", label: "Disabled" },
-];
+let categories = sessionStorage.getItem("categories");
 
+JSON.parse(categories)
+  .sort((a, b) => a.id - b.id)
+  .forEach((element) => {
+    optionsCategories.push({ value: element.id, label: element.name });
+  });
 
+const handleChangee = (event) => {
+  optionsCategories.length === event ? console.log("yes") : console.log("no");
+  
+};
 
-
-
-
-
-  const  onSubmit = (event) => {
-    console.log(event)
-  }
+// 1
+// 1
+// 1
+// 1
+// 1
+// 1
 export default function AddObject() {
-
-
-
+  const { register, handleSubmit } = useForm({ mode: "all" });
+const onSubmit=(event)=>{console.log(event)}
   const [fileList, setFileList] = useState([]);
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
   const uploadButton = (
     <div>
-      <PictureTwoTone  style={{ fontSize: "32px" }} />
-      <div>Загрузить</div>
+      <PictureOutlined style={{ fontSize: "32px" }} />
     </div>
   );
 
-
   return (
     <>
-      <form className={st.form}>
+      <form onSubmit={handleSubmit(onSubmit)} className={st.form}>
         <div className={st.wrapper}>
           <label className={st.text} htmlFor="name">
             Наименование *
           </label>
-          <input className={st.input} id="name" type="text" />
+          <input
+            {...register("firstName")}
+            className={st.input}
+            id="name"
+            type="text"
+          />
         </div>
 
-        <div className={st.wrapper}>
+        <div className={`${st.wrapper} ${st.svg}`}>
           <label className={st.text} htmlFor="categories">
             Категория
           </label>
@@ -61,9 +70,10 @@ export default function AddObject() {
                   colorBorder: `#3c6255`,
                   colorPrimary: "#3c6255",
                   controlHeight: 66,
+                  controlOutlineWidth: 0,
                   fontSize: 22,
-                  colorIcon: "rgba(30, 167, 30)",
                   fontSizeIcon: 20,
+                  color: "red",
                   borderRadius: 10,
                   lineWidth: 1,
                   colorPrimaryTextActive: "none",
@@ -73,24 +83,16 @@ export default function AddObject() {
             }}
           >
             <Select
-              defaultValue="места"
+              {...register("categories")}
+              defaultValue=""
               style={{ width: 500 }}
-              // onChange={handleChange}
-              options={[
-                { value: "jack", label: "Гараж" },
-                { value: "lucy", label: "Дом" },
-                { value: "Yiminghe", label: "Погреб" },
-                { value: "disabled", label: "Балкон" },
-                { value: "jack1", label: "дача" },
-                { value: "lucy1", label: "вон" },
-                { value: "Yiminghe1", label: "тд" },
-                { value: "disabled1", label: "тп" },
-              ]}
+              onChange={handleChangee}
+              options={optionsCategories}
             />
           </ConfigProvider>
         </div>
 
-        <div className={st.wrapper}>
+        <div className={`${st.wrapper} ${st.svg}`}>
           <label className={st.text} htmlFor="storage">
             Место хранения
           </label>
@@ -98,6 +100,7 @@ export default function AddObject() {
             theme={{
               components: {
                 Select: {
+                  controlOutlineWidth: 0,
                   colorBorder: `#3c6255`,
                   colorPrimary: "#3c6255",
                   controlHeight: 66,
@@ -112,10 +115,11 @@ export default function AddObject() {
             }}
           >
             <Select
+              register="storage"
               defaultValue="lucy"
               style={{ width: 500 }}
               // onChange={handleChange}
-              options={options}
+              // options={options}
             />
           </ConfigProvider>
         </div>
@@ -124,26 +128,41 @@ export default function AddObject() {
           <label className={st.text} htmlFor="description">
             Описание
           </label>
-          <input className={st.input} id="description" type="text" />
+          <textarea
+            register="description"
+            className={`${st.input} ${st.description}`}
+            type="text"
+          />
         </div>
 
-        <div className={st.wrapper}>
+        <div className={`${st.wrapper} ${st.wrapperUpload} `}>
           <label className={st.text} htmlFor="photos">
-            Фотографии *
+            Фотографии * <br />
+            <span className={st.miniTitle}>Не более 5</span>
           </label>
-
+          {/* <input
+            multiple
+            type="file"
+            id="fileLoaderButton"
+            className={st.fileLoaderButton}
+          />
+          <img src={iconAdd} alt="ppp" className={st.fileUploaderPreview} />
+          <div className={st.fileUploaderFileName}></div> */}
           <Upload
+            register="photos"
             action="https://run.mocky.io/v3/0662a897-e2af-4141-ad0d-a85c21309918"
             listType="picture-card"
             multiple
+            className={st.wrapperUpload}
             fileList={fileList}
             onChange={handleChange}
           >
-            {fileList.length >= 8 ? null : uploadButton}
+            {fileList.length >= 5 ? null : uploadButton}
           </Upload>
         </div>
 
-        <button>Отправить</button>
+        {/* <Button label={"Сохранить"} widthButton={500} disabledButton={true} /> */}
+        <button className={st.button}>Отправить</button>
       </form>
     </>
   );

@@ -1,9 +1,14 @@
 import st from "./Button.module.scss";
 
-export default function button({ label }) {
-  console.log(label);
+export default function Button({ label, widthButton, disabledButton }) {
+    //  console.log(disabledButton);
   return (
-    <button  className={st.button}>
+    
+    <button
+  
+      style={{ width: widthButton + "px" }}
+      className={st.button}
+    >
       {label}
     </button>
   );
