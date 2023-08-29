@@ -3,12 +3,23 @@ import { useForm } from "react-hook-form";
 import st from "./AddObject.module.scss";
 import { PictureOutlined } from "@ant-design/icons";
 import { ConfigProvider, Select, Upload } from "antd";
+import arrow from "./../../img/svg/arrows_button.svg";
+import close from "./../../img/svg/close.svg";
 import Button from "./../../components/Button/Button";
-
+let access = localStorage.getItem("access");
+console.log(access);
 const urlCategories = "https://rms2022.pythonanywhere.com/categoris/";
 const optionsCategories = [];
-fetch(urlCategories)
-  .then((response) => response.json())
+fetch(
+  urlCategories
+  //   , {
+  //   method: "GET",
+  //   headers: {
+  //    'access': access,
+  //   },
+  // }
+)
+  .then((www) => www.json())
   .then((result) =>
     sessionStorage.setItem("categories", JSON.stringify(result))
   );
@@ -16,14 +27,13 @@ fetch(urlCategories)
 let categories = sessionStorage.getItem("categories");
 
 JSON.parse(categories)
-  .sort((a, b) => a.id - b.id)
+  // .sort((a, b) => a.id - b.id)
   .forEach((element) => {
     optionsCategories.push({ value: element.id, label: element.name });
   });
 
 const handleChangee = (event) => {
   optionsCategories.length === event ? console.log("yes") : console.log("no");
-  
 };
 
 // 1
@@ -34,7 +44,9 @@ const handleChangee = (event) => {
 // 1
 export default function AddObject() {
   const { register, handleSubmit } = useForm({ mode: "all" });
-const onSubmit=(event)=>{console.log(event)}
+  const onSubmit = (event) => {
+    console.log(event);
+  };
   const [fileList, setFileList] = useState([]);
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
   const uploadButton = (
@@ -45,6 +57,17 @@ const onSubmit=(event)=>{console.log(event)}
 
   return (
     <>
+      <header className={st.header}>
+        <div>
+          <a className={st.down} href="#">
+            <img src={arrow} alt="arrow" />
+          </a>
+          <span>Создать карточку вещи </span>
+        </div>
+        <a className={st.down} href="#">
+          <img src={close} alt="close" />
+        </a>
+      </header>
       <form onSubmit={handleSubmit(onSubmit)} className={st.form}>
         <div className={st.wrapper}>
           <label className={st.text} htmlFor="name">

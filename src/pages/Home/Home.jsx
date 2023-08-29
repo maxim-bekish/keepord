@@ -1,6 +1,11 @@
 import search from "./../../img/svg/search.svg";
 import st from "./Home.module.scss";
 export default function home() {
+// document.addEventListener("DOMContentLoaded", ()=>{
+//   lo
+// })
+
+
   return (
     <header className={st.header}>
       <button className={st.buttonAdd}>

@@ -37,16 +37,16 @@ export default function LoginForm(props) {
       body: JSON.stringify(event),
     })
       .then((response) => response.json())
-    
-      .then((result) => console.log(result))
 
-    // try {
-    //   setErr("");
-    // } catch (error) {
-    //   setErr(``);
-    // }
-
-    // reset();
+      .then((result) => {
+        if (typeof result.access === typeof "dvfsd") {
+          reset();
+          console.log(result);
+          localStorage.setItem("access", result.access);
+          localStorage.setItem("refresh", result.refresh);
+          navigate("/home");
+        }
+      });
   };
 
   return (
@@ -74,7 +74,7 @@ export default function LoginForm(props) {
         />
         <p>
           {err} <br />
-          login: user1@example.com <br />
+          login: admin@admin.ru <br />
           Password:1234
         </p>
         <Checkbox />
