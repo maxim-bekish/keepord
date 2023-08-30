@@ -5,11 +5,14 @@ import Checkbox from "../Checkbox/Checkbox";
 import Input from "../Input/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+
+import saveTokenSessionStorage from "./../../fun/saveTokenSessionStorage";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { axios } from "axios";
-let url1 = "https://rms2022.pythonanywhere.com/users/api/token/";
-// let url2 = "https://rms2022.pythonanywhere.com/users/sign_in/"; убрать
+import axios from "axios";
+
+
+let url = "https://rms2022.pythonanywhere.com/users/sign_in/";
 const SignUpSchema = yup.object().shape({
   email: yup.string().email("Введите верный email").required("Обязательно"),
   password: yup.string().min(4, "min 4").required("Обязательно"),
@@ -29,22 +32,24 @@ export default function LoginForm(props) {
   const navigate = useNavigate();
 
   const onSubmit = (event) => {
-    fetch(url1, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify(event),
-    })
-      .then((response) => response.json())
 
-      .then((result) => {
-        if (typeof result.access === typeof "dvfsd") {
+    axios
+      .post(url, {
+        email: event.email,
+        password: event.password,
+      })
+      .then(function (response) {
+        if (response.status === 200) {
           reset();
-          console.log(result);
-          localStorage.setItem("access", result.access);
-          localStorage.setItem("refresh", result.refresh);
+          console.log(response);
+          saveTokenSessionStorage(response.data);
           navigate("/home");
+        }
+      })
+      .catch(function (error) {
+        if (error.response.status === 401) {
+          reset();
+          setErr("не вырный логин или пароль");
         }
       });
   };
@@ -63,7 +68,7 @@ export default function LoginForm(props) {
           errors={errors}
           fieldName="email"
           label="Логин"
-          err={err}
+  
         />
         <Input
           register={register}
@@ -71,11 +76,12 @@ export default function LoginForm(props) {
           type="password"
           fieldName="password"
           label="Пароль"
+          
         />
         <p>
           {err} <br />
-          login: admin@admin.ru <br />
-          Password:1234
+          login: user1@example.com <br />
+          Password: qwerty1234
         </p>
         <Checkbox />
       </div>

@@ -1,48 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import st from "./AddObject.module.scss";
 import { PictureOutlined } from "@ant-design/icons";
 import { ConfigProvider, Select, Upload } from "antd";
 import arrow from "./../../img/svg/arrows_button.svg";
 import close from "./../../img/svg/close.svg";
-import Button from "./../../components/Button/Button";
-let access = localStorage.getItem("access");
-console.log(access);
-const urlCategories = "https://rms2022.pythonanywhere.com/categoris/";
-const optionsCategories = [];
-fetch(
-  urlCategories
-  //   , {
-  //   method: "GET",
-  //   headers: {
-  //    'access': access,
-  //   },
-  // }
-)
-  .then((www) => www.json())
-  .then((result) =>
-    sessionStorage.setItem("categories", JSON.stringify(result))
-  );
 
-let categories = sessionStorage.getItem("categories");
+import getTokenData from "./../../fun/getTokenData";
 
-JSON.parse(categories)
-  // .sort((a, b) => a.id - b.id)
-  .forEach((element) => {
-    optionsCategories.push({ value: element.id, label: element.name });
+// import { useNavigate } from "react-router-dom";
+const url = "https://rms2022.pythonanywhere.com/categoris/";
+
+export default function AddObject() {
+  let categories = [];
+
+  let cat = JSON.parse(sessionStorage.getItem("category"));
+
+  
+console.log(cat)
+  cat.forEach((element) => {
+    categories.push({ value: element.id, label: element.name });
   });
 
-const handleChangee = (event) => {
-  optionsCategories.length === event ? console.log("yes") : console.log("no");
-};
-
-// 1
-// 1
-// 1
-// 1
-// 1
-// 1
-export default function AddObject() {
+  const handleChangee = (event) => {
+    categories.length === event ? console.log("yes") : console.log("no");
+  };
+  // const navigate = useNavigate();
   const { register, handleSubmit } = useForm({ mode: "all" });
   const onSubmit = (event) => {
     console.log(event);
@@ -110,7 +93,7 @@ export default function AddObject() {
               defaultValue=""
               style={{ width: 500 }}
               onChange={handleChangee}
-              options={optionsCategories}
+              options={categories}
             />
           </ConfigProvider>
         </div>
@@ -139,9 +122,9 @@ export default function AddObject() {
           >
             <Select
               register="storage"
-              defaultValue="lucy"
+              defaultValue=""
               style={{ width: 500 }}
-              // onChange={handleChange}
+              onChange={handleChange}
               // options={options}
             />
           </ConfigProvider>

@@ -1,10 +1,11 @@
 import search from "./../../img/svg/search.svg";
 import st from "./Home.module.scss";
+import getTokenData from './../../fun/getTokenData'
 export default function home() {
 // document.addEventListener("DOMContentLoaded", ()=>{
 //   lo
 // })
-
+getTokenData();
 
   return (
     <header className={st.header}>
