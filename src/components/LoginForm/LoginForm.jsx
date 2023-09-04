@@ -13,6 +13,7 @@ import axios from "axios";
 
 
 let url = "https://rms2022.pythonanywhere.com/users/sign_in/";
+let urlTest = "https://rms2022.pythonanywhere.com/users/sign_in_base/";
 const SignUpSchema = yup.object().shape({
   email: yup.string().email("Введите верный email").required("Обязательно"),
   password: yup.string().min(4, "min 4").required("Обязательно"),
@@ -34,14 +35,13 @@ export default function LoginForm(props) {
   const onSubmit = (event) => {
 
     axios
-      .post(url, {
+      .post(urlTest, {
         email: event.email,
         password: event.password,
       })
       .then(function (response) {
         if (response.status === 200) {
           reset();
-          console.log(response);
           saveTokenSessionStorage(response.data);
           navigate("/home");
         }

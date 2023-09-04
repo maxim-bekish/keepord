@@ -6,25 +6,14 @@ import { ConfigProvider, Select, Upload } from "antd";
 import arrow from "./../../img/svg/arrows_button.svg";
 import close from "./../../img/svg/close.svg";
 
-import getTokenData from "./../../fun/getTokenData";
+import Categories from "../../components/categories/Categories";
 
 // import { useNavigate } from "react-router-dom";
-const url = "https://rms2022.pythonanywhere.com/categoris/";
+// const url = "https://rms2022.pythonanywhere.com/categoris/";
+// if(sessionStorage.getItem('token')===false){
+// document.addEventListener("DOMContentLoaded", getTokenData);
 
 export default function AddObject() {
-  let categories = [];
-
-  let cat = JSON.parse(sessionStorage.getItem("category"));
-
-  
-console.log(cat)
-  cat.forEach((element) => {
-    categories.push({ value: element.id, label: element.name });
-  });
-
-  const handleChangee = (event) => {
-    categories.length === event ? console.log("yes") : console.log("no");
-  };
   // const navigate = useNavigate();
   const { register, handleSubmit } = useForm({ mode: "all" });
   const onSubmit = (event) => {
@@ -64,39 +53,7 @@ console.log(cat)
           />
         </div>
 
-        <div className={`${st.wrapper} ${st.svg}`}>
-          <label className={st.text} htmlFor="categories">
-            Категория
-          </label>
-
-          <ConfigProvider
-            theme={{
-              components: {
-                Select: {
-                  colorBorder: `#3c6255`,
-                  colorPrimary: "#3c6255",
-                  controlHeight: 66,
-                  controlOutlineWidth: 0,
-                  fontSize: 22,
-                  fontSizeIcon: 20,
-                  color: "red",
-                  borderRadius: 10,
-                  lineWidth: 1,
-                  colorPrimaryTextActive: "none",
-                  algorithm: true, // Enable algorithm
-                },
-              },
-            }}
-          >
-            <Select
-              {...register("categories")}
-              defaultValue=""
-              style={{ width: 500 }}
-              onChange={handleChangee}
-              options={categories}
-            />
-          </ConfigProvider>
-        </div>
+        <Categories width="500" defaultValue="" register={register} />
 
         <div className={`${st.wrapper} ${st.svg}`}>
           <label className={st.text} htmlFor="storage">
@@ -121,6 +78,7 @@ console.log(cat)
             }}
           >
             <Select
+              {...register("Storage")}
               register="storage"
               defaultValue=""
               style={{ width: 500 }}
@@ -129,7 +87,6 @@ console.log(cat)
             />
           </ConfigProvider>
         </div>
-
         <div className={st.wrapper}>
           <label className={st.text} htmlFor="description">
             Описание
@@ -140,7 +97,6 @@ console.log(cat)
             type="text"
           />
         </div>
-
         <div className={`${st.wrapper} ${st.wrapperUpload} `}>
           <label className={st.text} htmlFor="photos">
             Фотографии * <br />
@@ -166,7 +122,6 @@ console.log(cat)
             {fileList.length >= 5 ? null : uploadButton}
           </Upload>
         </div>
-
         {/* <Button label={"Сохранить"} widthButton={500} disabledButton={true} /> */}
         <button className={st.button}>Отправить</button>
       </form>

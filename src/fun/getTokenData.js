@@ -1,17 +1,22 @@
+
 import axios from "axios";
 import refreshToken from "./refreshToken";
 
-function getTokenData() {
+function getTokenData(url, title) {
+  console.log("getTokenData");
   axios
-    .get("https://rms2022.pythonanywhere.com/categoris/", {
+    .get(url, {
       headers: {
         Authorization:
           "Bearer " + JSON.parse(sessionStorage.getItem("token")).access,
       },
     })
-    .then(function (response) {
-      sessionStorage.setItem("category", JSON.stringify(response.data));
+    .then((response) => {
+
+
+      sessionStorage.setItem(title, JSON.stringify(response.data))
     })
+    
     .catch(function (error) {
       if (error.response.status === 401) {
         refreshToken(JSON.parse(sessionStorage.getItem("token")).refresh);

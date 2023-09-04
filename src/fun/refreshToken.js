@@ -3,10 +3,19 @@ import saveTokenSessionStorage from "./saveTokenSessionStorage";
 
 // import saveToken from "./saveTokenSessionStorage";
 function refreshToken(token) {
-  axios
-    .post("https://rms2022.pythonanywhere.com/users/token/refresh/", {
-      refresh: token,
-    })
+  console.log("refreshToken--- "+token);
+
+  axios({
+    method: "POST",
+    url: "https://rms2022.pythonanywhere.com/users/token/refresh/",
+
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      'refresh': token
+    }
+    // body: token,
+  })
     .then((res) => {
       if (res.status === 200) {
         console.log(res.data.access);
@@ -15,9 +24,20 @@ function refreshToken(token) {
       }
     })
     .catch(function (error) {
-      console.log(error);
-      console.log("refreshToken");
+      // console.log(error);
+  
     });
 }
 
 export default refreshToken;
+
+// axios({
+//   method: "POST",
+//   url: "https://rms2022.pythonanywhere.com/users/token/refresh/",
+
+//   headers: {
+//     Accept: "application/json",
+//     "Content-Type": "application/json",
+//   },
+//   body: token,
+// });
