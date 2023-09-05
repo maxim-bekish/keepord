@@ -1,0 +1,1 @@
+export const categorisURL = "https://rms2022.pythonanywhere.com/categoris/";

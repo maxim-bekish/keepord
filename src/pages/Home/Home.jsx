@@ -4,7 +4,9 @@ import search from "./../../img/svg/search.svg";
 import st from "./Home.module.scss";
 
 export default function home() {
-  getTokenData("https://rms2022.pythonanywhere.com/categoris/", "category");
+  const title = "category";
+  const urlCategories = "https://rms2022.pythonanywhere.com/categoris/";
+  getTokenData(urlCategories, title);
 
   return (
     <>
@@ -32,8 +34,8 @@ export default function home() {
           <span>Вещи в базе</span>
           <span>Списки</span>
         </div>
-        {/* <Categories width={300} defaultValue={"Категория"} />
-        <Categories width={300} defaultValue={"Категория"} /> */}
+        {/* <Categories width={300} defaultValue={"Категория"} title={title} /> */}
+        {/* <Categories width={300} defaultValue={"Места хранения"} title={title} /> */}
 
         <button>Применить</button>
       </main>

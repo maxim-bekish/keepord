@@ -5,16 +5,31 @@ import { PictureOutlined } from "@ant-design/icons";
 import { ConfigProvider, Select, Upload } from "antd";
 import arrow from "./../../img/svg/arrows_button.svg";
 import close from "./../../img/svg/close.svg";
-
+import getTokenData from "./../../fun/getTokenData";
+import { add } from "../../store/slice";
 import Categories from "../../components/categories/Categories";
-
+import { useDispatch } from "react-redux";
+import { categorisURL } from "../../constants/api";
 // import { useNavigate } from "react-router-dom";
-// const url = "https://rms2022.pythonanywhere.com/categoris/";
-// if(sessionStorage.getItem('token')===false){
-// document.addEventListener("DOMContentLoaded", getTokenData);
 
 export default function AddObject() {
-  // const navigate = useNavigate();
+  const [categorie, setCategorie] = useState(null);
+
+  const getCategori = async (url) => {
+    const res = await getTokenData(url);
+    const categoriAll = res.map(({ id, name }) => {
+      return {
+        value: id,
+        label: name,
+      };
+    });
+    setCategorie(categoriAll);
+  };
+  // { value: element.id, label: element.name }
+  useEffect(() => {
+    getCategori(categorisURL);
+  }, []);
+
   const { register, handleSubmit } = useForm({ mode: "all" });
   const onSubmit = (event) => {
     console.log(event);
@@ -52,9 +67,12 @@ export default function AddObject() {
             type="text"
           />
         </div>
-
-        <Categories width="500" defaultValue="" register={register} />
-
+        <div className={`${st.wrapper} ${st.svg}`}>
+          <label className={st.text} htmlFor="categories">
+            Категория
+          </label>
+          <Categories width="500" defaultValue="" categorie={categorie} />
+        </div>
         <div className={`${st.wrapper} ${st.svg}`}>
           <label className={st.text} htmlFor="storage">
             Место хранения
