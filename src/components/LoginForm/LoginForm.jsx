@@ -42,7 +42,8 @@ export default function LoginForm(props) {
       .then(function (response) {
         if (response.status === 200) {
           reset();
-          saveTokenSessionStorage(response.data);
+        
+          saveTokenSessionStorage(response.data.access, response.data.refresh);
           navigate("/home");
         }
       })

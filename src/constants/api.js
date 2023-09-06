@@ -1,1 +1,1 @@
-export const categorisURL = "https://rms2022.pythonanywhere.com/categoris/";
+export  const categoriesURL = "https://rms2022.pythonanywhere.com/categoris/";

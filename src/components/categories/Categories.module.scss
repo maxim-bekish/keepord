@@ -1,6 +1,6 @@
 @import "../../ColorStyle.scss";
 .text {
-  font-family: "Inter";
+
   min-width: 160px;
   color: $colorBlack;
   font-size: 1.125rem;
@@ -27,6 +27,7 @@
   div {
     span {
       color: $colorDarkGreen;
+
       font-size: 22px;
     }
   }

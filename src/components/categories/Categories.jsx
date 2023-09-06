@@ -1,24 +1,32 @@
 import { ConfigProvider, Select } from "antd";
 import st from "./Categories.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import getTokenData from "../../fun/getTokenData";
+import { categoriesURL } from "../../constants/api";
 
-export default function Categories({ width, defaultValue, categorie }) {
-  const [categories11111, setСategories] = useState("");
-  let categoriese = [];
-  const handleChange = (event) => {
-    setСategories(event);
+export default function Categories({ width, defaultValue }) {
+  // useSelector(
+  //   // categoriesReducer=index.js 5
+  //   // categories= slice 6
+  //   (state) => state.categoriesReducer.categories
+  // );
+
+  const [categories, setCategories] = useState(null);
+
+  const getCategories = async (url) => {
+    const res = await getTokenData(url);
+    const categoriesAll = res.map(({ id, name }) => {
+      return {
+        value: id,
+        label: name,
+      };
+    });
+    setCategories(categoriesAll);
   };
-  const categirTest = useSelector(
-    // categoriesReducer=index.js 5
-    // categories= slice 6
-    (state) => state.categoriesReducer.categories
-  );
-
-  categirTest.forEach((element) => {
-    categoriese.push({ value: element.id, label: element.name });
-  });
-
+  useEffect(() => {
+    getCategories(categoriesURL);
+  }, []);
 
   return (
     <ConfigProvider
@@ -43,9 +51,8 @@ export default function Categories({ width, defaultValue, categorie }) {
       <Select
         defaultValue={defaultValue}
         style={{ width: +width }}
-        onChange={handleChange}
-        options={categorie}
-        className={st.sected}
+        options={categories}
+        className={`${st.select}  ${st.svg}`}
       />
     </ConfigProvider>
   );
