@@ -8,22 +8,18 @@ import Home from "./pages/Home/Home";
 import AddObject from "./pages/AddObject/AddObject";
 
 function App() {
-
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<First_page />} />
-          <Route path="/login" element={<LoginPages />} />
-          <Route path="/registration" element={<Registration_page />} />
-          <Route path="/send" element={<MethodsPage />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/home/add_object" element={<AddObject />} />
-        </Routes>
-      </Router>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<First_page />} />
+        <Route path="/login" element={<LoginPages />} />
+        <Route path="/registration" element={<Registration_page />} />
+        <Route path="/send" element={<MethodsPage />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/home/add_object" element={<AddObject />} />
+      </Routes>
+    </Router>
   );
 }
 
 export default App;
-

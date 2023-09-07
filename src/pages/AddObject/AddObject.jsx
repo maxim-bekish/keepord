@@ -28,7 +28,7 @@ export default function AddObject() {
     <>
       <header className={st.header}>
         <div>
-          <a className={st.down} href="#">
+          <a className={st.down} href="/home">
             <img src={arrow} alt="arrow" />
           </a>
           <span>Создать карточку вещи </span>

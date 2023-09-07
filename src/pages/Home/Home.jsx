@@ -4,10 +4,13 @@ import search from "./../../img/svg/search.svg";
 import st from "./Home.module.scss";
 import { categoriesURL } from "../../constants/api";
 import ListOfThings from "../../components/ListOfThings/ListOfThings";
-import BookmarksTitle from "../../components/bookmarksTitlea/BookmarksTitle";
+import BookmarksTitle from "../../components/bookmarksTitle/BookmarksTitle";
+import { useSelector } from "react-redux";
 
-export default function home() {
+export default function Home() {
   getTokenData(categoriesURL);
+  const select = useSelector((state) => state.categoriesReducer.categories);
+  console.log(select === "base");
 
   return (
     <>
@@ -17,25 +20,27 @@ export default function home() {
             + Добавить вещь
           </a>
         </button>
-        <h2 className={st.h2Name}>Name User</h2>
+        <h2 className={st.h2Name}>Name User8</h2>
         <div className={st.search}>
           <input placeholder="Поиск" className={st.inputSearch} type="text" />
           <button className={st.buttonSearch}>
             <img src={search} />
           </button>
           <button className={`${st.buttonExit} ${st.button}`}>
-            <a className={st.textA} href="/login">
-              Выход
-            </a>
+            <a className={st.textA}>Выход</a>
           </button>
         </div>
       </header>
       <main className={st.container}>
         <BookmarksTitle />
+        {}
         <div className={st.filter}>
           <Categories width={300} defaultValue={"Категория"} />
           <Categories width={300} defaultValue={"Места хранения"} />
-          <button className={`${st.button} ${st.buttonSubmit}`}>
+          <button
+            onClick={() => console.log(select)}
+            className={`${st.button} ${st.buttonSubmit}`}
+          >
             Применить
           </button>
         </div>

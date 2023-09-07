@@ -16,6 +16,7 @@ async function getTokenData(url) {
     return await response.data;
   } catch (error) {
     console.log(error);
+     refreshToken(JSON.parse(sessionStorage.getItem("refresh")));
     error.response.status === 401 ? (
       window.location.replace("/login")
   

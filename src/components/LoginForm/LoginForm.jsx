@@ -5,14 +5,11 @@ import Checkbox from "../Checkbox/Checkbox";
 import Input from "../Input/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
 import saveTokenSessionStorage from "./../../fun/saveTokenSessionStorage";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 
-
-let url = "https://rms2022.pythonanywhere.com/users/sign_in/";
 let urlTest = "https://rms2022.pythonanywhere.com/users/sign_in_base/";
 const SignUpSchema = yup.object().shape({
   email: yup.string().email("Введите верный email").required("Обязательно"),
@@ -20,6 +17,7 @@ const SignUpSchema = yup.object().shape({
 });
 
 export default function LoginForm(props) {
+  const navigation = useNavigate();
   const {
     register,
     reset,
@@ -30,10 +28,8 @@ export default function LoginForm(props) {
     mode: "all",
   });
   const [err, setErr] = useState("");
-  const navigate = useNavigate();
 
   const onSubmit = (event) => {
-
     axios
       .post(urlTest, {
         email: event.email,
@@ -42,9 +38,8 @@ export default function LoginForm(props) {
       .then(function (response) {
         if (response.status === 200) {
           reset();
-        
           saveTokenSessionStorage(response.data.access, response.data.refresh);
-          navigate("/home");
+          navigation("/home", { replace: true });
         }
       })
       .catch(function (error) {
@@ -69,7 +64,6 @@ export default function LoginForm(props) {
           errors={errors}
           fieldName="email"
           label="Логин"
-  
         />
         <Input
           register={register}
@@ -77,7 +71,6 @@ export default function LoginForm(props) {
           type="password"
           fieldName="password"
           label="Пароль"
-          
         />
         <p>
           {err} <br />
