@@ -35,11 +35,11 @@ let state = [
   },
 ];
 
-  const get = async (url) => {
-    const res = await getTokenData(url);
-    console.log(res);
-  };
-  get("https://rms2022.pythonanywhere.com/storage/");
+
+
+
+
+
 export default function ListOfThings() {
   return (
     <>

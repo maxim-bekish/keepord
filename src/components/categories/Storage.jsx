@@ -1,38 +1,15 @@
 import { ConfigProvider, Select } from "antd";
 import st from "./Categories.module.scss";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import getTokenData from "../../fun/getTokenData";
-import { categoriesURL } from "../../constants/api";
 
-export default function Categories({ width, defaultValue }) {
-  // useSelector(
-  //   // categoriesReducer=index.js 5
-  //   // categories= slice 6
-  //   (state) => state.categoriesReducer.categories
-  // );
-
-  const [categories, setCategories] = useState(null);
-
-  const getCategories = async (url) => {
-    const res = await getTokenData(url);
-    const categoriesAll = res.map(({ id, name }) => {
-      return {
-        value: id,
-        label: name,
-      };
-    });
-    setCategories(categoriesAll);
-  };
-  useEffect(() => {
-    getCategories(categoriesURL);
-  }, []);
-
+export default function Storage({ width, defaultValue }) {
 
 
   const [storage, setStorage] = useState(null);
   const getStorage = async (url) => {
     const res = await getTokenData(url);
+    
     const storageAll = res.map(({ id, name }) => {
       return {
         value: id,
@@ -40,9 +17,10 @@ export default function Categories({ width, defaultValue }) {
       };
     });
     setStorage(storageAll);
+    console.log(storage);
   };
   useEffect(() => {
-    getStorage("https://rms2022.pythonanywhere.com/storage/");
+    getStorage("https://rms2022.pythonanywhere.com/storage/?item=1");
   }, []);
 
   return (
@@ -68,7 +46,7 @@ export default function Categories({ width, defaultValue }) {
       <Select
         defaultValue={defaultValue}
         style={{ width: +width }}
-        options={categories}
+        options={storage}
         className={`${st.select}  ${st.svg}`}
       />
     </ConfigProvider>

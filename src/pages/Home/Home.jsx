@@ -1,4 +1,6 @@
 import Categories from "../../components/categories/Categories";
+import Storage from "../../components/categories/Storage";
+
 import getTokenData from "../../fun/getTokenData";
 import search from "./../../img/svg/search.svg";
 import st from "./Home.module.scss";
@@ -36,7 +38,8 @@ export default function Home() {
         {}
         <div className={st.filter}>
           <Categories width={300} defaultValue={"Категория"} />
-          <Categories width={300} defaultValue={"Места хранения"} />
+          <Storage width={300} defaultValue={"Места хранения"} />
+
           <button
             onClick={() => console.log(select)}
             className={`${st.button} ${st.buttonSubmit}`}
