@@ -1,28 +1,30 @@
 import { ConfigProvider, Select } from "antd";
-import st from "./Categories.module.scss";
+import st from "./MainSelect.module.scss";
 import { useEffect, useState } from "react";
 import getTokenData from "../../fun/getTokenData";
+import { useDispatch } from "react-redux";
 
-export default function Storage({ width, defaultValue }) {
 
+export default function MainSelect({ width, defaultValue, url ,x }) {
+  const [mainSelect, setMainSelect] = useState(null);
+  // const [eventSelect, setEventSelect] = useState(null);
+  const dispatch = useDispatch();
 
-  const [storage, setStorage] = useState(null);
-  const getStorage = async (url) => {
+  const getCategories = async (url) => {
     const res = await getTokenData(url);
-    
-    const storageAll = res.map(({ id, name }) => {
+
+    const setMainSelectAll = res.map(({ id, name }) => {
       return {
-        value: id,
+        value: id + Math.floor(Math.random() * 10000),
         label: name,
       };
     });
-    setStorage(storageAll);
-    console.log(storage);
+    console.log(setMainSelectAll);
+    setMainSelect(setMainSelectAll);
   };
   useEffect(() => {
-    getStorage("https://rms2022.pythonanywhere.com/storage/?item=1");
+    getCategories(url);
   }, []);
-
   return (
     <ConfigProvider
       theme={{
@@ -44,11 +46,18 @@ export default function Storage({ width, defaultValue }) {
       }}
     >
       <Select
+        onChange={(id) => { console.log(id); dispatch(x({id}))}}
         defaultValue={defaultValue}
         style={{ width: +width }}
-        options={storage}
+        options={mainSelect}
         className={`${st.select}  ${st.svg}`}
       />
     </ConfigProvider>
   );
 }
+
+// useSelector(
+//   // categoriesReducer=index.js 5
+//   // categories= slice 6
+//   (state) => state.categoriesReducer.categories
+// );

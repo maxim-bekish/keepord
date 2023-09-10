@@ -1,16 +1,13 @@
-import Categories from "../../components/categories/Categories";
-import Storage from "../../components/categories/Storage";
-
-import getTokenData from "../../fun/getTokenData";
+import MainSelect from "./../../components/mainSelect/MainSelect";
 import search from "./../../img/svg/search.svg";
 import st from "./Home.module.scss";
-import { categoriesURL } from "../../constants/api";
 import ListOfThings from "../../components/ListOfThings/ListOfThings";
 import BookmarksTitle from "../../components/bookmarksTitle/BookmarksTitle";
 import { useSelector } from "react-redux";
+import { categoriesURL,storageURL } from "./../../constants/api";
 
 export default function Home() {
-  getTokenData(categoriesURL);
+
   const select = useSelector((state) => state.categoriesReducer.categories);
   console.log(select === "base");
 
@@ -37,8 +34,16 @@ export default function Home() {
         <BookmarksTitle />
         {}
         <div className={st.filter}>
-          <Categories width={300} defaultValue={"Категория"} />
-          <Storage width={300} defaultValue={"Места хранения"} />
+          <MainSelect
+            width={300}
+            defaultValue={"Категория"}
+            url={categoriesURL}
+          />
+          <MainSelect
+            width={300}
+            defaultValue={"Места хранения"}
+            url={storageURL}
+          />
 
           <button
             onClick={() => console.log(select)}

@@ -4,14 +4,24 @@ const categoriesSlice = createSlice({
   name: "categories",
   initialState: {
     categories: [],
+    categoriesState: [],
+    storageState: [],
   },
+
   reducers: {
-    add(state, action) {
-      console.log(action);
-      state.categories.splice(0, 1, action.payload);
+ 
+    categoriesAdd(state, action) {
+      state.categoriesState.splice(0,1,{
+        categoriesId: action.payload.id,
+      });
+    },
+    storageAdd(state, action) {
+      state.storageState.splice(0,1,{
+        storageId: action.payload.id,
+      });
     },
   },
 });
 
-export const { add, addTwo } = categoriesSlice.actions;
+export const { add, categoriesAdd, storageAdd } = categoriesSlice.actions;
 export default categoriesSlice.reducer;
