@@ -36,7 +36,6 @@ export default function LoginForm(props) {
         password: event.password,
       })
       .then(function (response) {
-              console.log(response);
         if (response.status === 200) {
           reset();
           saveTokenSessionStorage(response.data.access, response.data.refresh);
@@ -44,7 +43,7 @@ export default function LoginForm(props) {
         }
       })
       .catch(function (error) {
-        console.log(error.response)
+        console.log(error.response);
         if (error.response.status === 401) {
           reset();
           setErr("не вырный логин или пароль");

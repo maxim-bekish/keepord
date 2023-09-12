@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 import getTokenData from "../../fun/getTokenData";
 import { useDispatch } from "react-redux";
 
-
-export default function MainSelect({ width, defaultValue, url ,x }) {
+export default function MainSelect({ width, defaultValue, url, x }) {
   const [mainSelect, setMainSelect] = useState(null);
-  // const [eventSelect, setEventSelect] = useState(null);
+
   const dispatch = useDispatch();
 
   const getCategories = async (url) => {
@@ -15,11 +14,11 @@ export default function MainSelect({ width, defaultValue, url ,x }) {
 
     const setMainSelectAll = res.map(({ id, name }) => {
       return {
-        value: id + Math.floor(Math.random() * 10000),
+        value: id + Math.floor(Math.random() * 1000),
         label: name,
       };
     });
-    console.log(setMainSelectAll);
+
     setMainSelect(setMainSelectAll);
   };
   useEffect(() => {
@@ -46,7 +45,9 @@ export default function MainSelect({ width, defaultValue, url ,x }) {
       }}
     >
       <Select
-        onChange={(id) => { console.log(id); dispatch(x({id}))}}
+        onChange={(id) => {
+          dispatch(x({ id }));
+        }}
         defaultValue={defaultValue}
         style={{ width: +width }}
         options={mainSelect}
@@ -55,9 +56,3 @@ export default function MainSelect({ width, defaultValue, url ,x }) {
     </ConfigProvider>
   );
 }
-
-// useSelector(
-//   // categoriesReducer=index.js 5
-//   // categories= slice 6
-//   (state) => state.categoriesReducer.categories
-// );

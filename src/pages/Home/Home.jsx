@@ -4,12 +4,20 @@ import st from "./Home.module.scss";
 import ListOfThings from "../../components/ListOfThings/ListOfThings";
 import BookmarksTitle from "../../components/bookmarksTitle/BookmarksTitle";
 import { useSelector } from "react-redux";
-import { categoriesURL,storageURL } from "./../../constants/api";
+import { categoriesURL, storageURL, itemsURL } from "./../../constants/api";
+import { categoriesAdd, storageAdd } from "./../../store/slice";
 
 export default function Home() {
+  const categoriesState = useSelector((s) => s.homePageReducer.categoriesState);
+  const storageState = useSelector((s) => s.homePageReducer.storageState);
 
-  const select = useSelector((state) => state.categoriesReducer.categories);
-  console.log(select === "base");
+  // result id категории и мест хранинеия на главной странце
+  let result = {
+    categories: categoriesState.categoriesId,
+    storage: storageState.storageId,
+  };
+
+
 
   return (
     <>
@@ -23,10 +31,11 @@ export default function Home() {
         <div className={st.search}>
           <input placeholder="Поиск" className={st.inputSearch} type="text" />
           <button className={st.buttonSearch}>
-            <img src={search} />
+            <img src={search} alt="searchSVG" />
           </button>
           <button className={`${st.buttonExit} ${st.button}`}>
-            <a className={st.textA}>Выход</a>
+            {/* <a className={st.textA}></a> */}
+            Выход
           </button>
         </div>
       </header>
@@ -38,21 +47,23 @@ export default function Home() {
             width={300}
             defaultValue={"Категория"}
             url={categoriesURL}
+            x={categoriesAdd}
           />
           <MainSelect
             width={300}
             defaultValue={"Места хранения"}
             url={storageURL}
+            x={storageAdd}
           />
 
           <button
-            onClick={() => console.log(select)}
+            onClick={() => console.log(result)}
             className={`${st.button} ${st.buttonSubmit}`}
           >
             Применить
           </button>
         </div>
-        <ListOfThings />
+        <ListOfThings url={itemsURL} />
       </main>
     </>
   );

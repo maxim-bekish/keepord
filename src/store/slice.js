@@ -4,21 +4,16 @@ const categoriesSlice = createSlice({
   name: "categories",
   initialState: {
     categories: [],
-    categoriesState: [],
-    storageState: [],
+    categoriesState: {},
+    storageState: {},
   },
 
   reducers: {
- 
     categoriesAdd(state, action) {
-      state.categoriesState.splice(0,1,{
-        categoriesId: action.payload.id,
-      });
+      state.categoriesState.categoriesId = action.payload.id;
     },
     storageAdd(state, action) {
-      state.storageState.splice(0,1,{
-        storageId: action.payload.id,
-      });
+      state.storageState.storageId = action.payload.id;
     },
   },
 });

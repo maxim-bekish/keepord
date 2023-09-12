@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-// import { useForm } from "react-hook-form";
+
 import st from "./AddObject.module.scss";
+import Button from "./../../components/Button/Button";
 import { PictureOutlined } from "@ant-design/icons";
 import { Form, Upload, Input } from "antd";
 import arrow from "./../../img/svg/arrows_button.svg";
@@ -8,17 +9,9 @@ import close from "./../../img/svg/close.svg";
 import { categoriesURL, storageAllURL } from "./../../constants/api";
 import MainSelect from "../../components/mainSelect/MainSelect";
 import { useSelector } from "react-redux";
-import {  categoriesAdd, storageAdd} from "./../../store/slice";
-
-
-// import { useNavigate } from "react-router-dom";
+import { categoriesAdd, storageAdd } from "./../../store/slice";
 
 export default function AddObject() {
-  // const { register, handleSubmit } = useForm({ mode: "all" });
-  // const onSubmit = (event) => {
-  //   console.log(event);
-  // };
-
   const [fileList, setFileList] = useState([]);
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
   const uploadButton = (
@@ -27,28 +20,19 @@ export default function AddObject() {
     </div>
   );
 
-  const categoriesState = useSelector(
-  
-    (state) => state.categoriesReducer.categoriesState
-  );
-    const storageState = useSelector(
-
-      (state) => state.categoriesReducer.storageState
-    );
+  const categoriesState = useSelector((s) => s.homePageReducer.categoriesState);
+  const storageState = useSelector((s) => s.homePageReducer.storageState);
 
   const [form] = Form.useForm();
   const name = Form.useWatch("myName", form);
-  // const categories = Form.useWatch("categories", form);
-  // const arr=[]
-  // arr.push(name, categories);
-  // console.log(arr);
 
-  let e = [
-    { nameId: name },
-    { categories: categoriesState[0].categoriesId },
-    { storage: storageState[0].storageId },
-  ];
-
+  let e = {
+    nameId: name,
+    categories: categoriesState.categoriesId,
+    storage: storageState.storageId,
+    description: "none",
+  };
+  console.log(categoriesState);
   return (
     <>
       <header className={st.header}>
@@ -129,14 +113,14 @@ export default function AddObject() {
             {fileList.length >= 5 ? null : uploadButton}
           </Upload>
         </div>
-        {/* <Button label={"Сохранить"} widthButton={500} disabledButton={true} /> */}
+        <Button
+          label={"Отправить"}
+          widthButton={500}
+          disabledButton={true}
+          e={e}
+        />
       </Form>
-      <button
-        onClick={()=> {   console.log(); console.log(e)}}
-        className={st.button}
-      >
-        Отпраddddвить
-      </button>
+      {/* <button className={st.button}>Отпраddddвить</button> */}
     </>
   );
 }

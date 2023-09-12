@@ -1,7 +1,7 @@
 import { configureStore} from "@reduxjs/toolkit";
-import categoriesReducer from './slice'
+import homePageReducer from "./slice";
 export default configureStore({
   reducer: {
-    categoriesReducer: categoriesReducer,
+    homePageReducer: homePageReducer,
   },
 });
