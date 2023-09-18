@@ -1,25 +1,26 @@
 import axios from "axios";
-import refreshToken from "./refreshToken";
-import Error  from "./../components/Error/Error";
+
+// import refreshToken from "./refreshToken";
+import Error from "./../components/Error/Error";
+
+// withcredentials: true;
 
 async function getTokenData(url) {
   try {
     const response = await axios.get(url, {
-      headers: {
-        Authorization: "Bearer " + JSON.parse(sessionStorage.getItem("access")),
-      },
+      withCredentials:true,
     });
 
-    setInterval(() => {
-      refreshToken(JSON.parse(sessionStorage.getItem("refresh")));
-    }, 14.9 * 1000);
+    console.log(response);
+    console.log("ололололо");
+
     return await response.data;
   } catch (error) {
+  
     console.log(error);
-     refreshToken(JSON.parse(sessionStorage.getItem("refresh")));
+    // refreshToken();
     error.response.status === 401 ? (
       window.location.replace("/login")
-  
     ) : (
       <Error errors={error.response.status} />
     );

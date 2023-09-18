@@ -28,7 +28,7 @@ export default function Registration_form(props) {
   });
   const navigate = useNavigate();
   const onSubmit = (data) => {
-    console.log(data);
+
     navigate("/home");
     reset();
   };

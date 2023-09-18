@@ -1,13 +1,12 @@
 import axios from "axios";
-import saveTokenSessionStorage from "./saveTokenSessionStorage";
 
-function refreshToken(token) {
+import {refreshURL} from "./../constants/api";
+function refreshToken() {
   axios
-    .post("https://rms2022.pythonanywhere.com/users/token/refresh/", {
-      refresh: token,
-    })
+    .post(refreshURL, {})
     .then((res) => {
-      saveTokenSessionStorage(res.data.access, token);
+      console.log("refreshToken");
+      console.log(res);
     })
     .catch(function (error) {
       console.error("ошибка в refreshToken: " + error);

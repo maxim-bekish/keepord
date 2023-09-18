@@ -2,7 +2,7 @@ import { Col, Row } from "antd";
 import st from "./ListOfThings.module.scss";
 import refreshToken from "../../fun/refreshToken";
 import axios from "axios";
-import getTokenData from "../../fun/getTokenData";
+// import getTokenData from "../../fun/getTokenData";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -38,13 +38,13 @@ let state = [
 ];
 
 export default function ListOfThings(url) {
-  const getCategories = async (url) => {
-    const res = await getTokenData(url);
-    console.log(res);
-  };
-  useEffect(() => {
-    getCategories(url.url);
-  }, []);
+  // const getCategories = async (url) => {
+  //   const res = await getTokenData(url);
+
+  // };
+  // useEffect(() => {
+  //   getCategories(url.url);
+  // }, []);
 
   return (
     <>

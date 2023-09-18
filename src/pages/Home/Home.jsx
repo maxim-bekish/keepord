@@ -49,12 +49,12 @@ export default function Home() {
             url={categoriesURL}
             x={categoriesAdd}
           />
-          <MainSelect
+          {/* <MainSelect
             width={300}
             defaultValue={"Места хранения"}
             url={storageURL}
             x={storageAdd}
-          />
+          /> */}
 
           <button
             onClick={() => console.log(result)}

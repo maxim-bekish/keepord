@@ -5,12 +5,12 @@ import Checkbox from "../Checkbox/Checkbox";
 import Input from "../Input/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import saveTokenSessionStorage from "./../../fun/saveTokenSessionStorage";
+
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import {loginInURL} from "./../../constants/api";
 
-let urlTest = "https://rms2022.pythonanywhere.com/users/sign_in_base/";
 const SignUpSchema = yup.object().shape({
   email: yup.string().email("Введите верный email").required("Обязательно"),
   password: yup.string().min(4, "min 4").required("Обязательно"),
@@ -31,19 +31,19 @@ export default function LoginForm(props) {
 
   const onSubmit = (event) => {
     axios
-      .post(urlTest, {
+      .post(loginInURL, {
         email: event.email,
         password: event.password,
       })
       .then(function (response) {
         if (response.status === 200) {
           reset();
-          saveTokenSessionStorage(response.data.access, response.data.refresh);
+          console.log(response)
           navigation("/home", { replace: true });
         }
       })
       .catch(function (error) {
-        console.log(error.response);
+   
         if (error.response.status === 401) {
           reset();
           setErr("не вырный логин или пароль");

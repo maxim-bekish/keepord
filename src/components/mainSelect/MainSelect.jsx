@@ -9,7 +9,8 @@ export default function MainSelect({ width, defaultValue, url, x }) {
 
   const dispatch = useDispatch();
 
-  const getCategories = async (url) => {
+  const selectApi = async (url) => {
+
     const res = await getTokenData(url);
 
     const setMainSelectAll = res.map(({ id, name }) => {
@@ -21,9 +22,9 @@ export default function MainSelect({ width, defaultValue, url, x }) {
 
     setMainSelect(setMainSelectAll);
   };
-  useEffect(() => {
-    getCategories(url);
-  }, []);
+  // useEffect(() => {
+    selectApi(url);
+  // }, []);
   return (
     <ConfigProvider
       theme={{
