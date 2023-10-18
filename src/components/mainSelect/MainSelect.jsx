@@ -22,9 +22,9 @@ export default function MainSelect({ width, defaultValue, url, x }) {
 
     setMainSelect(setMainSelectAll);
   };
-  // useEffect(() => {
+  useEffect(() => {
     selectApi(url);
-  // }, []);
+  }, []);
   return (
     <ConfigProvider
       theme={{

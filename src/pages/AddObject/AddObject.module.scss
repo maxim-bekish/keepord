@@ -17,7 +17,7 @@ body {
   }
   span {
     margin-left: 30px;
-    
+
     font-size: 1.75rem;
     color: $colorBlack;
     line-height: 150%; /* 42px */
@@ -34,17 +34,23 @@ body {
   padding: 0;
   margin: 0;
 }
-.text {
-  
-  min-width: 160px;
-  color: $colorBlack;
-  font-size: 1.125rem;
-  font-weight: 600;
-  line-height: 150%; /* 27px */
-}
+
 .wrapper {
   display: flex;
+  flex-wrap: wrap;
   color: rgba(30, 167, 30, 0.964);
+  margin-bottom: 0;
+
+  .input{
+    max-width: 100%;
+  }
+  label {
+    min-width: 160px;
+    color: $colorBlack;
+    font-size: 1.125rem !important;
+    font-weight: 600;
+    line-height: 150%; /* 27px */
+  }
   .description {
     height: 200px;
     resize: none;
@@ -73,7 +79,6 @@ body {
   font-weight: 400;
 }
 .input {
-  
   box-sizing: border-box;
   height: 66px;
   width: 500px;
@@ -88,36 +93,20 @@ body {
   &:focus-visible {
     outline: 0;
   }
+  &:hover{
+    border-color: green;
+  }
 }
 
 .selectttt {
   width: 500px;
-  
   box-sizing: border-box;
   color: $colorBlack;
   font-size: 1.375rem;
-  // &:nth-child(3){
-  //  border-radius: 6px;
-  //     border: 1px solid red !important;
 
-  // }
 }
-// .select {
-//   display: flex;
-//   align-items: center;
-//   position: relative;
-//   &::after {
-//     position: absolute;
-//     right: 0px;
-//     content: "";
-//     width: 40px;
-//     height: 40px;
-//     background: url(./../../img/svg/arrows_button.svg) no-repeat;
-//     transform: rotateZ(270deg);
-//   }
-// }
-form {
-  margin-left: 90px;
+.form {
+padding: 0 20px;
   display: flex;
   flex-direction: column;
   gap: 50px;

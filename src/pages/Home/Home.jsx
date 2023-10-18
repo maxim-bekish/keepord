@@ -21,13 +21,13 @@ export default function Home() {
 
   return (
     <>
-      <header className={st.header}>
+      <header className={`${st.header}`}>
         <button className={`${st.buttonAdd} ${st.button}`}>
           <a className={st.textA} href="/home/add_object">
             + Добавить вещь
           </a>
         </button>
-        <h2 className={st.h2Name}>Name User8</h2>
+        <h2 className={st.h2Name}>Name User</h2>
         <div className={st.search}>
           <input placeholder="Поиск" className={st.inputSearch} type="text" />
           <button className={st.buttonSearch}>
@@ -41,20 +41,19 @@ export default function Home() {
       </header>
       <main className={st.container}>
         <BookmarksTitle />
-        {}
         <div className={st.filter}>
-          <MainSelect
+              <MainSelect
             width={300}
             defaultValue={"Категория"}
             url={categoriesURL}
             x={categoriesAdd}
           />
-          {/* <MainSelect
+         <MainSelect
             width={300}
             defaultValue={"Места хранения"}
             url={storageURL}
             x={storageAdd}
-          /> */}
+          />
 
           <button
             onClick={() => console.log(result)}

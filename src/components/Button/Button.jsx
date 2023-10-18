@@ -4,9 +4,7 @@ export default function Button({ label, widthButton, disabledButton,e }) {
  
   return (
     <button
-      onClick={() => {
- 
-      }}
+      onClick={() => console.log(e)}
       style={{ width: widthButton + "px" }}
       className={st.button}
     >

@@ -4,13 +4,14 @@ import st from "./AddObject.module.scss";
 import Button from "./../../components/Button/Button";
 import { PictureOutlined } from "@ant-design/icons";
 import { Form, Upload, Input } from "antd";
+
 import arrow from "./../../img/svg/arrows_button.svg";
 import close from "./../../img/svg/close.svg";
-import { categoriesURL, storageAllURL } from "./../../constants/api";
+import { categoriesAllURL, storageAllURL } from "./../../constants/api";
 import MainSelect from "../../components/mainSelect/MainSelect";
 import { useSelector } from "react-redux";
 import { categoriesAdd, storageAdd } from "./../../store/slice";
-
+const { TextArea } = Input;
 export default function AddObject() {
   const [fileList, setFileList] = useState([]);
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
@@ -25,14 +26,16 @@ export default function AddObject() {
 
   const [form] = Form.useForm();
   const name = Form.useWatch("myName", form);
+  const description = Form.useWatch("myDescription", form);
 
   let e = {
     nameId: name,
     categories: categoriesState.categoriesId,
     storage: storageState.storageId,
-    description: "none",
+    descriptionText: description,
   };
-  console.log(categoriesState);
+
+  const [value, setValue] = useState("");
   return (
     <>
       <header className={st.header}>
@@ -46,26 +49,28 @@ export default function AddObject() {
           <img src={close} alt="close" />
         </a>
       </header>
-      <Form form={form} className={st.form}>
+      <Form form={form} className={st.form} colon={false}>
         <Form.Item
           label="Наименование *"
           name={"myName"}
           className={st.wrapper}
         >
-          <Input className={st.input} id="name" type="text" />
+          <Input className={st.input} type="text" />
         </Form.Item>
-
+        {/* --------gggggggg--------ggggg-----ggg-----gg--------ggggggg------ggggg-------ggg----gggggg--
+---gggggg----ggg----ggg-ggggggggggg---------ggggggg-------ggggg------ggg */}
         <div className={`${st.wrapper} ${st.svg}`}>
           <label className={st.text} htmlFor="categories">
             Категория
           </label>
-
-          <MainSelect
-            width="500"
-            defaultValue=""
-            url={categoriesURL}
-            x={categoriesAdd}
-          />
+          <div className={st.test} >
+            <MainSelect
+              width="500"
+              defaultValue="categories"
+              url={categoriesAllURL}
+              x={categoriesAdd}
+            />
+          </div>
         </div>
         <div className={`${st.wrapper} ${st.svg}`}>
           <label className={st.text} htmlFor="storage">
@@ -73,21 +78,25 @@ export default function AddObject() {
           </label>
           <MainSelect
             width="500"
-            defaultValue=""
+            defaultValue="storage"
             url={storageAllURL}
             x={storageAdd}
           />
         </div>
-        <div className={st.wrapper}>
-          <label className={st.text} htmlFor="description">
-            Описание
-          </label>
-          <textarea
-            register="description"
-            className={`${st.input} ${st.description}`}
+
+        <Form.Item
+          label="Описание *"
+          name={"myDescription"}
+          className={st.wrapper}
+        >
+          <TextArea
             type="text"
+            className={`${st.input} ${st.description}`}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
           />
-        </div>
+        </Form.Item>
+
         <div className={`${st.wrapper} ${st.wrapperUpload} `}>
           <label className={st.text} htmlFor="photos">
             Фотографии * <br />

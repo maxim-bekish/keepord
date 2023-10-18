@@ -9,7 +9,7 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import {loginInURL} from "./../../constants/api";
+import { loginInURL } from "./../../constants/api";
 
 const SignUpSchema = yup.object().shape({
   email: yup.string().email("Введите верный email").required("Обязательно"),
@@ -37,13 +37,20 @@ export default function LoginForm(props) {
       })
       .then(function (response) {
         if (response.status === 200) {
+          console.log(response.data);
+          localStorage.setItem("token", JSON.stringify(response.data.access));
+          localStorage.setItem(
+            "tokenRefresh",
+            JSON.stringify(response.data.refresh)
+          );
           reset();
-          console.log(response)
+
           navigation("/home", { replace: true });
+          
         }
       })
       .catch(function (error) {
-   
+        console.log(error);
         if (error.response.status === 401) {
           reset();
           setErr("не вырный логин или пароль");

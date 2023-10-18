@@ -5,18 +5,21 @@ import Error from "./../components/Error/Error";
 
 // withcredentials: true;
 
+const access = JSON.parse(localStorage.getItem("token"));
+
 async function getTokenData(url) {
   try {
     const response = await axios.get(url, {
-      withCredentials:true,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${access}`,
+      },
     });
 
-    console.log(response);
-    console.log("ололололо");
+    // console.log(response);
 
     return await response.data;
   } catch (error) {
-  
     console.log(error);
     // refreshToken();
     error.response.status === 401 ? (
