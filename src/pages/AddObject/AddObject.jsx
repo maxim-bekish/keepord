@@ -63,12 +63,12 @@ export default function AddObject() {
           <label className={st.text} htmlFor="categories">
             Категория
           </label>
-          <div className={st.test} >
+          <div className={st.test}>
             <MainSelect
               width="500"
               defaultValue="categories"
               url={categoriesAllURL}
-              x={categoriesAdd}
+              reducersCategoriesAdd={categoriesAdd}
             />
           </div>
         </div>
@@ -80,7 +80,7 @@ export default function AddObject() {
             width="500"
             defaultValue="storage"
             url={storageAllURL}
-            x={storageAdd}
+            reducersCategoriesAdd={storageAdd}
           />
         </div>
 

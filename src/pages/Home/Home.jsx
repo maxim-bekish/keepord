@@ -1,24 +1,9 @@
-import MainSelect from "./../../components/mainSelect/MainSelect";
 import search from "./../../img/svg/search.svg";
 import st from "./Home.module.scss";
-import ListOfThings from "../../components/ListOfThings/ListOfThings";
 import BookmarksTitle from "../../components/bookmarksTitle/BookmarksTitle";
-import { useSelector } from "react-redux";
-import { categoriesURL, storageURL, itemsURL } from "./../../constants/api";
-import { categoriesAdd, storageAdd } from "./../../store/slice";
+import ThingsData from "./../../components/ThingsData/ThingsData";
 
 export default function Home() {
-  const categoriesState = useSelector((s) => s.homePageReducer.categoriesState);
-  const storageState = useSelector((s) => s.homePageReducer.storageState);
-
-  // result id категории и мест хранинеия на главной странце
-  let result = {
-    categories: categoriesState.categoriesId,
-    storage: storageState.storageId,
-  };
-
-
-
   return (
     <>
       <header className={`${st.header}`}>
@@ -41,28 +26,10 @@ export default function Home() {
       </header>
       <main className={st.container}>
         <BookmarksTitle />
-        <div className={st.filter}>
-              <MainSelect
-            width={300}
-            defaultValue={"Категория"}
-            url={categoriesURL}
-            x={categoriesAdd}
-          />
-         <MainSelect
-            width={300}
-            defaultValue={"Места хранения"}
-            url={storageURL}
-            x={storageAdd}
-          />
-
-          <button
-            onClick={() => console.log(result)}
-            className={`${st.button} ${st.buttonSubmit}`}
-          >
-            Применить
-          </button>
-        </div>
-        <ListOfThings url={itemsURL} />
+      
+          <ThingsData />
+      
+        {/* <ListData /> */}
       </main>
     </>
   );

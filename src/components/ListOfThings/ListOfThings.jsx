@@ -2,7 +2,7 @@ import { Col, Row } from "antd";
 import st from "./ListOfThings.module.scss";
 import refreshToken from "../../fun/refreshToken";
 import axios from "axios";
-// import getTokenData from "../../fun/getTokenData";
+import getTokenData from "../../fun/getTokenData";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -38,14 +38,22 @@ let state = [
 ];
 
 export default function ListOfThings(url) {
-  // const getCategories = async (url) => {
-  //   const res = await getTokenData(url);
+  // console.log( typeof reducersItemAdd);
 
-  // };
-  // useEffect(() => {
-  //   getCategories(url.url);
-  // }, []);
+  const [item, setItem] = useState("");
 
+  const erer = async (url) => {
+    const dataTable = await getTokenData(url.url);
+    setItem(dataTable);
+  };
+
+  useEffect(() => {
+  
+    erer(url)
+    
+  }, []);
+
+      console.log(item);
   return (
     <>
       <Row keys={0} className={st.gridTitle}>
@@ -73,19 +81,19 @@ export default function ListOfThings(url) {
             onClick={() => console.log("выбрал " + e.key)}
           >
             <Col keys={1} span={9}>
-              <img src="" alt="avatar" /> <span>{e.name}</span>
+              <img src="" alt="avatar" /> <span>{'item[0].name'}</span>
             </Col>
             <Col keys={2} span={5}>
-              {e.storage}
+              {"item[0].storage.name"}
             </Col>
             <Col keys={3} span={5}>
-              {e.categories}
+              {"item[0].category.name"}
             </Col>
             <Col keys={4} span={3}>
-              {e.data}
+              {"item[0].created_at"}
             </Col>
             <Col keys={5} span={2}>
-              {e.key}
+              {"item[0].id"}
             </Col>
           </Row>
         );
