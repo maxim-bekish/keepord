@@ -4,8 +4,10 @@ import BookmarksTitle from "../../components/bookmarksTitle/BookmarksTitle";
 import ThingsData from "./../../components/ThingsData/ThingsData";
 
 export default function Home() {
+ 
   return (
     <>
+      
       <header className={`${st.header}`}>
         <button className={`${st.buttonAdd} ${st.button}`}>
           <a className={st.textA} href="/home/add_object">
@@ -26,9 +28,9 @@ export default function Home() {
       </header>
       <main className={st.container}>
         <BookmarksTitle />
-      
-          <ThingsData />
-      
+
+        <ThingsData />
+
         {/* <ListData /> */}
       </main>
     </>

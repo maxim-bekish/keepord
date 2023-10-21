@@ -37,7 +37,7 @@ export default function LoginForm(props) {
       })
       .then(function (response) {
         if (response.status === 200) {
-          console.log(response.data);
+          
           localStorage.setItem("token", JSON.stringify(response.data.access));
           localStorage.setItem(
             "tokenRefresh",
@@ -46,7 +46,7 @@ export default function LoginForm(props) {
           reset();
 
           navigation("/home", { replace: true });
-          
+        
         }
       })
       .catch(function (error) {

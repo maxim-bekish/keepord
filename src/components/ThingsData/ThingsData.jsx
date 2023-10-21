@@ -18,7 +18,7 @@ export default function ThingsData() {
 
   useEffect(() => {
     dispatch(fetchTodos());
-    // erer(url)
+    
   }, []);
 
   // result id категории и мест хранинеия на главной странце
