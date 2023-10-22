@@ -1,12 +1,12 @@
 import st from "./Methods.module.scss";
 function sendGoggle() {
-  localStorage.setItem("test", "Google");
+  localStorage.setItem("methodsRegistration", "Google");
 }
 function sendYandex() {
-  localStorage.setItem("test", "Yandex");
+  localStorage.setItem("methodsRegistration", "Yandex");
 }
 function sendVK() {
-  localStorage.setItem("test", "VK");
+  localStorage.setItem("methodsRegistration", "VK");
 }
 function LoginMethod(props) {
   return (

@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { itemsURL } from "./../constants/api";
+import { itemsURL } from "../constants/api";
 
-export const fetchTodos = createAsyncThunk(
-  "testStateName/fetchTodos",
+export const fetchDataItem = createAsyncThunk(
+  "stateName/fetchDataItem",
   async function () {
     const response = await fetch(itemsURL, {
       headers: {
@@ -15,30 +15,30 @@ export const fetchTodos = createAsyncThunk(
   }
 );
 const testSlice = createSlice({
-  name: "testStateName",
+  name: "stateName",
   initialState: {
-    testState: [],
+    dataItem: [],
     status:null,
     error:null,
   },
 
   reducers: {
     testAdd(state, action) {
-      state.testState = action.payload;
+      state.dataItem = action.payload;
     },
   },
   extraReducers:{
 
-    [fetchTodos.pending]:(state)=>{
+    [fetchDataItem.pending]:(state)=>{
       state.status='loading';
       state.error=null;
     },
-    [fetchTodos.fulfilled]:(state,action)=>{
+    [fetchDataItem.fulfilled]:(state,action)=>{
       state.status='resolve';
-      state.testState=action.payload;
+      state.dataItem = action.payload;
 
     },
-    [fetchTodos.rejected]:(state,action)=>{},
+    [fetchDataItem.rejected]:(state,action)=>{},
   }
 });
 
@@ -46,7 +46,3 @@ export const { testAdd } = testSlice.actions;
 export default testSlice.reducer;
 
 
-//  extraReducers: (builder) => {
-//     builder.addCase(fetchCards.pending, (state) => {
-//       state.status = "loading";
-//     })};

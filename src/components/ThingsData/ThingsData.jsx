@@ -1,23 +1,22 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Col, Row } from "antd";
 import ListOfThings from "../ListOfThings/ListOfThings";
 import MainSelect from "../mainSelect/MainSelect";
 import { categoriesURL, storageURL, itemsURL } from "./../../constants/api";
 import { categoriesAdd, storageAdd } from "./../../store/slice";
 import st from "./../../components/ThingsData/ThingsData.module.scss";
 import { useEffect } from "react";
-import { fetchTodos } from "./../../store/sliseTest";
+import { fetchDataItem } from "./../../store/sliceDataItem";
 
 
 
 export default function ThingsData() {
   const categoriesState = useSelector((s) => s.homePageReducer.categoriesState);
   const storageState = useSelector((s) => s.homePageReducer.storageState);
-  const status = useSelector((s) => s.sliceTest.status);
+  const status = useSelector((s) => s.sliceDataItem.status);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchTodos());
+    dispatch(fetchDataItem());
     
   }, []);
 

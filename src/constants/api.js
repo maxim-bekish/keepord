@@ -15,3 +15,5 @@ export const refreshURL =
   "https://rms2022.pythonanywhere.com/users/token/refresh_cookies/";
 
 export const loginInURL = "https://rms2022.pythonanywhere.com/users/sign_in/";
+
+export const storageAddURL = "https://rms2022.pythonanywhere.com/storage/add/";

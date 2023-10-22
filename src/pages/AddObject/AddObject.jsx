@@ -4,14 +4,20 @@ import st from "./AddObject.module.scss";
 import Button from "./../../components/Button/Button";
 import { PictureOutlined } from "@ant-design/icons";
 import { Form, Upload, Input } from "antd";
-
 import arrow from "./../../img/svg/arrows_button.svg";
 import close from "./../../img/svg/close.svg";
 import { categoriesAllURL, storageAllURL } from "./../../constants/api";
 import MainSelect from "../../components/mainSelect/MainSelect";
+import MainSelectAdd from "../../components/MainSelectAdd/MainSelectAdd";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { categoriesAdd, storageAdd } from "./../../store/slice";
 const { TextArea } = Input;
+
+
+
+
+
 export default function AddObject() {
   const [fileList, setFileList] = useState([]);
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
@@ -27,22 +33,25 @@ export default function AddObject() {
   const [form] = Form.useForm();
   const name = Form.useWatch("myName", form);
   const description = Form.useWatch("myDescription", form);
-
-  let e = {
-    nameId: name,
+// const [formName,useFormName]=useState('не выбрано');
+  let dataFormAddCard = {
+    name: name,
     categories: categoriesState.categoriesId,
     storage: storageState.storageId,
     descriptionText: description,
   };
 
   const [value, setValue] = useState("");
+
+const navigate = useNavigate();
+const goBack = () => navigate(-1);
   return (
     <>
       <header className={st.header}>
         <div>
-          <a className={st.down} href="/home">
+          <div onClick={goBack}  >
             <img src={arrow} alt="arrow" />
-          </a>
+          </div>
           <span>Создать карточку вещи </span>
         </div>
         <a className={st.down} href="#">
@@ -54,16 +63,20 @@ export default function AddObject() {
           label="Наименование *"
           name={"myName"}
           className={st.wrapper}
+          // rules={[
+          //   {
+          //     required: true,
+          //   },
+          // ]}
         >
           <Input className={st.input} type="text" />
         </Form.Item>
-        {/* --------gggggggg--------ggggg-----ggg-----gg--------ggggggg------ggggg-------ggg----gggggg--
----gggggg----ggg----ggg-ggggggggggg---------ggggggg-------ggggg------ggg */}
+
         <div className={`${st.wrapper} ${st.svg}`}>
           <label className={st.text} htmlFor="categories">
             Категория
           </label>
-          <div className={st.test}>
+          <div >
             <MainSelect
               width="500"
               defaultValue="categories"
@@ -76,7 +89,8 @@ export default function AddObject() {
           <label className={st.text} htmlFor="storage">
             Место хранения
           </label>
-          <MainSelect
+
+          <MainSelectAdd
             width="500"
             defaultValue="storage"
             url={storageAllURL}
@@ -126,7 +140,7 @@ export default function AddObject() {
           label={"Отправить"}
           widthButton={500}
           disabledButton={true}
-          e={e}
+          dataFormAddCard={dataFormAddCard}
         />
       </Form>
       {/* <button className={st.button}>Отпраddddвить</button> */}

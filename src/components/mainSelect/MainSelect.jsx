@@ -4,14 +4,18 @@ import { useEffect, useState } from "react";
 import getTokenData from "../../fun/getTokenData";
 import { useDispatch } from "react-redux";
 
-export default function MainSelect({ width, defaultValue, url, reducersCategoriesAdd }) {
+export default function MainSelect({
+  width,
+  defaultValue,
+  url,
+  reducersCategoriesAdd,
+}) {
   const [mainSelect, setMainSelect] = useState(null);
 
   const dispatch = useDispatch();
 
   const selectApi = async (url) => {
     const res = await getTokenData(url);
-
     const setMainSelectAll = res.map(({ id, name }) => {
       return {
         value: id + Math.random(),

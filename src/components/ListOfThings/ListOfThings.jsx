@@ -3,15 +3,15 @@ import st from "./ListOfThings.module.scss";
 // import refreshToken from "../../fun/refreshToken";
 // import axios from "axios";
 // import getTokenData from "../../fun/getTokenData";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTodos, testAdd } from "./../../store/sliseTest";
+
 import share from "./../../img/svg/share.svg";
 import trash from "./../../img/svg/trash.svg";
 import edit from "./../../img/svg/edit.svg";
 export default function ListOfThings(url) {
-  const test = useSelector((s) => s.sliceTest.testState);
-  console.log(test);
+  const dataItemArray = useSelector((s) => s.sliceDataItem.dataItem);
+
   return (
     <>
       <Row keys={0} className={st.gridTitle}>
@@ -21,7 +21,7 @@ export default function ListOfThings(url) {
         <Col keys={4}>Дата добавления</Col>
         <Col keys={5}></Col>
       </Row>
-      {test.map((e) => {
+      {dataItemArray.map((e) => {
         return (
           <div className={st.wrapper}>
             <Row

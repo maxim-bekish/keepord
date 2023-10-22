@@ -10,6 +10,9 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { loginInURL } from "./../../constants/api";
+import { useDispatch } from "react-redux";
+import { singInAuth } from "./../../store/sliceAuth";
+// import { useSelector } from "react-redux";
 
 const SignUpSchema = yup.object().shape({
   email: yup.string().email("Введите верный email").required("Обязательно"),
@@ -17,6 +20,9 @@ const SignUpSchema = yup.object().shape({
 });
 
 export default function LoginForm(props) {
+  const dispatch = useDispatch();
+
+
   const navigation = useNavigate();
   const {
     register,
@@ -37,7 +43,8 @@ export default function LoginForm(props) {
       })
       .then(function (response) {
         if (response.status === 200) {
-          
+          dispatch(singInAuth(true));
+
           localStorage.setItem("token", JSON.stringify(response.data.access));
           localStorage.setItem(
             "tokenRefresh",
@@ -46,7 +53,6 @@ export default function LoginForm(props) {
           reset();
 
           navigation("/home", { replace: true });
-        
         }
       })
       .catch(function (error) {

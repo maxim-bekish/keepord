@@ -2,15 +2,27 @@ import search from "./../../img/svg/search.svg";
 import st from "./Home.module.scss";
 import BookmarksTitle from "../../components/bookmarksTitle/BookmarksTitle";
 import ThingsData from "./../../components/ThingsData/ThingsData";
+// import ListData from "./../../components/ListData/ListData";
+import { useDispatch, useSelector } from "react-redux";
+import { singInAuth } from "./../../store/sliceAuth";
 
 export default function Home() {
- 
+  const dispatch = useDispatch();
+  //   function logout (){
+  //  localStorage.removeItem("token");
+  //  localStorage.removeItem("tokenRefresh");
+
+  // dispatch(singInAuth(false));
+
+  //  }
+  const status = useSelector((s) => s.sliceAuth.singIn);
+  console.log(status);
+
   return (
     <>
-      
       <header className={`${st.header}`}>
         <button className={`${st.buttonAdd} ${st.button}`}>
-          <a className={st.textA} href="/home/add_object">
+          <a className={st.textA} href="/add_object">
             + Добавить вещь
           </a>
         </button>
@@ -20,7 +32,15 @@ export default function Home() {
           <button className={st.buttonSearch}>
             <img src={search} alt="searchSVG" />
           </button>
-          <button className={`${st.buttonExit} ${st.button}`}>
+          <button
+            onClick={() => {
+              localStorage.removeItem("token");
+              localStorage.removeItem("tokenRefresh");
+
+              // dispatch(singInAuth(false));
+            }}
+            className={`${st.buttonExit} ${st.button}`}
+          >
             {/* <a className={st.textA}></a> */}
             Выход
           </button>

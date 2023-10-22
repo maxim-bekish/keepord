@@ -1,10 +1,12 @@
 import { configureStore} from "@reduxjs/toolkit";
 import homePageReducer from "./slice";
-import sliceTest from "./sliseTest";
+import sliceDataItem from "./sliceDataItem";
+import sliceAuth from "./sliceAuth";
 export default configureStore({
   reducer: {
     homePageReducer: homePageReducer,
-    sliceTest: sliceTest,
+    sliceDataItem: sliceDataItem,
+    sliceAuth: sliceAuth,
   },
 });
 

@@ -5,7 +5,7 @@ export default function methodsPage() {
   }
   let label = "";
   let url = "";
-  switch (localStorage.getItem("test")) {
+  switch (localStorage.getItem("methodsRegistration")) {
     case "Google":
       label = "Google";
       url = require("../../img/png/google.png");
