@@ -1,24 +1,24 @@
 import React, { useState } from "react";
 
-import st from "./AddObject.module.scss";
-import Button from "./../../components/Button/Button";
+import st from "./CreatingCard.module.scss";
+import Button from "../../components/Button/Button";
 import { PictureOutlined } from "@ant-design/icons";
 import { Form, Upload, Input } from "antd";
 import arrow from "./../../img/svg/arrows_button.svg";
 import close from "./../../img/svg/close.svg";
-import { categoriesAllURL, storageAllURL } from "./../../constants/api";
+import { categoriesAllURL, storageAllURL } from "../../constants/api";
 import MainSelect from "../../components/mainSelect/MainSelect";
 import MainSelectAdd from "../../components/MainSelectAdd/MainSelectAdd";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { categoriesAdd, storageAdd } from "./../../store/slice";
+import { categoriesAdd, storageAdd } from "../../store/slice";
 const { TextArea } = Input;
 
 
 
 
 
-export default function AddObject() {
+export default function CreatingCard() {
   const [fileList, setFileList] = useState([]);
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
   const uploadButton = (
@@ -34,7 +34,7 @@ export default function AddObject() {
   const name = Form.useWatch("myName", form);
   const description = Form.useWatch("myDescription", form);
 // const [formName,useFormName]=useState('не выбрано');
-  let dataFormAddCard = {
+  let dataFormCreatingCard = {
     name: name,
     categories: categoriesState.categoriesId,
     storage: storageState.storageId,
@@ -140,7 +140,7 @@ const goBack = () => navigate(-1);
           label={"Отправить"}
           widthButton={500}
           disabledButton={true}
-          dataFormAddCard={dataFormAddCard}
+          dataFormCreatingCard={dataFormCreatingCard}
         />
       </Form>
       {/* <button className={st.button}>Отпраddddвить</button> */}

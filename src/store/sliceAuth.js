@@ -8,7 +8,7 @@ const sliceAuth = createSlice({
 
   reducers: {
     singInAuth(state, action) {
-      console.log(state.singIn);
+      // console.log(state.singIn);
       state.singIn = action.payload ;
     },
   },
@@ -16,3 +16,4 @@ const sliceAuth = createSlice({
 
 export const { singInAuth } = sliceAuth.actions;
 export default sliceAuth.reducer;
+//  переделать на контекст

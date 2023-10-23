@@ -9,17 +9,21 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { loginInURL } from "./../../constants/api";
+import { loginURL } from "./../../constants/api";
 import { useDispatch } from "react-redux";
 import { singInAuth } from "./../../store/sliceAuth";
 // import { useSelector } from "react-redux";
-
+import { useContext } from "react";
+import Context from "./../../utilities/Context/Context";
 const SignUpSchema = yup.object().shape({
   email: yup.string().email("Введите верный email").required("Обязательно"),
   password: yup.string().min(4, "min 4").required("Обязательно"),
 });
 
 export default function LoginForm(props) {
+const xxx = useContext(Context);
+console.log(xxx);
+
   const dispatch = useDispatch();
 
 
@@ -37,14 +41,14 @@ export default function LoginForm(props) {
 
   const onSubmit = (event) => {
     axios
-      .post(loginInURL, {
+      .post(loginURL, {
         email: event.email,
         password: event.password,
       })
       .then(function (response) {
         if (response.status === 200) {
           dispatch(singInAuth(true));
-
+xxx.$auth.setAuth(true)
           localStorage.setItem("token", JSON.stringify(response.data.access));
           localStorage.setItem(
             "tokenRefresh",

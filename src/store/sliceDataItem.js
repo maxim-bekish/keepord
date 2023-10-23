@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { itemsURL } from "../constants/api";
+import { itemsAllURL } from "../constants/api";
 
 export const fetchDataItem = createAsyncThunk(
   "stateName/fetchDataItem",
   async function () {
-    const response = await fetch(itemsURL, {
+    const response = await fetch(itemsAllURL, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,

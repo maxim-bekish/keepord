@@ -1,13 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import ListOfThings from "../ListOfThings/ListOfThings";
 import MainSelect from "../mainSelect/MainSelect";
-import { categoriesURL, storageURL, itemsURL } from "./../../constants/api";
+import { categoriesURL, storageURL } from "./../../constants/api";
 import { categoriesAdd, storageAdd } from "./../../store/slice";
 import st from "./../../components/ThingsData/ThingsData.module.scss";
 import { useEffect } from "react";
 import { fetchDataItem } from "./../../store/sliceDataItem";
-
-
 
 export default function ThingsData() {
   const categoriesState = useSelector((s) => s.homePageReducer.categoriesState);
@@ -17,7 +15,6 @@ export default function ThingsData() {
 
   useEffect(() => {
     dispatch(fetchDataItem());
-    
   }, []);
 
   // result id категории и мест хранинеия на главной странце
@@ -50,7 +47,6 @@ export default function ThingsData() {
         </button>
       </div>
 
- 
       {status === "loading" && <h2>Loading...</h2>}
       {status === "resolve" && <ListOfThings />}
       {/* {error && <h2>An error occured: {error}</h2>} */}
