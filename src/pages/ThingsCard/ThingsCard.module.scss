@@ -1,0 +1,85 @@
+@import "./../../ColorStyle.scss";
+.wrapper {
+  max-width: 850px;
+  .name {
+    font-size: 1.375rem;
+    color: $colorBlack;
+    line-height: 150%;
+    max-width: 385px;
+  }
+  .img {
+    flex-wrap: wrap;
+    display: flex;
+    gap: 25px;
+    width: 100%;
+    margin: 10px 0 100px 0;
+    img {
+      display: flex;
+      width: 150px;
+      height: 150px;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+    }
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+    margin-bottom: 20px;
+  }
+
+  .wrapperData {
+    display: flex;
+    gap: 70px;
+    span {
+      min-width: 160px;
+      color: $colorBlack;
+      font-size: 1.125rem;
+      font-weight: 600;
+      line-height: 150%; /* 27px */
+    }
+    p {
+      color: $colorBlack;
+      font-size: 1.75rem;
+      font-weight: 400;
+      line-height: 150%; /* 42px */
+    }
+  }
+}
+.buttonAll {
+  display: flex;
+  gap: 20px;
+}
+header {
+  background-color: $colorBase;
+  height: 150px;
+  margin-bottom: 35px;
+  .flexBox {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    .miniWrapper {
+      display: flex;
+      gap: 30px;
+      justify-content: flex-start;
+      span {
+        color: $colorBlack;
+        font-size: 1.75rem;
+        line-height: 150%; /* 42px */
+      }
+    }
+  }
+}
+.closed {
+  position: absolute;
+  top: 56px;
+  right: 80px;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1280px;
+}

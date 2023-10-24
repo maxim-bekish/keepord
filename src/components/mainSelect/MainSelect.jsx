@@ -18,7 +18,7 @@ export default function MainSelect({
     const res = await getTokenData(url);
     const setMainSelectAll = res.map(({ id, name }) => {
       return {
-        value: id + Math.random(),
+        value: id,
         label: name,
       };
     });

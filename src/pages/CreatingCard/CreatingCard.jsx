@@ -27,6 +27,11 @@ export default function CreatingCard() {
     </div>
   );
 
+
+function addItems(){
+  console.log(dataFormCreatingCard);
+}
+
   const categoriesState = useSelector((s) => s.homePageReducer.categoriesState);
   const storageState = useSelector((s) => s.homePageReducer.storageState);
 
@@ -141,6 +146,7 @@ const goBack = () => navigate(-1);
           widthButton={500}
           disabledButton={true}
           dataFormCreatingCard={dataFormCreatingCard}
+          onClick={addItems}
         />
       </Form>
       {/* <button className={st.button}>Отпраddddвить</button> */}

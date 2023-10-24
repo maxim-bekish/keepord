@@ -2,6 +2,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import First_page from "./pages/FirstPage/FirstPage";
 import LoginPages from "./pages/LoginPages/LoginPages";
+import ThingsCard from "./pages/ThingsCard/ThingsCard";
 import Registration_page from "./pages/RegistrationPage/RegistrationPage";
 import MethodsPage from "./pages/MethodsPage/MethodsPage";
 import Home from "./pages/Home/Home";
@@ -27,7 +28,7 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/home" element={<Home />} />
             <Route path="/creatingCard" element={<CreatingCard />} />
-            
+            <Route path="/thingsCard" element={<ThingsCard />} />
           </Route>
         </Routes>
       </Router>
