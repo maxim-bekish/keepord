@@ -1,14 +1,34 @@
-import { itemsURL } from "./../../constants/api";
 
 import arrow from "./../../img/svg/arrows_button.svg";
 import closed from "./../../img/svg/close.svg";
 import eee from "./../../img/png/google.png";
 import st from "./ThingsCard.module.scss";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { thingsCard } from "../../store/sliceDataItem";
 
 export default function ThingsCard() {
+
+const dataItemArray = useSelector((s) => s.sliceDataItem.dataItem);
+  const { status, error } = useSelector((s) => s.sliceDataItem);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(thingsCard());
+  }, []);
+
+
+
+
+
+console.log(dataItemArray);
+
   return (
     <>
-      <header>
+      {status === "loading" && <h2>Loading...</h2>}
+      {error && <h2>An error has occurred: {error}</h2>}
+      <header className={st.header}>
         <div className={st.container}>
           <div className={st.flexBox}>
             <div className={st.miniWrapper}>
@@ -28,7 +48,7 @@ export default function ThingsCard() {
 
       <main className={`${st.container}  `}>
         <div className={st.wrapper}>
-          <h2 className={st.name}>Платье белое летнее с коротким рукавом</h2>
+          <h2 className={st.name}>{dataItemArray.name}</h2>
           <div className={st.img}>
             <img src={eee} alt="photo" />
             <img src={eee} alt="photo" />
@@ -39,18 +59,15 @@ export default function ThingsCard() {
           <section>
             <div className={st.wrapperData}>
               <span>Категория</span>
-              <p>Летние платья</p>
+              <p>{dataItemArray.category.name}</p>
             </div>
             <div className={st.wrapperData}>
               <span>Место хранения</span>
-              <p>Балкон </p>
+              <p>{dataItemArray.storage.name} </p>
             </div>
             <div className={st.wrapperData}>
               <span>Описание</span>
-              <p>
-                Белое короткое платье в кружевными рукавами с последнего
-                семейного ужина
-              </p>
+              <p>{dataItemArray.description}</p>
             </div>
           </section>
         </div>

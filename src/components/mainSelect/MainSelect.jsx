@@ -16,6 +16,8 @@ export default function MainSelect({
 
   const selectApi = async (url) => {
     const res = await getTokenData(url);
+   
+   
     const setMainSelectAll = res.map(({ id, name }) => {
       return {
         value: id,
