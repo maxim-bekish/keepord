@@ -17,7 +17,7 @@ function App() {
   let stateContext = { $auth: { auth: auth, setAuth: setAuth } };
 
   return (
-    <Context.Provider value={stateContext}>
+    // <Context.Provider value={stateContext}>
       <Router>
         <Routes>
           <Route path="*" element={<NotFoundPage />} />
@@ -32,7 +32,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
-    </Context.Provider>
+    // </Context.Provider>
   );
 }
 

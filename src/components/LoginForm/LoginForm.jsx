@@ -45,8 +45,8 @@ export default function LoginForm(props) {
       })
       .then(function (response) {
         if (response.status === 200) {
-          dispatch(singInAuth(true));
-          xxx.$auth.setAuth(true);
+          // dispatch(singInAuth(true));
+          // xxx.$auth.setAuth(true);
           localStorage.setItem("token", JSON.stringify(response.data.access));
           localStorage.setItem(
             "tokenRefresh",

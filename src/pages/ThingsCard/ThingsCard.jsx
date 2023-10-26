@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import st from "./ThingsCard.module.scss";
 import arrow from "./../../img/svg/arrows_button.svg";
 import closed from "./../../img/svg/close.svg";
-import { itemsURL } from "./../../constants/api";
+
 
 export default function ThingsCard() {
   let id = useLocation().state;
