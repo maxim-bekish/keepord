@@ -54,7 +54,7 @@ const goBack = () => navigate(-1);
     <>
       <header className={st.header}>
         <div>
-          <div onClick={goBack}  >
+          <div onClick={() => navigate(-1)}>
             <img src={arrow} alt="arrow" />
           </div>
           <span>Создать карточку вещи </span>
@@ -81,7 +81,7 @@ const goBack = () => navigate(-1);
           <label className={st.text} htmlFor="categories">
             Категория
           </label>
-          <div >
+          <div>
             <MainSelect
               width="500"
               defaultValue="categories"

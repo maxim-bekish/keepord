@@ -1,38 +1,34 @@
-
-import arrow from "./../../img/svg/arrows_button.svg";
-import closed from "./../../img/svg/close.svg";
-import eee from "./../../img/png/google.png";
-import st from "./ThingsCard.module.scss";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thingsCard } from "../../store/sliceDataItem";
+import { thingsCards } from "../../store/sliceThingsItem";
+import Card from "./../../components/Card/Card";
+import { useLocation, useNavigate } from "react-router-dom";
+import st from "./ThingsCard.module.scss";
+import arrow from "./../../img/svg/arrows_button.svg";
+import closed from "./../../img/svg/close.svg";
+import { itemsURL } from "./../../constants/api";
 
 export default function ThingsCard() {
+  let id = useLocation().state;
+ 
+const navigate = useNavigate();
 
-const dataItemArray = useSelector((s) => s.sliceDataItem.dataItem);
-  const { status, error } = useSelector((s) => s.sliceDataItem);
 
+  const { status, error } = useSelector((s) => s.sliceThingsItem);
   const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(thingsCard());
+    dispatch(thingsCards({ id: id }));
   }, []);
 
 
 
-
-
-console.log(dataItemArray);
-
   return (
     <>
-      {status === "loading" && <h2>Loading...</h2>}
-      {error && <h2>An error has occurred: {error}</h2>}
       <header className={st.header}>
         <div className={st.container}>
           <div className={st.flexBox}>
             <div className={st.miniWrapper}>
-              <div>
+              <div className={st.link} onClick={() => navigate(-1)}>
                 <img src={arrow} alt="arrow" />
               </div>
               <div>
@@ -45,38 +41,9 @@ console.log(dataItemArray);
           </div>
         </div>
       </header>
-
-      <main className={`${st.container}  `}>
-        <div className={st.wrapper}>
-          <h2 className={st.name}>{dataItemArray.name}</h2>
-          <div className={st.img}>
-            <img src={eee} alt="photo" />
-            <img src={eee} alt="photo" />
-            <img src={eee} alt="photo" />
-            <img src={eee} alt="photo" />
-            <img src={eee} alt="photo" />
-          </div>
-          <section>
-            <div className={st.wrapperData}>
-              <span>Категория</span>
-              <p>{dataItemArray.category.name}</p>
-            </div>
-            <div className={st.wrapperData}>
-              <span>Место хранения</span>
-              <p>{dataItemArray.storage.name} </p>
-            </div>
-            <div className={st.wrapperData}>
-              <span>Описание</span>
-              <p>{dataItemArray.description}</p>
-            </div>
-          </section>
-        </div>
-      </main>
-      <div className={`${st.buttonAll} ${st.container}`}>
-        <button>Редактировать</button>
-        <button>Удалить</button>
-        <button>Поделиться</button>
-      </div>
+      {status === "loading" && <h2>Loading...</h2>}
+      {error && <h2>An error has occurred: {error}</h2>}
+      {status === "resolve" && <Card />}
     </>
   );
 }

@@ -6,7 +6,7 @@ import { categoriesAdd, storageAdd } from "./../../store/slice";
 import st from "./../../components/ThingsData/ThingsData.module.scss";
 import { useEffect } from "react";
 import { fetchDataItem } from "./../../store/sliceDataItem";
-import { itemsAllURL } from "./../../constants/api";
+
 
 export default function ThingsData() {
   const { categoriesState, storageState } = useSelector(
@@ -49,9 +49,10 @@ export default function ThingsData() {
           Применить
         </button>
       </div>
-      <ListOfThings />
+
       {status === "loading" && <h2>Loading...</h2>}
       {error && <h2>An error has occurred: {error}</h2>}
+      {status === "resolve" && <ListOfThings />}
     </>
   );
 }

@@ -1,16 +1,16 @@
 import { Col, Row } from "antd";
+
 import st from "./ListOfThings.module.scss";
 import { useSelector } from "react-redux";
-
 import share from "./../../img/svg/share.svg";
 import trash from "./../../img/svg/trash.svg";
 import edit from "./../../img/svg/edit.svg";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 export default function ListOfThings() {
   const dataItemArray = useSelector((s) => s.sliceDataItem.dataItem);
-  const [x, setX] = useState();
-  console.log(x);
-  // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  const navigate = useNavigate();
+
   return (
     <>
       <Row className={st.gridTitle}>
@@ -22,9 +22,12 @@ export default function ListOfThings() {
       </Row>
       {dataItemArray.map((e) => {
         return (
-          <div className={st.wrapper}>
+          <div
+            onClick={() => navigate("/thingsCard", { state: e.id })}
+            className={st.wrapper}
+          >
             {/* нужно key */}
-            <Row className={st.grid} onClick={() => setX(e.id)}>
+            <Row className={st.grid}>
               <div className={st.allData}>
                 <Col>{e.name}</Col>
                 <Col>{e.storage.name}</Col>

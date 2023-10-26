@@ -21,11 +21,9 @@ const SignUpSchema = yup.object().shape({
 });
 
 export default function LoginForm(props) {
-const xxx = useContext(Context);
-console.log(xxx);
+  const xxx = useContext(Context);
 
   const dispatch = useDispatch();
-
 
   const navigation = useNavigate();
   const {
@@ -48,7 +46,7 @@ console.log(xxx);
       .then(function (response) {
         if (response.status === 200) {
           dispatch(singInAuth(true));
-xxx.$auth.setAuth(true)
+          xxx.$auth.setAuth(true);
           localStorage.setItem("token", JSON.stringify(response.data.access));
           localStorage.setItem(
             "tokenRefresh",

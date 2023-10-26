@@ -18,3 +18,5 @@ export const storageAllURL = "https://rms2022.pythonanywhere.com/storage/all";
 export const itemsAllURL = "https://rms2022.pythonanywhere.com/items/all";
 
 export const itemsURL = "https://rms2022.pythonanywhere.com/items";
+
+export const usersURL = "https://rms2022.pythonanywhere.com/users/info/";

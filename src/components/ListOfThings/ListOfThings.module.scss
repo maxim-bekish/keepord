@@ -1,17 +1,15 @@
 @import "./../../ColorStyle.scss";
 
 .wrapper {
-  
   display: flex;
   width: 100%;
-
+  cursor: pointer;
   .grid {
     gap: 45px;
- 
 
     .allData {
       padding: 10px;
-        border-radius: 10px;
+      border-radius: 10px;
       &:hover {
         background-color: $colorBlur;
       }
@@ -28,8 +26,8 @@
         color: $colorDarkGreen;
       }
     }
-    .endData{
-  padding: 10px 10px 10px 0px;
+    .endData {
+      padding: 10px 10px 10px 0px;
     }
   }
 }
