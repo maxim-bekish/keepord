@@ -22,9 +22,10 @@ export default function MainSelect({
       return {
         value: id,
         label: name,
+       
       };
     });
-
+// console.log(mainSelect)
     setMainSelect(setMainSelectAll);
   };
   useEffect(() => {

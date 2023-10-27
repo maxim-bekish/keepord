@@ -6,10 +6,29 @@ import share from "./../../img/svg/share.svg";
 import trash from "./../../img/svg/trash.svg";
 import edit from "./../../img/svg/edit.svg";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { itemsURL } from "./../../constants/api.js";
 
 export default function ListOfThings() {
   const dataItemArray = useSelector((s) => s.sliceDataItem.dataItem);
   const navigate = useNavigate();
+
+  const deletedItems = (e) => {
+
+    let isDelete = window.confirm("Точно удалить?");
+
+    if (isDelete) {
+      axios.delete(`${itemsURL}/${e.id}/delete/`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        },
+      });
+
+
+
+    }
+  };
 
   return (
     <>
@@ -22,13 +41,13 @@ export default function ListOfThings() {
       </Row>
       {dataItemArray.map((e) => {
         return (
-          <div
-            onClick={() => navigate("/thingsCard", { state: e.id })}
-            className={st.wrapper}
-          >
+          <div className={st.wrapper}>
             {/* нужно key */}
             <Row className={st.grid}>
-              <div className={st.allData}>
+              <div
+                onClick={() => navigate("/thingsCard", { state: e.id })}
+                className={st.allData}
+              >
                 <Col>{e.name}</Col>
                 <Col>{e.storage.name}</Col>
                 <Col>{e.category.name}</Col>
@@ -38,7 +57,7 @@ export default function ListOfThings() {
                 <div>
                   <img src={edit} alt="" />
                   <img src={share} alt="" />
-                  <img src={trash} alt="" />
+                  <img onClick={() => deletedItems(e)} src={trash} alt="" />
                 </div>
               </Col>
             </Row>

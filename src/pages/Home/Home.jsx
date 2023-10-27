@@ -8,13 +8,22 @@ import { usersURL } from "./../../constants/api";
 
 import { useQuery } from "react-query";
 import getUrl from "./../../fun/getData";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+// import useValidFun from "../../fun/validFun";
+
 export default function Home() {
-  const { data, isError, isLoading } = useQuery("coins", () =>
-    getUrl(usersURL)
-  );
+  const { data, isLoading, error } = useQuery("coins", () => getUrl( usersURL));
+
+  // const navigate = useNavigate();
+
   if (isLoading) {
     return <h2>Loadinggggg</h2>;
   }
+
+  if (error) {
+    return <ErrorComponent props={error}></ErrorComponent>;
+  }
+
   return (
     <>
       <header className={`${st.header}`}>

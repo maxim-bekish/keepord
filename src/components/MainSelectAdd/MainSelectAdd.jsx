@@ -56,7 +56,7 @@ export default function MainSelectAdd({
 
   useEffect(() => {
     selectApi(url);
-    console.log("useEffect запустился");
+    // console.log("useEffect запустился");
   }, [toggle]);
 
   return (

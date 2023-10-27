@@ -1,9 +1,30 @@
 import st from "./Card.module.scss";
 import eee from "./../../img/png/google.png";
 import { useSelector } from "react-redux";
+import { itemsURL } from "./../../constants/api";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Card() {
   const hingsItem = useSelector((s) => s.sliceThingsItem.card);
+  const location = useLocation();
+  const url = `${itemsURL}/${location.state}/delete/`;
+  const navigate = useNavigate();
+
+  const deletedItems = () => {
+    let isDelete = window.confirm("Точно удалить?");
+
+    if (isDelete) {
+      axios.delete(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        },
+      });
+
+      navigate("/home", { replace: true });
+    }
+  };
 
   return (
     <>
@@ -35,7 +56,7 @@ export default function Card() {
       </main>
       <div className={`${st.buttonAll} ${st.container}`}>
         <button>Редактировать</button>
-        <button>Удалить</button>
+        <button onClick={deletedItems}>Удалить</button>
         <button>Поделиться</button>
       </div>
     </>

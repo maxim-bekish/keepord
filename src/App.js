@@ -6,6 +6,7 @@ import ThingsCard from "./pages/ThingsCard/ThingsCard";
 import Registration_page from "./pages/RegistrationPage/RegistrationPage";
 import MethodsPage from "./pages/MethodsPage/MethodsPage";
 import Home from "./pages/Home/Home";
+import Xxx from "./pages/Home/Xxx";
 import CreatingCard from "./pages/CreatingCard/CreatingCard";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import PrivateRoute from "./utilities/router/PrivateRoute";
@@ -27,6 +28,7 @@ function App() {
           <Route path="/send" element={<MethodsPage />} />
           <Route element={<PrivateRoute />}>
             <Route path="/home" element={<Home />} />
+            <Route path="/xxx" element={<Xxx />} />
             <Route path="/creatingCard" element={<CreatingCard />} />
             <Route path="/thingsCard" element={<ThingsCard />} />
           </Route>

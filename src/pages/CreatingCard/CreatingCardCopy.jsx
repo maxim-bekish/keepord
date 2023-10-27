@@ -13,9 +13,10 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { categoriesAdd, storageAdd } from "../../store/slice";
 import iconAdd from "./../../img/svg/iconAddImg.svg";
+import axios from "axios";
 const { TextArea } = Input;
 
-export default function CreatingCard() {
+export default function CreatingCardCopy() {
   const [fileList, setFileList] = useState([]);
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
   const uploadButton = (
@@ -24,12 +25,10 @@ export default function CreatingCard() {
     </div>
   );
 
-  function addItems() {
-    console.log(dataFormCreatingCard);
-  }
-  function xxx(event) {
-    console.log(event.target.files);
-  }
+ 
+  // function xxx(event) {
+  //   console.log(event.target.files);
+  // }
   const categoriesState = useSelector((s) => s.homePageReducer.categoriesState);
   const storageState = useSelector((s) => s.homePageReducer.storageState);
 
@@ -45,11 +44,29 @@ export default function CreatingCard() {
     description: description,
     images: fileList,
   };
-
+   const formData = new FormData();
+ formData.append("images", dataFormCreatingCard.images);
+//  formData.append("description", dataFormCreatingCard.description);
+//  formData.append("storage", dataFormCreatingCard.storage);
+//  formData.append("category", dataFormCreatingCard.category);
+//  formData.append("name", dataFormCreatingCard.name);
+    
   const [value, setValue] = useState("");
 
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
+
+  //  const props = {
+ 
+  //    headers: {
+      
+  //     //  "Access-Control-Allow-Origin": "*",
+  //      "Content-Type": "multipart/form-data",
+  //      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+  //    },
+  //    action: "https://rms2022.pythonanywhere.com/items/add",
+  //    body: formData,
+  //  }; 
   return (
     <>
       <header className={st.header}>
@@ -68,28 +85,17 @@ export default function CreatingCard() {
           label="Наименование *"
           name={"myName"}
           className={st.wrapper}
-          // rules={[
-          //   {
-          //     required: true,
-          //   },
-          // ]}
         >
           <Input className={st.input} type="text" />
         </Form.Item>
-        <Form.Item lebel="Категория">
-          <div className={`${st.wrapper} ${st.svg}`}>
-            <label className={st.text} htmlFor="categories">
-              Категория
-            </label>
-            <div>
-              <MainSelect
-                width="500"
-                defaultValue="categories"
-                url={categoriesAllURL}
-                reducersCategoriesAdd={categoriesAdd}
-              />
-            </div>
-          </div>
+
+        <Form.Item label="Категория">
+          <MainSelect
+            width="500"
+            defaultValue="categories"
+            url={categoriesAllURL}
+            reducersCategoriesAdd={categoriesAdd}
+          />
         </Form.Item>
 
         <div className={`${st.wrapper} ${st.svg}`}>
@@ -121,18 +127,10 @@ export default function CreatingCard() {
           <div className={`${st.wrapper} ${st.wrapperUpload} `}>
             <span className={st.miniTitle}>Не более 5</span>
 
-            {/* <input
-              multiple
-              type="file"
-              id="fileLoaderButton"
-              className={st.fileLoaderButton}
-            /> */}
-            {/* <img src={iconAdd} alt="ppp" className={st.fileUploaderPreview} /> */}
-            {/* <div className={st.fileUploaderFileName}></div> */}
             <Upload
-              //  onChange={xxx}
+              // {...props}
+            
               register="photos"
-              // action="https://rms2022.pythonanywhere.com/items/add/"
               listType="picture-card"
               multiple
               className={st.wrapperUpload}
@@ -148,8 +146,9 @@ export default function CreatingCard() {
           widthButton={500}
           disabledButton={true}
           dataFormCreatingCard={dataFormCreatingCard}
-          onClick={addItems}
+          // onClick={() => console.log(dataFormCreatingCard)}
         />
+       
       </Form>
       {/* <button className={st.button}>Отпраddddвить</button> */}
     </>
