@@ -9,6 +9,7 @@ import axios from "axios";
 import { itemsURL } from "./../../constants/api.js";
 import { itemsAllURL } from "./../../constants/api.js";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useRef } from "react";
 
 async function getItems() {
   const { data } = await axios.get(itemsAllURL, {
@@ -22,6 +23,7 @@ async function getItems() {
 }
 
 export default function ListOfThings() {
+  const divUtility = useRef(null);
   // const dataItemArray = useSelector((s) => s.sliceDataItem.dataItem);
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -46,7 +48,14 @@ export default function ListOfThings() {
   if (isError) {
     return <div>Error! {error.message}</div>;
   }
+  const xxx = (e) => {
+    // divUtility.current.style.display='block';
+    console.log(divUtility);
+  };
 
+  const eee = (e) => {
+    //  divUtility.current.style.display = "none";
+  };
   return (
     <>
       <Row className={st.gridTitle}>
@@ -58,7 +67,7 @@ export default function ListOfThings() {
       </Row>
       {data.map((e) => {
         return (
-          <div className={st.wrapper}>
+          <div onMouseEnter={xxx} onMouseLeave={eee} className={st.wrapper}>
             {/* нужно key */}
             <Row className={st.grid}>
               <div
@@ -71,9 +80,17 @@ export default function ListOfThings() {
                 <Col>{e.created_at}</Col>
               </div>
               <Col className={st.endData}>
-                <div>
-                  <img src={edit} alt="" />
-                  <img src={share} alt="" />
+                <div id={e.id} ref={divUtility}>
+                  <img
+                    onClick={() => console.log(`edit ${e.id}`)}
+                    src={edit}
+                    alt=""
+                  />
+                  <img
+                    onClick={() => console.log(`share ${e.id}`)}
+                    src={share}
+                    alt=""
+                  />
                   <img
                     onClick={() => deletePost.mutate(e.id)}
                     src={trash}

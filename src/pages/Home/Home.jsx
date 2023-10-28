@@ -9,15 +9,9 @@ import { usersURL } from "./../../constants/api";
 import { useQuery } from "react-query";
 import getUrl from "./../../fun/getData";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
-// import useValidFun from "../../fun/validFun";
 
 export default function Home() {
-  const { data, isLoading, error } = useQuery("coins", () => getUrl( usersURL));
-
-
-
-  
-  // const navigate = useNavigate();
+  const { data, isLoading, error } = useQuery("coins", () => getUrl(usersURL));
 
   if (isLoading) {
     return <h2>Loadinggggg</h2>;
@@ -36,6 +30,7 @@ export default function Home() {
           </a>
         </button>
         <h2 className={st.h2Name}>{data.email}</h2>
+
         <div className={st.search}>
           <input placeholder="Поиск" className={st.inputSearch} type="text" />
           <button className={st.buttonSearch}>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import st from "./CreatingCard.module.scss";
 import Button from "../../components/Button/Button";
@@ -6,17 +6,18 @@ import { PictureOutlined } from "@ant-design/icons";
 import { Form, Upload, Input } from "antd";
 import arrow from "./../../img/svg/arrows_button.svg";
 import close from "./../../img/svg/close.svg";
-import { categoriesAllURL, storageAllURL } from "../../constants/api";
+import { categoriesAllURL,  } from "../../constants/api";
 import Category from "../../components/mainSelect/Category";
 
 import MainSelectAdd from "../../components/MainSelectAdd/MainSelectAdd";
-// import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { categoriesAdd, storageAdd } from "../../store/slice";
-import iconAdd from "./../../img/svg/iconAddImg.svg";
+import Context from "../../utilities/Context/Context";
+
 const { TextArea } = Input;
 
 export default function CreatingCard() {
+
+    const { $category, $storage } = useContext(Context);
   const [fileList, setFileList] = useState([]);
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
   const uploadButton = (
@@ -25,12 +26,8 @@ export default function CreatingCard() {
     </div>
   );
 
-  function addItems() {
-    console.log(dataFormCreatingCard);
-  }
-  function xxx(event) {
-    console.log(event.target.files);
-  }
+ 
+
   // const categoriesState = useSelector((s) => s.homePageReducer.categoriesState);
   // const storageState = useSelector((s) => s.homePageReducer.storageState);
 
@@ -39,10 +36,10 @@ export default function CreatingCard() {
   const description = Form.useWatch("myDescription", form);
   const photo = Form.useWatch("myPhoto", form);
   // const [formName,useFormName]=useState('не выбрано');
-  let dataFormCreatingCard = {
+  let creatingCard = {
     name: name,
-    // category: categoriesState.categoriesId,
-    // storage: storageState.storageId,
+    category: $category.category,
+    storage: $storage.storage,
     description: description,
     images: fileList,
   };
@@ -50,7 +47,7 @@ export default function CreatingCard() {
   const [value, setValue] = useState("");
 
   const navigate = useNavigate();
-  const goBack = () => navigate(-1);
+
   return (
     <>
       <header className={st.header}>
@@ -138,8 +135,8 @@ export default function CreatingCard() {
           label={"Отправить"}
           widthButton={500}
           disabledButton={true}
-          dataFormCreatingCard={dataFormCreatingCard}
-          onClick={addItems}
+          dataFormCreatingCard={creatingCard}
+         
         />
       </Form>
       {/* <button className={st.button}>Отпраddddвить</button> */}
