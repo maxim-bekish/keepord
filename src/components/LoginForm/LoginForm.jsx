@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { loginURL } from "./../../constants/api";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { singInAuth } from "./../../store/sliceAuth";
 // import { useSelector } from "react-redux";
 import { useContext } from "react";
@@ -23,7 +23,7 @@ const SignUpSchema = yup.object().shape({
 export default function LoginForm(props) {
   const xxx = useContext(Context);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const navigation = useNavigate();
   const {

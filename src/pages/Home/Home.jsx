@@ -14,6 +14,9 @@ import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 export default function Home() {
   const { data, isLoading, error } = useQuery("coins", () => getUrl( usersURL));
 
+
+
+  
   // const navigate = useNavigate();
 
   if (isLoading) {

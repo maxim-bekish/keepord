@@ -15,10 +15,17 @@ import { useState } from "react";
 
 function App() {
   const [auth, setAuth] = useState(false);
-  let stateContext = { $auth: { auth: auth, setAuth: setAuth } };
+  const [category, setCategory] = useState(null);
+  const [storage, setStorage] = useState(null);
+
+  let stateContext = {
+    $auth: { auth: auth, setAuth: setAuth },
+    $category: { category: category, setCategory: setCategory },
+    $storage: { storage: storage, setStorage: setStorage },
+  };
 
   return (
-    // <Context.Provider value={stateContext}>
+    <Context.Provider value={stateContext}>
       <Router>
         <Routes>
           <Route path="*" element={<NotFoundPage />} />
@@ -34,7 +41,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
-    // </Context.Provider>
+    </Context.Provider>
   );
 }
 

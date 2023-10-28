@@ -7,11 +7,11 @@ import { Form, Upload, Input } from "antd";
 import arrow from "./../../img/svg/arrows_button.svg";
 import close from "./../../img/svg/close.svg";
 import { categoriesAllURL, storageAllURL } from "../../constants/api";
-import MainSelect from "../../components/mainSelect/MainSelect";
+import Category from "../../components/mainSelect/Category";
 import MainSelectAdd from "../../components/MainSelectAdd/MainSelectAdd";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { categoriesAdd, storageAdd } from "../../store/slice";
+// import { categoriesAdd, storageAdd } from "../../store/slice";
 import iconAdd from "./../../img/svg/iconAddImg.svg";
 import axios from "axios";
 const { TextArea } = Input;
@@ -25,12 +25,11 @@ export default function CreatingCardCopy() {
     </div>
   );
 
- 
   // function xxx(event) {
   //   console.log(event.target.files);
   // }
-  const categoriesState = useSelector((s) => s.homePageReducer.categoriesState);
-  const storageState = useSelector((s) => s.homePageReducer.storageState);
+  // const categoriesState = useSelector((s) => s.homePageReducer.categoriesState);
+  // const storageState = useSelector((s) => s.homePageReducer.storageState);
 
   const [form] = Form.useForm();
   const name = Form.useWatch("myName", form);
@@ -39,34 +38,34 @@ export default function CreatingCardCopy() {
   // const [formName,useFormName]=useState('не выбрано');
   let dataFormCreatingCard = {
     name: name,
-    category: categoriesState.categoriesId,
-    storage: storageState.storageId,
+    // category: categoriesState.categoriesId,
+    // storage: storageState.storageId,
     description: description,
     images: fileList,
   };
-   const formData = new FormData();
- formData.append("images", dataFormCreatingCard.images);
-//  formData.append("description", dataFormCreatingCard.description);
-//  formData.append("storage", dataFormCreatingCard.storage);
-//  formData.append("category", dataFormCreatingCard.category);
-//  formData.append("name", dataFormCreatingCard.name);
-    
+  const formData = new FormData();
+  formData.append("images", dataFormCreatingCard.images);
+  //  formData.append("description", dataFormCreatingCard.description);
+  //  formData.append("storage", dataFormCreatingCard.storage);
+  //  formData.append("category", dataFormCreatingCard.category);
+  //  formData.append("name", dataFormCreatingCard.name);
+
   const [value, setValue] = useState("");
 
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
 
   //  const props = {
- 
+
   //    headers: {
-      
+
   //     //  "Access-Control-Allow-Origin": "*",
   //      "Content-Type": "multipart/form-data",
   //      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
   //    },
   //    action: "https://rms2022.pythonanywhere.com/items/add",
   //    body: formData,
-  //  }; 
+  //  };
   return (
     <>
       <header className={st.header}>
@@ -90,12 +89,7 @@ export default function CreatingCardCopy() {
         </Form.Item>
 
         <Form.Item label="Категория">
-          <MainSelect
-            width="500"
-            defaultValue="categories"
-            url={categoriesAllURL}
-            reducersCategoriesAdd={categoriesAdd}
-          />
+          <Category />
         </Form.Item>
 
         <div className={`${st.wrapper} ${st.svg}`}>
@@ -107,7 +101,7 @@ export default function CreatingCardCopy() {
             width="500"
             defaultValue="storage"
             url={storageAllURL}
-            reducersCategoriesAdd={storageAdd}
+            // reducersCategoriesAdd={storageAdd}
           />
         </div>
 
@@ -129,7 +123,7 @@ export default function CreatingCardCopy() {
 
             <Upload
               // {...props}
-            
+
               register="photos"
               listType="picture-card"
               multiple
@@ -148,7 +142,6 @@ export default function CreatingCardCopy() {
           dataFormCreatingCard={dataFormCreatingCard}
           // onClick={() => console.log(dataFormCreatingCard)}
         />
-       
       </Form>
       {/* <button className={st.button}>Отпраddddвить</button> */}
     </>

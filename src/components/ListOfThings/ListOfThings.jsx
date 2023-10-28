@@ -1,34 +1,51 @@
 import { Col, Row } from "antd";
-
 import st from "./ListOfThings.module.scss";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import share from "./../../img/svg/share.svg";
 import trash from "./../../img/svg/trash.svg";
 import edit from "./../../img/svg/edit.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { itemsURL } from "./../../constants/api.js";
+import { itemsAllURL } from "./../../constants/api.js";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+
+async function getItems() {
+  const { data } = await axios.get(itemsAllURL, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+    },
+  });
+
+  return data;
+}
 
 export default function ListOfThings() {
-  const dataItemArray = useSelector((s) => s.sliceDataItem.dataItem);
+  // const dataItemArray = useSelector((s) => s.sliceDataItem.dataItem);
   const navigate = useNavigate();
-
-  const deletedItems = (e) => {
-
-    let isDelete = window.confirm("Точно удалить?");
-
-    if (isDelete) {
-      axios.delete(`${itemsURL}/${e.id}/delete/`, {
+  const queryClient = useQueryClient();
+  const deletePost = useMutation(
+    (e) => {
+      return axios.delete(`${itemsURL}/${e}/delete`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
         },
       });
-
-
-
+    },
+    {
+      onSuccess: () => queryClient.invalidateQueries(["items"]),
     }
-  };
+  );
+  const { isLoading, isError, error, data } = useQuery(["items"], getItems);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error! {error.message}</div>;
+  }
 
   return (
     <>
@@ -39,7 +56,7 @@ export default function ListOfThings() {
         <Col>Дата добавления</Col>
         <Col></Col>
       </Row>
-      {dataItemArray.map((e) => {
+      {data.map((e) => {
         return (
           <div className={st.wrapper}>
             {/* нужно key */}
@@ -57,7 +74,11 @@ export default function ListOfThings() {
                 <div>
                   <img src={edit} alt="" />
                   <img src={share} alt="" />
-                  <img onClick={() => deletedItems(e)} src={trash} alt="" />
+                  <img
+                    onClick={() => deletePost.mutate(e.id)}
+                    src={trash}
+                    alt=""
+                  />
                 </div>
               </Col>
             </Row>

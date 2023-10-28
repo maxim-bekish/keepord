@@ -1,19 +1,33 @@
 import st from "./Card.module.scss";
 import eee from "./../../img/png/google.png";
-import { useSelector } from "react-redux";
 import { itemsURL } from "./../../constants/api";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useQuery } from "react-query";
+import getUrl from "../../fun/getData";
+import ErrorComponent from "../ErrorComponent/ErrorComponent";
 
 export default function Card() {
-  const hingsItem = useSelector((s) => s.sliceThingsItem.card);
-  const location = useLocation();
-  const url = `${itemsURL}/${location.state}/delete/`;
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location)
+  const url = `${itemsURL}/${location.state}/delete/`;
+
+  const { data, isLoading, error } = useQuery("card", () =>
+    getUrl(`${itemsURL}/${location.state}`)
+  );
+
+  if (isLoading) {
+    return <h2>Loadinggggg</h2>;
+  }
+
+  if (error) {
+
+    return <ErrorComponent props={error}></ErrorComponent>;
+  }
 
   const deletedItems = () => {
     let isDelete = window.confirm("Точно удалить?");
-
     if (isDelete) {
       axios.delete(url, {
         headers: {
@@ -30,7 +44,7 @@ export default function Card() {
     <>
       <main className={`${st.container}  `}>
         <div className={st.wrapper}>
-          <h2 className={st.name}>{hingsItem.name}</h2>
+          <h2 className={st.name}>{data.name}</h2>
           <div className={st.img}>
             <img src={eee} alt="photo" />
             <img src={eee} alt="photo" />
@@ -41,15 +55,15 @@ export default function Card() {
           <section>
             <div className={st.wrapperData}>
               <span>Категория</span>
-              <p>{hingsItem.category.name}</p>
+              <p>{data.category.name}</p>
             </div>
             <div className={st.wrapperData}>
               <span>Место хранения</span>
-              <p>{hingsItem.storage.name} </p>
+              <p>{data.storage.name} </p>
             </div>
             <div className={st.wrapperData}>
               <span>Описание</span>
-              <p>{hingsItem.description}</p>
+              <p>{data.description}</p>
             </div>
           </section>
         </div>

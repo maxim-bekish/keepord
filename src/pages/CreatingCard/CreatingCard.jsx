@@ -7,9 +7,10 @@ import { Form, Upload, Input } from "antd";
 import arrow from "./../../img/svg/arrows_button.svg";
 import close from "./../../img/svg/close.svg";
 import { categoriesAllURL, storageAllURL } from "../../constants/api";
-import MainSelect from "../../components/mainSelect/MainSelect";
+import Category from "../../components/mainSelect/Category";
+
 import MainSelectAdd from "../../components/MainSelectAdd/MainSelectAdd";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { categoriesAdd, storageAdd } from "../../store/slice";
 import iconAdd from "./../../img/svg/iconAddImg.svg";
@@ -30,8 +31,8 @@ export default function CreatingCard() {
   function xxx(event) {
     console.log(event.target.files);
   }
-  const categoriesState = useSelector((s) => s.homePageReducer.categoriesState);
-  const storageState = useSelector((s) => s.homePageReducer.storageState);
+  // const categoriesState = useSelector((s) => s.homePageReducer.categoriesState);
+  // const storageState = useSelector((s) => s.homePageReducer.storageState);
 
   const [form] = Form.useForm();
   const name = Form.useWatch("myName", form);
@@ -40,8 +41,8 @@ export default function CreatingCard() {
   // const [formName,useFormName]=useState('не выбрано');
   let dataFormCreatingCard = {
     name: name,
-    category: categoriesState.categoriesId,
-    storage: storageState.storageId,
+    // category: categoriesState.categoriesId,
+    // storage: storageState.storageId,
     description: description,
     images: fileList,
   };
@@ -82,12 +83,7 @@ export default function CreatingCard() {
               Категория
             </label>
             <div>
-              <MainSelect
-                width="500"
-                defaultValue="categories"
-                url={categoriesAllURL}
-                reducersCategoriesAdd={categoriesAdd}
-              />
+              <Category width={"500"} url={categoriesAllURL} />
             </div>
           </div>
         </Form.Item>
@@ -97,12 +93,7 @@ export default function CreatingCard() {
             Место хранения
           </label>
 
-          <MainSelectAdd
-            width="500"
-            defaultValue="storage"
-            url={storageAllURL}
-            reducersCategoriesAdd={storageAdd}
-          />
+          <MainSelectAdd />
         </div>
 
         <Form.Item

@@ -1,63 +1,57 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import st from "./MainSelectAdd.module.scss";
 import { storageAddURL } from "./../../constants/api";
 import { Input, Select, Space, Button, ConfigProvider } from "antd";
-import getTokenData from "../../fun/getTokenData";
-import { useDispatch } from "react-redux";
+
 import axios from "axios";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import getUrl from "../../fun/getData";
+import Context from "../../utilities/Context/Context";
+import ErrorComponent from "../ErrorComponent/ErrorComponent";
+import { storageAllURL } from "./../../constants/api";
 
-export default function MainSelectAdd({
-  width,
-  defaultValue,
-  url,
-  reducersCategoriesAdd,
-}) {
-  const [toggle, setToggle] = useState(true);
-  const dispatch = useDispatch();
-  const [mainSelect, setMainSelect] = useState(null);
-  const selectApi = async (url) => {
-    const res = await getTokenData(url);
-  
-    const setMainSelectAll = res.map(({ id, name }) => {
-      return {
-        value: id ,
-        label: name,
-      };
-    });
+async function create(data) {
+  return await axios.post(storageAddURL, data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+    },
+  });
+}
 
-    setMainSelect(setMainSelectAll);
-  };
-
+export default function MainSelectAdd() {
+  const queryClient = useQueryClient();
   const [name, setName] = useState("");
-  const inputRef = useRef(null);
-  const onNameChange = (event) => {
-    setName(event.target.value);
-  };
-  const addItem = (e) => {
+
+  const mutation = useMutation((newProduct) => create(newProduct), {
+    onSuccess: () => queryClient.invalidateQueries(["storageAll"]),
+  });
+
+  // const { $category } = useContext(Context);
+  const { data, isLoading, error } = useQuery("storageAll", () =>
+    getUrl(storageAllURL)
+  );
+
+  if (isLoading) {
+    return <h2>Loadinggggg</h2>;
+  }
+
+  if (error) {
+    return <ErrorComponent props={error}></ErrorComponent>;
+  }
+
+  const mainSelectAll = data.map(({ id, name }) => {
+    return {
+      value: id,
+      label: name,
+    };
+  });
+
+  const submit = (e) => {
     e.preventDefault();
-    setToggle(!toggle);
-    const access = JSON.parse(localStorage.getItem("token"));
-
-    axios({
-      method: "post",
-      url: storageAddURL,
-      data: {
-        name: name,
-      },
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${access}`,
-      },
-    });
-
+    mutation.mutate({ name: name });
     setName("");
   };
-  // console.log(toggle);
-
-  useEffect(() => {
-    selectApi(url);
-    // console.log("useEffect запустился");
-  }, [toggle]);
 
   return (
     <ConfigProvider
@@ -82,9 +76,9 @@ export default function MainSelectAdd({
       <Select
         className={`${st.select}  ${st.svg}`}
         style={{
-          width: +width,
+          width: 500,
         }}
-        defaultValue={defaultValue}
+        defaultValue={"defaultValue"}
         dropdownRender={(menu) => (
           <>
             {menu}
@@ -92,25 +86,22 @@ export default function MainSelectAdd({
               <Input
                 className={st.inputStorageAdd}
                 placeholder="Введите наемонавние места хранения"
-                ref={inputRef}
+                // ref={inputRef}
                 value={name}
-                onChange={onNameChange}
+                onChange={(e) => setName(e.target.value)}
                 onKeyDown={(e) => e.stopPropagation()}
               />
               <Button
                 className={st.buttonStorageAdd}
                 type="text"
-                onClick={addItem}
+                onClick={submit}
               >
                 +
               </Button>
             </Space>
           </>
         )}
-        onChange={(id) => {
-          dispatch(reducersCategoriesAdd({ id }));
-        }}
-        options={mainSelect}
+        options={mainSelectAll}
       />
     </ConfigProvider>
   );
