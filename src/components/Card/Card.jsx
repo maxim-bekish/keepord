@@ -16,7 +16,7 @@ export default function Card() {
   const { data, isLoading, error } = useQuery("card", () =>
     getUrl(`${itemsURL}/${location.state}`)
   );
-console.log(error.response.status);
+
   if (isLoading) {
 
     return <h2>Loadinggggg</h2>;
