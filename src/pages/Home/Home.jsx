@@ -5,19 +5,25 @@ import ThingsData from "./../../components/ThingsData/ThingsData";
 import ListData from "../../components/ListData/ListData";
 
 import { usersURL } from "./../../constants/api";
-
+import { Spin } from "antd";
 import { useQuery } from "react-query";
 import getUrl from "./../../fun/getData";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { useContext } from "react";
 import Context from "../../utilities/Context/Context";
 
+import Spiner from "../../components/Spiner/Spiner";
+
 export default function Home() {
   const { $isActiveBaseAndList } = useContext(Context);
   const { data, isLoading, error } = useQuery("coins", () => getUrl(usersURL));
 
   if (isLoading) {
-    return <h2>Loadinggggg</h2>;
+    return (
+      <div style={{ left: "50vw", top: "50vh", position: "absolute" }}>
+        <Spiner />
+      </div>
+    );
   }
 
   if (error) {
@@ -26,6 +32,7 @@ export default function Home() {
 
   return (
     <>
+      {/* <Spiner /> */}
       <header className={`${st.header}`}>
         <button className={`${st.buttonAdd} ${st.button}`}>
           <a className={st.textA} href="/creatingCard">
@@ -35,7 +42,6 @@ export default function Home() {
         <h2 className={st.h2Name}>{data.email}</h2>
 
         {/* <button onClick={() => getCookie('access')}>куки показить</button> */}
-
         <div className={st.search}>
           <input placeholder="Поиск" className={st.inputSearch} type="text" />
           <button className={st.buttonSearch}>

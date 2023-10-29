@@ -65,7 +65,7 @@ export default function ListOfThings() {
         <Col>Место хранения</Col>
         <Col>Категория</Col>
         <Col>Дата добавления</Col>
-        <Col></Col>
+      
       </Row>
       {data.map((e,id) => {
         return (
