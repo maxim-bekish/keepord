@@ -1,31 +1,37 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import st from "./BookmarksTitle.module.scss";
+import Context from "../../utilities/Context/Context";
 // import { useDispatch } from "react-redux";
 // import {add} from './../../store/slice'
-
+// $isActiveBaseAndList:{ isActiveBaseAndList:isActiveBaseAndList,setIsActiveBaseAndList: setIsActiveBaseAndList},
 export default function BookmarksTitle() {
-  const [isActive, setIsActive] = useState("base");
-// const dispatch= useDispatch()
+  const { $isActiveBaseAndList } = useContext(Context);
+
+  // const dispatch= useDispatch()
   return (
     <div className={st.div}>
       <div
         onClick={() => {
-          setIsActive("base");
+          $isActiveBaseAndList.setIsActiveBaseAndList("base");
           // dispatch(add(isActive))
         }}
         className={
-          isActive === "base" ? `${st.spanTitleActive}` : `${st.spanTitle}`
+          $isActiveBaseAndList.isActiveBaseAndList === "base"
+            ? `${st.spanTitleActive}`
+            : `${st.spanTitle}`
         }
       >
         Вещи в базе
       </div>
       <div
         onClick={() => {
-          setIsActive("list");
-            // dispatch(add(isActive));
+          $isActiveBaseAndList.setIsActiveBaseAndList("list");
+          // dispatch(add(isActive));
         }}
         className={
-          isActive === "list" ? `${st.spanTitleActive}` : `${st.spanTitle}`
+          $isActiveBaseAndList.isActiveBaseAndList === "list"
+            ? `${st.spanTitleActive}`
+            : `${st.spanTitle}`
         }
       >
         Списки

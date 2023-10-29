@@ -14,7 +14,8 @@ display: none;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 95px;
+  // gap: 95px;
+  justify-content: space-between
 }
 .container {
   box-sizing: border-box;
@@ -23,7 +24,7 @@ display: none;
   margin: 40px auto 0 auto;
   padding: 0px 25px;
   border-radius: 20px;
-  background-color: $colorBase;
+  // background-color: $colorBase;
 }
 
 .h2Name {
@@ -73,13 +74,18 @@ display: none;
   line-height: 150%;
   text-decoration: none;
   color: $colorBlack;
+  white-space: nowrap;
   
 }
 
 .buttonAdd {
+  max-width: 210px;
   background: $colorBlur;
 }
 .buttonExit {
+  border-radius: 10px;
   margin-left: 30px;
   background-color: $color0;
+  border: 2px solid $colorDarkGreen;
+
 }

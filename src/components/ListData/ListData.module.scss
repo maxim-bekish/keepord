@@ -4,7 +4,8 @@
   flex-direction: row;
   gap: 45px;
   max-width: 350px;
-  margin: 20px 0;
+  margin: 33px 0;
+  height: 66px;
   button {
     color: $colorDarkGreen;
     font-size: 22px;
@@ -12,7 +13,7 @@
     border-radius: 10px;
     border: 1px solid $colorDarkGreen;
     background: #fff;
-    height: 60px;
+    height: 66px;
     padding: 16px 15px 17px 15px;
   }
 }

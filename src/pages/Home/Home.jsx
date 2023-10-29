@@ -9,10 +9,13 @@ import { usersURL } from "./../../constants/api";
 import { useQuery } from "react-query";
 import getUrl from "./../../fun/getData";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import { useContext } from "react";
+import Context from "../../utilities/Context/Context";
 
 export default function Home() {
+  const { $isActiveBaseAndList } = useContext(Context);
   const { data, isLoading, error } = useQuery("coins", () => getUrl(usersURL));
-  console.log(data);
+
   if (isLoading) {
     return <h2>Loadinggggg</h2>;
   }
@@ -52,12 +55,22 @@ export default function Home() {
           </button>
         </div>
       </header>
-      <main className={st.container}>
+      <main
+        style={{
+          backgroundColor: ` ${`${
+            $isActiveBaseAndList.isActiveBaseAndList === "base"
+              ? "#f2ffe3"
+              : "#A6BB8D"
+          }`}    `,
+        }}
+        className={st.container}
+      >
         <BookmarksTitle />
-
-        {/* <ThingsData /> */}
-
-        <ListData />
+        {$isActiveBaseAndList.isActiveBaseAndList === "base" ? (
+          <ThingsData />
+        ) : (
+          <ListData />
+        )}
       </main>
     </>
   );

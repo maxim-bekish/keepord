@@ -18,8 +18,10 @@ function App() {
   const [auth, setAuth] = useState(false);
   const [category, setCategory] = useState(null);
   const [storage, setStorage] = useState(null);
+  const [isActiveBaseAndList, setIsActiveBaseAndList] = useState("base");
 
   let stateContext = {
+    $isActiveBaseAndList:{ isActiveBaseAndList:isActiveBaseAndList,setIsActiveBaseAndList: setIsActiveBaseAndList},
     $auth: { auth: auth, setAuth: setAuth },
     $category: { category: category, setCategory: setCategory },
     $storage: { storage: storage, setStorage: setStorage },
