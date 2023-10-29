@@ -8,9 +8,23 @@ function refreshToken() {
       console.log("refreshToken");
       console.log(res);
     })
-    .catch(function (error) {
-      console.error("ошибка в refreshToken: " + error);
-    });
+    // .catch(function (error) {
+    //   console.error("ошибка в refreshToken: " + error);
+    // });
 }
 
 export default refreshToken;
+
+
+
+
+// function getCookie(name) {
+//   let matches = document.cookie.match(
+//     new RegExp(
+//       "(?:^|; )" +
+//         name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
+//         "=([^;]*)"
+//     )
+//   );
+//  return matches ? decodeURIComponent(matches[1]) : undefined;
+// }

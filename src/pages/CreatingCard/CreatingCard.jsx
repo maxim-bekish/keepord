@@ -6,48 +6,74 @@ import { PictureOutlined } from "@ant-design/icons";
 import { Form, Upload, Input } from "antd";
 import arrow from "./../../img/svg/arrows_button.svg";
 import close from "./../../img/svg/close.svg";
-import { categoriesAllURL,  } from "../../constants/api";
+import { categoriesAllURL } from "../../constants/api";
 import Category from "../../components/mainSelect/Category";
 
 import MainSelectAdd from "../../components/MainSelectAdd/MainSelectAdd";
 import { useNavigate } from "react-router-dom";
 import Context from "../../utilities/Context/Context";
+import { useMutation } from "react-query";
+import axios from "axios";
 
 const { TextArea } = Input;
 
+async function create(data) {
+  return await axios.post(
+    `https://rms2022.pythonanywhere.com/items/add/`,
+    data,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      },
+    }
+  );
+}
 export default function CreatingCard() {
+  const { $category, $storage } = useContext(Context);
+  // const [fileList, setFileList] = useState([]);
+  const [xxx, setXxx] = useState([]);
+  // const handleChange = ({ fileList: newFileList }) => {
+  //   setFileList(newFileList);
+  //   console.log(fileList);
+  // };
 
-    const { $category, $storage } = useContext(Context);
-  const [fileList, setFileList] = useState([]);
-  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  const handleChange = (e) => {
+    setXxx(e.target.files);
+  };
   const uploadButton = (
     <div>
       <PictureOutlined style={{ fontSize: "32px" }} />
     </div>
   );
-
- 
-
-  // const categoriesState = useSelector((s) => s.homePageReducer.categoriesState);
-  // const storageState = useSelector((s) => s.homePageReducer.storageState);
-
   const [form] = Form.useForm();
   const name = Form.useWatch("myName", form);
   const description = Form.useWatch("myDescription", form);
   const photo = Form.useWatch("myPhoto", form);
-  // const [formName,useFormName]=useState('не выбрано');
+
   let creatingCard = {
     name: name,
     category: $category.category,
     storage: $storage.storage,
     description: description,
-    images: fileList,
   };
 
-  const [value, setValue] = useState("");
+  const formData = new FormData();
+  formData.append("item", JSON.stringify(creatingCard));
 
+  for (let i = 0; i < xxx.length; i++) {
+    formData.append("image_list", xxx[i]);
+  }
+
+  const [value, setValue] = useState("");
+  const mutation = useMutation((newProduct) => create(newProduct));
   const navigate = useNavigate();
 
+  const submit = (e) => {
+    e.preventDefault();
+    mutation.mutate(formData);
+    navigate('/home');
+  };
   return (
     <>
       <header className={st.header}>
@@ -117,7 +143,9 @@ export default function CreatingCard() {
             /> */}
             {/* <img src={iconAdd} alt="ppp" className={st.fileUploaderPreview} /> */}
             {/* <div className={st.fileUploaderFileName}></div> */}
-            <Upload
+
+            <input type="file" multiple onChange={handleChange} />
+            {/* <Upload
               //  onChange={xxx}
               register="photos"
               // action="https://rms2022.pythonanywhere.com/items/add/"
@@ -128,16 +156,13 @@ export default function CreatingCard() {
               onChange={handleChange}
             >
               {fileList.length >= 5 ? null : uploadButton}
-            </Upload>
+            </Upload> */}
           </div>
         </Form.Item>
-        <Button
-          label={"Отправить"}
-          widthButton={500}
-          disabledButton={true}
-          dataFormCreatingCard={creatingCard}
-         
-        />
+     
+        <button style={{ width: "500px" }} onClick={submit}>
+          Отправить
+        </button>
       </Form>
       {/* <button className={st.button}>Отпраddddвить</button> */}
     </>

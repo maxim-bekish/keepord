@@ -2,7 +2,7 @@ import search from "./../../img/svg/search.svg";
 import st from "./Home.module.scss";
 import BookmarksTitle from "../../components/bookmarksTitle/BookmarksTitle";
 import ThingsData from "./../../components/ThingsData/ThingsData";
-// import ListData from "./../../components/ListData/ListData";
+import ListData from "../../components/ListData/ListData";
 
 import { usersURL } from "./../../constants/api";
 
@@ -12,7 +12,7 @@ import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 
 export default function Home() {
   const { data, isLoading, error } = useQuery("coins", () => getUrl(usersURL));
-
+  console.log(data);
   if (isLoading) {
     return <h2>Loadinggggg</h2>;
   }
@@ -30,6 +30,8 @@ export default function Home() {
           </a>
         </button>
         <h2 className={st.h2Name}>{data.email}</h2>
+
+        {/* <button onClick={() => getCookie('access')}>куки показить</button> */}
 
         <div className={st.search}>
           <input placeholder="Поиск" className={st.inputSearch} type="text" />
@@ -53,9 +55,9 @@ export default function Home() {
       <main className={st.container}>
         <BookmarksTitle />
 
-        <ThingsData />
+        {/* <ThingsData /> */}
 
-        {/* <ListData /> */}
+        <ListData />
       </main>
     </>
   );

@@ -10,20 +10,25 @@ import ErrorComponent from "../ErrorComponent/ErrorComponent";
 export default function Card() {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location)
+
   const url = `${itemsURL}/${location.state}/delete/`;
 
   const { data, isLoading, error } = useQuery("card", () =>
     getUrl(`${itemsURL}/${location.state}`)
   );
-
+console.log(error.response.status);
   if (isLoading) {
+
     return <h2>Loadinggggg</h2>;
   }
 
   if (error) {
+    if (error.response.status===401) {
+ 
 
-    return <ErrorComponent props={error}></ErrorComponent>;
+    } else {
+      return <ErrorComponent props={error}></ErrorComponent>;
+    }
   }
 
   const deletedItems = () => {
@@ -46,20 +51,30 @@ export default function Card() {
         <div className={st.wrapper}>
           <h2 className={st.name}>{data.name}</h2>
           <div className={st.img}>
-            <img src={eee} alt="photo" />
-            <img src={eee} alt="photo" />
-            <img src={eee} alt="photo" />
-            <img src={eee} alt="photo" />
-            <img src={eee} alt="photo" />
+            {data.images.map((e, id) => {
+              return (
+                <img
+                  key={`key${id}`}
+                  src={
+                    data.images.length === 0
+                      ? ""
+                      : `https://rms2022.pythonanywhere.com${e.image_url}`
+                  }
+                  alt={`itemPhoto-${id}`}
+                />
+              );
+            })}
           </div>
           <section>
             <div className={st.wrapperData}>
               <span>Категория</span>
-              <p>{data.category.name}</p>
+              <p>
+                {data.category === null ? "Не добавил" : data.category.name}
+              </p>
             </div>
             <div className={st.wrapperData}>
               <span>Место хранения</span>
-              <p>{data.storage.name} </p>
+              <p>{data.storage === null ? "Не добавил" : data.storage.name} </p>
             </div>
             <div className={st.wrapperData}>
               <span>Описание</span>

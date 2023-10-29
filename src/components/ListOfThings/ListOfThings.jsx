@@ -41,6 +41,8 @@ export default function ListOfThings() {
     }
   );
   const { isLoading, isError, error, data } = useQuery(["items"], getItems);
+
+  // console.log(data);
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -50,7 +52,7 @@ export default function ListOfThings() {
   }
   const xxx = (e) => {
     // divUtility.current.style.display='block';
-    console.log(divUtility);
+    // console.log(divUtility);
   };
 
   const eee = (e) => {
@@ -65,9 +67,9 @@ export default function ListOfThings() {
         <Col>Дата добавления</Col>
         <Col></Col>
       </Row>
-      {data.map((e) => {
+      {data.map((e,id) => {
         return (
-          <div onMouseEnter={xxx} onMouseLeave={eee} className={st.wrapper}>
+          <div     key={`key${id}`} onMouseEnter={xxx} onMouseLeave={eee} className={st.wrapper}>
             {/* нужно key */}
             <Row className={st.grid}>
               <div
@@ -75,8 +77,10 @@ export default function ListOfThings() {
                 className={st.allData}
               >
                 <Col>{e.name}</Col>
-                <Col>{e.storage.name}</Col>
-                <Col>{e.category.name}</Col>
+                <Col>{e.storage === null ? "Не добавили" : e.storage.name}</Col>
+                <Col>
+                  {e.category === null ? "Не добавили" : e.category.name}
+                </Col>
                 <Col>{e.created_at}</Col>
               </div>
               <Col className={st.endData}>

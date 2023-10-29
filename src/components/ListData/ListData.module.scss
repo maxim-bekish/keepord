@@ -1,0 +1,70 @@
+@import "./../../ColorStyle.scss";
+.filter {
+  display: flex;
+  flex-direction: row;
+  gap: 45px;
+  max-width: 350px;
+  margin: 20px 0;
+  button {
+    color: $colorDarkGreen;
+    font-size: 22px;
+    line-height: 150%;
+    border-radius: 10px;
+    border: 1px solid $colorDarkGreen;
+    background: #fff;
+    height: 60px;
+    padding: 16px 15px 17px 15px;
+  }
+}
+section {
+  padding-left: 10px;
+
+  .gridTitle {
+    margin-bottom: 15px;
+    color: $colorDarkGreen;
+    font-size: 1rem;
+    line-height: 150%; /* 24px */
+    div {
+      color: $colorDarkGreen;
+      font-size: 16px;
+      line-height: 150%; /* 24px */
+      width: 33.33%;
+    }
+  }
+  .grid {
+    div {
+      display: flex;
+      gap: 10px;
+      width: 33.33%;
+      font-size: 1.375rem;
+      line-height: 150%; /* 24px */
+      color: $colorDarkGreen;
+      img {
+        display: flex;
+        width: 40px;
+        height: 40px;
+        justify-content: center;
+        align-items: center;
+      }
+      ul {
+        display: flex;
+        gap: 10px;
+        li {
+          text-transform: uppercase;
+          height: 40px;
+          width: 40px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          &:first-of-type {
+            background-color: $colorDarkGreen;
+            color: $colorWhite;
+          }
+          background-color: $colorBlur;
+          color: $colorBlack;
+        }
+      }
+    }
+  }
+}

@@ -45,13 +45,9 @@ export default function LoginForm(props) {
       })
       .then(function (response) {
         if (response.status === 200) {
-          // dispatch(singInAuth(true));
-          // xxx.$auth.setAuth(true);
           localStorage.setItem("token", JSON.stringify(response.data.access));
-          localStorage.setItem(
-            "tokenRefresh",
-            JSON.stringify(response.data.refresh)
-          );
+          document.cookie = `refresh=${JSON.stringify(response.data.refresh)}`;
+
           reset();
 
           navigation("/home", { replace: true });
