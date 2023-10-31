@@ -13,6 +13,9 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 70px;
+  .imgAll {
+    @include icon;
+  }
   div {
     display: flex;
     img {

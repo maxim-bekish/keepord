@@ -34,7 +34,7 @@ const navigate = useNavigate();
           <div className={st.flexBox}>
             <div className={st.miniWrapper}>
               <div className={st.link} onClick={() => navigate(-1)}>
-                <img src={arrow} alt="arrow" />
+                <img  src={arrow} alt="arrow" />
               </div>
               <div>
                 <span>Карточка вещи</span>

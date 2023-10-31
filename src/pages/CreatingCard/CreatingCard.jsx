@@ -78,12 +78,12 @@ export default function CreatingCard() {
       <header className={st.header}>
         <div>
           <div onClick={() => navigate(-1)}>
-            <img src={arrow} alt="arrow" />
+            <img className={st.imgAll} src={arrow} alt="arrow" />
           </div>
           <span>Создать карточку вещи </span>
         </div>
         <a className={st.down} href="#">
-          <img src={close} alt="close" />
+          <img className={st.imgAll} src={close} alt="close" />
         </a>
       </header>
       <Form form={form} className={st.form} colon={false}>
@@ -158,7 +158,7 @@ export default function CreatingCard() {
             </Upload> */}
           </div>
         </Form.Item>
-     <button className={st.buttonTest} >Отправить</button>
+        <button className={st.buttonTest}>Отправить</button>
         {/* <button style={{ width: "500px" }} onClick={submit}>
           Отправить
         </button> */}

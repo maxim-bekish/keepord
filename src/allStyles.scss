@@ -42,3 +42,11 @@
     border: 1px solid $colorDarkGreen;
   }
 }
+@mixin icon {
+  width: 40px;
+  height: 40px;
+  &:hover {
+    border-radius: 10px;
+    background-color: $colorBlur;
+  }
+}

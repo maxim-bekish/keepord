@@ -42,7 +42,7 @@ export default function ListOfThings() {
   );
   const { isLoading, isError, error, data } = useQuery(["items"], getItems);
 
-  // console.log(data);
+  console.log(data);
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -65,18 +65,35 @@ export default function ListOfThings() {
         <Col>Место хранения</Col>
         <Col>Категория</Col>
         <Col>Дата добавления</Col>
-      
       </Row>
-      {data.map((e,id) => {
+      {data.map((e, id) => {
         return (
-          <div     key={`key${id}`} onMouseEnter={xxx} onMouseLeave={eee} className={st.wrapper}>
+          <div
+            key={`key${id}`}
+            onMouseEnter={xxx}
+            onMouseLeave={eee}
+            className={st.wrapper}
+          >
             {/* нужно key */}
             <Row className={st.grid}>
               <div
                 onClick={() => navigate("/thingsCard", { state: e.id })}
                 className={st.allData}
               >
-                <Col>{e.name}</Col>
+                <Col>
+                
+                    {e.images.length === 0 ? (
+                      <h2>eee</h2>
+                    ) : (
+                      <img
+                        src={`https://rms2022.pythonanywhere.com${e.images[0].image_url}`}
+                        alt=""
+                      />
+                    )}
+              
+
+                  <div>{e.name}</div>
+                </Col>
                 <Col>{e.storage === null ? "Не добавили" : e.storage.name}</Col>
                 <Col>
                   {e.category === null ? "Не добавили" : e.category.name}
@@ -84,7 +101,7 @@ export default function ListOfThings() {
                 <Col>{e.created_at}</Col>
               </div>
               <Col className={st.endData}>
-                <div id={e.id} ref={divUtility}>
+                <div id={e.id} ref={divUtility} className={st.allUtility}>
                   <img
                     onClick={() => console.log(`edit ${e.id}`)}
                     src={edit}
