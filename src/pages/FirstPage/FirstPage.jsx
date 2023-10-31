@@ -1,42 +1,55 @@
-import styles from "./FirstPage.module.scss";
+import st from "./FirstPage.module.scss";
 import iconSrc from "./../../img/svg/animation.svg";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 let width = document.body.clientWidth;
 function First_page() {
+  const navigate = useNavigate();
+  navigate("/home");
   return (
     <>
-      <div className={styles.firstPage}>
+      <div className={st.firstPage}>
         <motion.div
           initial={{ x: width / 2 }}
           animate={{ x: 0 }}
           transition={{ duration: 2 }}
-          className={styles.firstPage__leftWindow}
+          className={st.firstPage__leftWindow}
         >
-          <div className={styles.svg}>
+          <div className={st.svg}>
             <img src={iconSrc} alt="" />
           </div>
         </motion.div>
-        <div className={styles.firstPage__rightWindow}>
-          <section className={styles.rightWindow__Form}>
+        <div className={st.firstPage__rightWindow}>
+          <section className={st.rightWindow__Form}>
             <h2>
               Добро пожаловать в Систему <br /> управления ресурсами
             </h2>
-            <div className={styles.form__buttons}>
+            <div className={st.form__buttons}>
               <div>
                 <span>У Вас уже есть профиль?</span>
-                <a className={styles.aa} href="/login">
+                <button
+                  onClick={() => {
+                    navigate("/login");
+                  }}
+                  className={st.button}
+                >
                   Войти
-                </a>
+                </button>
               </div>
               <div>
                 <span>Еще не зарегистрированы?</span>
-                <a className={styles.aa} href="/registration">
+                <button
+                  onClick={() => {
+                    navigate("/registration");
+                  }}
+                  className={st.button}
+                >
                   Зарегистрироваться
-                </a>
+                </button>
               </div>
             </div>
-            <a href="#" className={styles.a}>
+            <a href="#" className={st.a}>
               Продолжить без авторизации
             </a>
           </section>

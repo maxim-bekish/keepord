@@ -1,4 +1,5 @@
 @import "../../ColorStyle.scss";
+@import "../../allStyles.scss";
 .firstPage {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -37,22 +38,10 @@
           font-size: 1.375rem;
           line-height: 150%;
         }
-        .aa {
-          color: $colorDarkGreen;
-          text-decoration: none;
-          margin-top: 1.5rem;
-          font-size: 1.125rem;
-          width: 100%;
-          display: flex;
-          max-width: 31.25rem;
-          height: 3.75rem;
-          justify-content: center;
-          align-items: center;
-          gap: 0.625rem;
-          flex-shrink: 0;
-          border: 0;
-          border-radius: 0.625rem;
-          background: $colorBlur;
+        .button {
+          @include buttonOne;
+          margin-top: 24px;
+          font-weight: 400;
         }
       }
       .a {

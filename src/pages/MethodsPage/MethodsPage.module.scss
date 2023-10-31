@@ -1,4 +1,5 @@
 @import "./../../ColorStyle.scss";
+@import "./../../allStyles.scss";
 
 .container {
   position: absolute;
@@ -16,17 +17,5 @@
   line-height: 150%; /* 42px */
 }
 .button {
-  box-sizing: border-box;
-  display: flex;
-  width: 100%;
-  height: 60px;
-  background: $colorBlur;
-  padding: 20px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  border: 0;
-  color: $colorGreen;
-  font-size: 1.125rem;
-  font-weight: 600;
+  @include buttonOne;
 }
