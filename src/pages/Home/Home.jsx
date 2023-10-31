@@ -34,7 +34,7 @@ export default function Home() {
     <>
       {/* <Spiner /> */}
       <header className={`${st.header}`}>
-        <button className={`${st.buttonAdd} ${st.button}`}>
+        <button className={st.buttonAdd}>
           <a className={st.textA} href="/creatingCard">
             + Добавить вещь
           </a>
@@ -54,7 +54,7 @@ export default function Home() {
               window.location.replace("/login");
               // dispatch(singInAuth(false));
             }}
-            className={`${st.buttonExit} ${st.button}`}
+            className={st.buttonExit} 
           >
             {/* <a className={st.textA}></a> */}
             Выход

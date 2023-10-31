@@ -23,9 +23,11 @@ export default function methodsPage() {
       break;
   }
   return (
-    <div className={st.container} >
+    <div className={st.container}>
       <img src={url} alt="logo" />
-      <p className={st.text}>Для продолжения вы будете перенаправлены в аккаунт {label}</p>
+      <p className={st.text}>
+        Для продолжения вы будете перенаправлены в аккаунт {label}
+      </p>
       <button className={st.button} onClick={send}>
         Перейти сейчас
       </button>

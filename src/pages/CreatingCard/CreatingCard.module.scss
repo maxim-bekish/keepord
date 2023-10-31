@@ -1,4 +1,5 @@
 @import "../../ColorStyle.scss";
+@import "../../allStyles.scss";
 body {
   margin: 0;
 }
@@ -14,8 +15,8 @@ body {
   margin-bottom: 70px;
   div {
     display: flex;
-    img{
-      cursor:pointer;
+    img {
+      cursor: pointer;
     }
   }
   span {
@@ -44,7 +45,7 @@ body {
   color: rgba(30, 167, 30, 0.964);
   margin-bottom: 0;
 
-  .input{
+  .input {
     max-width: 100%;
   }
   label {
@@ -96,7 +97,7 @@ body {
   &:focus-visible {
     outline: 0;
   }
-  &:hover{
+  &:hover {
     border-color: green;
   }
 }
@@ -106,10 +107,9 @@ body {
   box-sizing: border-box;
   color: $colorBlack;
   font-size: 1.375rem;
-
 }
 .form {
-padding: 0 20px;
+  padding: 0 20px;
   display: flex;
   flex-direction: column;
   gap: 50px;
@@ -162,4 +162,8 @@ padding: 0 20px;
       }
     }
   }
+}
+.buttonTest {
+  max-width: 500px;
+  @include buttonOne;
 }

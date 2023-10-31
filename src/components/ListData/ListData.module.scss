@@ -1,4 +1,5 @@
 @import "./../../ColorStyle.scss";
+@import "./../../allStyles.scss";
 .filter {
   display: flex;
   flex-direction: row;
@@ -7,14 +8,7 @@
   margin: 33px 0;
   height: 66px;
   button {
-    color: $colorDarkGreen;
-    font-size: 22px;
-    line-height: 150%;
-    border-radius: 10px;
-    border: 1px solid $colorDarkGreen;
-    background: #fff;
-    height: 66px;
-    padding: 16px 15px 17px 15px;
+    @include buttonTwo;
   }
 }
 section {

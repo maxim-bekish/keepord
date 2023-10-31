@@ -35,7 +35,7 @@ function App() {
           <Route path="/" element={<First_page />} />
           <Route path="/login" element={<LoginPages />} />
           <Route path="/registration" element={<Registration_page />} />
-          <Route path="/send" element={<MethodsPage />} />
+          <Route path="/methodsPage" element={<MethodsPage />} />
           <Route element={<PrivateRoute />}>
             <Route path="/home" element={<Home />} />
             <Route path="/creatingCard" element={<CreatingCard />} />

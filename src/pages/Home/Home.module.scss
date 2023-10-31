@@ -1,8 +1,8 @@
 @import "./../../ColorStyle.scss";
-
+@import "./../../allStyles.scss";
 
 .xxx {
-display: none;
+  display: none;
 }
 
 .header {
@@ -15,7 +15,7 @@ display: none;
   justify-content: center;
   align-items: center;
   // gap: 95px;
-  justify-content: space-between
+  justify-content: space-between;
 }
 .container {
   box-sizing: border-box;
@@ -75,17 +75,15 @@ display: none;
   text-decoration: none;
   color: $colorBlack;
   white-space: nowrap;
-  
 }
 
 .buttonAdd {
   max-width: 210px;
-  background: $colorBlur;
+
+  @include buttonOne;
 }
 .buttonExit {
-  border-radius: 10px;
+  @include buttonTwo;
+  max-width: 115px;
   margin-left: 30px;
-  background-color: $color0;
-  border: 2px solid $colorDarkGreen;
-
 }

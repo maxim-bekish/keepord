@@ -84,9 +84,11 @@ export default function Card() {
         </div>
       </main>
       <div className={`${st.buttonAll} ${st.container}`}>
-        <button>Редактировать</button>
-        <button onClick={deletedItems}>Удалить</button>
-        <button>Поделиться</button>
+        <button className={st.button}>Редактировать</button>
+        <button className={st.button} onClick={deletedItems}>
+          Удалить
+        </button>
+        <button className={st.button}>Поделиться</button>
       </div>
     </>
   );

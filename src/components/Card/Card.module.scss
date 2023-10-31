@@ -1,4 +1,5 @@
 @import "./../../ColorStyle.scss";
+@import "./../../allStyles.scss";
 .wrapper {
   max-width: 850px;
   .name {
@@ -53,22 +54,18 @@
   max-width: 1280px;
 }
 
-
-
 .buttonAll {
   display: flex;
   gap: 20px;
+  button {
+    @include buttonOne;
+  }
 }
-
 
 .container {
   margin: 0 auto;
   max-width: 1280px;
 }
-
-
-
-
 
 .header {
   background-color: $colorBase;
@@ -97,4 +94,3 @@
   top: 56px;
   right: 80px;
 }
-

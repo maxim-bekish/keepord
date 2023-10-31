@@ -10,9 +10,18 @@ export default function ListData() {
   return (
     <>
       <div className={st.filter}>
-        <button onClick={ ()=> console.log("Автор")}>Автор</button>
-        <button onClick={ ()=> console.log("Исполнитель")}>Исполнитель</button>
-        <button onClick={ ()=> console.log("Все")}>Все</button>
+        <button className={st.button} onClick={() => console.log("Автор")}>
+          Автор
+        </button>
+        <button
+          className={st.button}
+          onClick={() => console.log("Исполнитель")}
+        >
+          Исполнитель
+        </button>
+        <button className={st.button} onClick={() => console.log("Все")}>
+          Все
+        </button>
       </div>
       <section>
         <>

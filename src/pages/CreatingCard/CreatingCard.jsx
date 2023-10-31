@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 
 import st from "./CreatingCard.module.scss";
-import Button from "../../components/Button/Button";
 import { PictureOutlined } from "@ant-design/icons";
 import { Form, Upload, Input } from "antd";
 import arrow from "./../../img/svg/arrows_button.svg";
@@ -159,10 +158,10 @@ export default function CreatingCard() {
             </Upload> */}
           </div>
         </Form.Item>
-     
-        <button style={{ width: "500px" }} onClick={submit}>
+     <button className={st.buttonTest} >Отправить</button>
+        {/* <button style={{ width: "500px" }} onClick={submit}>
           Отправить
-        </button>
+        </button> */}
       </Form>
       {/* <button className={st.button}>Отпраddddвить</button> */}
     </>

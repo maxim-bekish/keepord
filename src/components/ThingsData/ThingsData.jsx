@@ -22,7 +22,7 @@ let result = {
 
         <button
           onClick={() => console.log(result)}
-          className={`${st.button} ${st.buttonSubmit}`}
+          className= {st.buttonSubmit}
         >
           Применить
         </button>

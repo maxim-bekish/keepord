@@ -1,28 +1,34 @@
+import { useNavigate } from "react-router-dom";
 import st from "./Methods.module.scss";
-function sendGoggle() {
-  localStorage.setItem("methodsRegistration", "Google");
-}
-function sendYandex() {
-  localStorage.setItem("methodsRegistration", "Yandex");
-}
-function sendVK() {
-  localStorage.setItem("methodsRegistration", "VK");
-}
+
 function LoginMethod(props) {
+  const navigate = useNavigate();
+  navigate("/home");
+  function sendGoggle() {
+    localStorage.setItem("methodsRegistration", "Google");
+    navigate("/methodsPage");
+  }
+  function sendYandex() {
+    localStorage.setItem("methodsRegistration", "Yandex");
+    navigate("/methodsPage");
+  }
+  function sendVK() {
+    localStorage.setItem("methodsRegistration", "VK");
+    navigate("/methodsPage");
+  }
+
   return (
     <div className={st.pagesRight}>
       <h5>{props.title} с помощью</h5>
       <div className={st.buttons}>
-        <button onClick={sendGoggle}>
-          <a href="/send">Google</a>
+        <button className={st.button} onClick={sendGoggle}>
+          Google
         </button>
-
-        <button onClick={sendYandex}>
-          <a href="/send">Яндекс</a>
+        <button className={st.button} onClick={sendYandex}>
+          Яндекс
         </button>
-
-        <button onClick={sendVK}>
-          <a href="/send">Вк</a>
+        <button className={st.button} onClick={sendVK}>
+          Вк
         </button>
       </div>
       <a href="#">{props.text}</a>

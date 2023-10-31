@@ -123,10 +123,15 @@ q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+
+
 }
-button {
-  cursor: pointer;
-}
+
+
+
+
+
+
 input {
   padding: 1rem 1.25rem;
 }
