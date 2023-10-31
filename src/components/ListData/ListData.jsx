@@ -35,7 +35,7 @@ export default function ListData() {
           {/* нужно key */}
           <Row className={st.grid}>
             <Col>
-              <img src="#" alt="ph" /> <span>{"name"}</span>
+              <img src="#" alt="ph" /> <div>{"name"}</div>
             </Col>
             <Col>{"created_at"}</Col>
             <Col>

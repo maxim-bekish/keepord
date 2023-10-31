@@ -85,6 +85,9 @@
 }
 .buttonExit {
   @include buttonTwo;
-  max-width: 115px;
+  width: 115px;
   margin-left: 30px;
+  &:hover{
+    border-width: 1px;
+  }
 }

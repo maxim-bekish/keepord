@@ -18,14 +18,11 @@ export default function Card() {
   );
 
   if (isLoading) {
-
     return <h2>Loadinggggg</h2>;
   }
 
   if (error) {
-    if (error.response.status===401) {
- 
-
+    if (error.response.status === 401) {
     } else {
       return <ErrorComponent props={error}></ErrorComponent>;
     }
@@ -84,11 +81,17 @@ export default function Card() {
         </div>
       </main>
       <div className={`${st.buttonAll} ${st.container}`}>
-        <button className={st.button}>Редактировать</button>
-        <button className={st.button} onClick={deletedItems}>
-          Удалить
-        </button>
-        <button className={st.button}>Поделиться</button>
+        <div>
+          <button className={st.button}>Редактировать</button>
+        </div>
+        <div>
+          <button className={st.button} onClick={deletedItems}>
+            Удалить
+          </button>
+        </div>
+        <div>
+          <button className={st.button}>Поделиться</button>
+        </div>
       </div>
     </>
   );

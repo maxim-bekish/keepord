@@ -4,11 +4,12 @@
   display: flex;
   flex-direction: row;
   gap: 45px;
-  max-width: 350px;
+  max-width: 450px;
   margin: 33px 0;
   height: 66px;
   button {
     @include buttonTwo;
+border: 1px solid $colorDarkGreen;
   }
 }
 section {
@@ -33,7 +34,7 @@ section {
       width: 33.33%;
       font-size: 1.375rem;
       line-height: 150%; /* 24px */
-      color: $colorDarkGreen;
+
       img {
         display: flex;
         width: 40px;
@@ -57,7 +58,6 @@ section {
             color: $colorWhite;
           }
           background-color: $colorBlur;
-          color: $colorBlack;
         }
       }
     }

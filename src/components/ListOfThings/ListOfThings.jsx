@@ -4,6 +4,7 @@ import st from "./ListOfThings.module.scss";
 import share from "./../../img/svg/share.svg";
 import trash from "./../../img/svg/trash.svg";
 import edit from "./../../img/svg/edit.svg";
+import iconPhoto from "./../../img/png/iconPhoto.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { itemsURL } from "./../../constants/api.js";
@@ -81,16 +82,14 @@ export default function ListOfThings() {
                 className={st.allData}
               >
                 <Col>
-                
-                    {e.images.length === 0 ? (
-                      <h2>eee</h2>
-                    ) : (
-                      <img
-                        src={`https://rms2022.pythonanywhere.com${e.images[0].image_url}`}
-                        alt=""
-                      />
-                    )}
-              
+                  {e.images.length === 0 ? (
+                    <img src={iconPhoto} />
+                  ) : (
+                    <img
+                      src={`https://rms2022.pythonanywhere.com${e.images[0].image_url}`}
+                      alt=""
+                    />
+                  )}
 
                   <div>{e.name}</div>
                 </Col>

@@ -50,6 +50,11 @@ export default function CreatingCard() {
   const description = Form.useWatch("myDescription", form);
   const photo = Form.useWatch("myPhoto", form);
 
+  function popUp() {
+
+    
+  }
+
   let creatingCard = {
     name: name,
     category: $category.category,
@@ -71,7 +76,7 @@ export default function CreatingCard() {
   const submit = (e) => {
     e.preventDefault();
     mutation.mutate(formData);
-    navigate('/home');
+    navigate("/home");
   };
   return (
     <>
@@ -158,7 +163,9 @@ export default function CreatingCard() {
             </Upload> */}
           </div>
         </Form.Item>
-        <button className={st.buttonTest}>Отправить</button>
+        <button className={st.buttonTest} onClick={popUp}>
+          Отправить
+        </button>
         {/* <button style={{ width: "500px" }} onClick={submit}>
           Отправить
         </button> */}

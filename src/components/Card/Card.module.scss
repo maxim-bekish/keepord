@@ -57,8 +57,11 @@
 .buttonAll {
   display: flex;
   gap: 20px;
-  button {
-    @include buttonOne;
+  div {
+    width: 33.33%;
+    button {
+      @include buttonOne;
+    }
   }
 }
 

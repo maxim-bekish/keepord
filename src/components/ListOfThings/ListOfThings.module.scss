@@ -25,6 +25,8 @@
         font-size: 1.375rem;
         line-height: 150%; /* 24px */
         color: $colorDarkGreen;
+        display: flex;
+        align-items: center;
       }
       img {
         border-radius: 10px;

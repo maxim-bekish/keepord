@@ -45,8 +45,14 @@ body {
 .wrapper {
   display: flex;
   flex-wrap: wrap;
-  color: rgba(30, 167, 30, 0.964);
+  color: #1ea71ef6;
   margin-bottom: 0;
+  textarea, input {
+    &:focus {
+      border: 1px solid $colorDarkGreen;
+      box-shadow: 0 0 0 2px #54856538;
+    }
+  }
 
   .input {
     max-width: 100%;
@@ -61,6 +67,11 @@ body {
   .description {
     height: 200px;
     resize: none;
+    // .textarea {
+
+    //     border-color: red;
+
+    // }
   }
 }
 
