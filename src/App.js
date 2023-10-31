@@ -8,7 +8,7 @@ import MethodsPage from "./pages/MethodsPage/MethodsPage";
 import Home from "./pages/Home/Home";
 import ListData from "./components/ListData/ListData";
 
-import CreatingCard from "./pages/CreatingCard/CreatingCard";
+import {CreatingCard} from "./pages/CreatingCard/CreatingCard";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import PrivateRoute from "./utilities/router/PrivateRoute";
 import Context from "./utilities/Context/Context";
@@ -21,7 +21,10 @@ function App() {
   const [isActiveBaseAndList, setIsActiveBaseAndList] = useState("base");
 
   let stateContext = {
-    $isActiveBaseAndList:{ isActiveBaseAndList:isActiveBaseAndList,setIsActiveBaseAndList: setIsActiveBaseAndList},
+    $isActiveBaseAndList: {
+      isActiveBaseAndList: isActiveBaseAndList,
+      setIsActiveBaseAndList: setIsActiveBaseAndList,
+    },
     $auth: { auth: auth, setAuth: setAuth },
     $category: { category: category, setCategory: setCategory },
     $storage: { storage: storage, setStorage: setStorage },
@@ -36,6 +39,7 @@ function App() {
           <Route path="/login" element={<LoginPages />} />
           <Route path="/registration" element={<Registration_page />} />
           <Route path="/methodsPage" element={<MethodsPage />} />
+
           <Route element={<PrivateRoute />}>
             <Route path="/home" element={<Home />} />
             <Route path="/creatingCard" element={<CreatingCard />} />

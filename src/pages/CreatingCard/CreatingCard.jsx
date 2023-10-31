@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import Context from "../../utilities/Context/Context";
 import { useMutation } from "react-query";
 import axios from "axios";
+import PopUp from "../../components/popUp/popUp";
 
 const { TextArea } = Input;
 
@@ -28,8 +29,10 @@ async function create(data) {
     }
   );
 }
-export default function CreatingCard() {
+export function CreatingCard() {
   const { $category, $storage } = useContext(Context);
+  const [modalActive, setModalActive] = useState(false);
+
   // const [fileList, setFileList] = useState([]);
   const [xxx, setXxx] = useState([]);
   // const handleChange = ({ fileList: newFileList }) => {
@@ -48,12 +51,7 @@ export default function CreatingCard() {
   const [form] = Form.useForm();
   const name = Form.useWatch("myName", form);
   const description = Form.useWatch("myDescription", form);
-  const photo = Form.useWatch("myPhoto", form);
 
-  function popUp() {
-
-    
-  }
 
   let creatingCard = {
     name: name,
@@ -80,76 +78,77 @@ export default function CreatingCard() {
   };
   return (
     <>
-      <header className={st.header}>
-        <div>
-          <div onClick={() => navigate(-1)}>
-            <img className={st.imgAll} src={arrow} alt="arrow" />
-          </div>
-          <span>Создать карточку вещи </span>
-        </div>
-        <a className={st.down} href="#">
-          <img className={st.imgAll} src={close} alt="close" />
-        </a>
-      </header>
-      <Form form={form} className={st.form} colon={false}>
-        <Form.Item
-          label="Наименование *"
-          name={"myName"}
-          className={st.wrapper}
-          // rules={[
-          //   {
-          //     required: true,
-          //   },
-          // ]}
-        >
-          <Input className={st.input} type="text" />
-        </Form.Item>
-        <Form.Item lebel="Категория">
-          <div className={`${st.wrapper} ${st.svg}`}>
-            <label className={st.text} htmlFor="categories">
-              Категория
-            </label>
-            <div>
-              <Category width={"500"} url={categoriesAllURL} />
+      <div>
+        <header className={st.header}>
+          <div>
+            <div onClick={() => navigate(-1)}>
+              <img className={st.imgAll} src={arrow} alt="arrow" />
             </div>
+            <span>Создать карточку вещи </span>
           </div>
-        </Form.Item>
+          <a className={st.down} href="#">
+            <img className={st.imgAll} src={close} alt="close" />
+          </a>
+        </header>
+        <Form form={form} className={st.form} colon={false}>
+          <Form.Item
+            label="Наименование *"
+            name={"myName"}
+            className={st.wrapper}
+            // rules={[
+            //   {
+            //     required: true,
+            //   },
+            // ]}
+          >
+            <Input className={st.input} type="text" />
+          </Form.Item>
+          <Form.Item lebel="Категория">
+            <div className={`${st.wrapper} ${st.svg}`}>
+              <label className={st.text} htmlFor="categories">
+                Категория
+              </label>
+              <div>
+                <Category width={"500"} url={categoriesAllURL} />
+              </div>
+            </div>
+          </Form.Item>
 
-        <div className={`${st.wrapper} ${st.svg}`}>
-          <label className={st.text} htmlFor="storage">
-            Место хранения
-          </label>
+          <div className={`${st.wrapper} ${st.svg}`}>
+            <label className={st.text} htmlFor="storage">
+              Место хранения
+            </label>
 
-          <MainSelectAdd />
-        </div>
+            <MainSelectAdd />
+          </div>
 
-        <Form.Item
-          label="Описание *"
-          name={"myDescription"}
-          className={st.wrapper}
-        >
-          <TextArea
-            type="text"
-            className={`${st.input} ${st.description}`}
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-          />
-        </Form.Item>
-        <Form.Item label="Фотографии *" className={st.wrapper}>
-          <div className={`${st.wrapper} ${st.wrapperUpload} `}>
-            <span className={st.miniTitle}>Не более 5</span>
+          <Form.Item
+            label="Описание *"
+            name={"myDescription"}
+            className={st.wrapper}
+          >
+            <TextArea
+              type="text"
+              className={`${st.input} ${st.description}`}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+            />
+          </Form.Item>
+          <Form.Item label="Фотографии *" className={st.wrapper}>
+            <div className={`${st.wrapper} ${st.wrapperUpload} `}>
+              <span className={st.miniTitle}>Не более 5</span>
 
-            {/* <input
+              {/* <input
               multiple
               type="file"
               id="fileLoaderButton"
               className={st.fileLoaderButton}
             /> */}
-            {/* <img src={iconAdd} alt="ppp" className={st.fileUploaderPreview} /> */}
-            {/* <div className={st.fileUploaderFileName}></div> */}
+              {/* <img src={iconAdd} alt="ppp" className={st.fileUploaderPreview} /> */}
+              {/* <div className={st.fileUploaderFileName}></div> */}
 
-            <input type="file" multiple onChange={handleChange} />
-            {/* <Upload
+              <input type="file" multiple onChange={handleChange} />
+              {/* <Upload
               //  onChange={xxx}
               register="photos"
               // action="https://rms2022.pythonanywhere.com/items/add/"
@@ -161,16 +160,32 @@ export default function CreatingCard() {
             >
               {fileList.length >= 5 ? null : uploadButton}
             </Upload> */}
-          </div>
-        </Form.Item>
-        <button className={st.buttonTest} onClick={popUp}>
-          Отправить
-        </button>
-        {/* <button style={{ width: "500px" }} onClick={submit}>
+            </div>
+          </Form.Item>
+          <button
+            className={st.buttonTest}
+            onClick={() => setModalActive(true)}
+          >
+            Отправить
+          </button>
+          {/* <button style={{ width: "500px" }} onClick={submit}>
           Отправить
         </button> */}
-      </Form>
-      {/* <button className={st.button}>Отпраddddвить</button> */}
+        </Form>
+        {/* <button className={st.button}>Отпраddddвить</button> */}
+      </div>
+
+      <PopUp active={modalActive} setActive={setModalActive}>
+        <div className={st.wrapperModal}>
+          <img onClick={() => setModalActive(false)} src={close} alt="" />
+          <h2>Сохранить новую вещь?</h2>
+          <div className={st.buttonModal}>
+            <button onClick={submit}>Да</button>
+
+            <button onClick={ ()=> navigate("/home") } >Нет</button>
+          </div>
+        </div>
+      </PopUp>
     </>
   );
 }

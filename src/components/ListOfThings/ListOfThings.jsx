@@ -12,14 +12,13 @@ import { itemsAllURL } from "./../../constants/api.js";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useRef } from "react";
 
-async function getItems() {
-  const { data } = await axios.get(itemsAllURL, {
+function getItems() {
+  const { data } = axios.get(itemsAllURL, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
     },
   });
-
   return data;
 }
 

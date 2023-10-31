@@ -6,8 +6,12 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import getUrl from "../../fun/getData";
 import ErrorComponent from "../ErrorComponent/ErrorComponent";
+import PopUp from "../popUp/popUp";
+import { useState } from "react";
+import close from "./../../img/svg/close.svg";
 
 export default function Card() {
+  const [modalActive, setModalActive] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -28,22 +32,19 @@ export default function Card() {
     }
   }
 
-  const deletedItems = () => {
-    let isDelete = window.confirm("Точно удалить?");
-    if (isDelete) {
-      axios.delete(url, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-        },
-      });
+  const deletedItems = async () => {
+    await axios.delete(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      },
+    });
 
-      navigate("/home", { replace: true });
-    }
+    navigate("/home");
   };
 
   return (
-    <>
+    <div className={st.all}>
       <main className={`${st.container}  `}>
         <div className={st.wrapper}>
           <h2 className={st.name}>{data.name}</h2>
@@ -85,7 +86,7 @@ export default function Card() {
           <button className={st.button}>Редактировать</button>
         </div>
         <div>
-          <button className={st.button} onClick={deletedItems}>
+          <button className={st.button} onClick={() => setModalActive(true)}>
             Удалить
           </button>
         </div>
@@ -93,6 +94,18 @@ export default function Card() {
           <button className={st.button}>Поделиться</button>
         </div>
       </div>
-    </>
+
+      <PopUp active={modalActive}>
+        <div className={st.wrapperModal}>
+          <img onClick={() => setModalActive(false)} src={close} alt="" />
+          <h2>Вы действительно хотите удалить эту вещь?</h2>
+          <div className={st.buttonModal}>
+            <button onClick={deletedItems}>Да</button>
+
+            <button onClick={() => setModalActive(false)}>Нет</button>
+          </div>
+        </div>
+      </PopUp>
+    </div>
   );
 }
