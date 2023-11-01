@@ -26,10 +26,9 @@ export default function Card() {
   }
 
   if (error) {
-    if (error.response.status === 401) {
-    } else {
+
       return <ErrorComponent props={error}></ErrorComponent>;
-    }
+    
   }
 
   const deletedItems = async () => {
@@ -44,6 +43,7 @@ export default function Card() {
   };
 
   return (
+    
     <div className={st.all}>
       <main className={`${st.container}  `}>
         <div className={st.wrapper}>

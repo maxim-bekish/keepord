@@ -1,5 +1,8 @@
 @import "./../../ColorStyle.scss";
-
+@import "./../../allStyles.scss";
+.firstWrapper{
+  @include modalPopUp;
+}
 .wrapper {
   display: flex;
   width: 100%;

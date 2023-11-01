@@ -2,6 +2,7 @@ import { Col, Row } from "antd";
 import st from "./ListOfThings.module.scss";
 // import { useSelector } from "react-redux";
 import share from "./../../img/svg/share.svg";
+import close from "./../../img/svg/close.svg";
 import trash from "./../../img/svg/trash.svg";
 import edit from "./../../img/svg/edit.svg";
 import iconPhoto from "./../../img/png/iconPhoto.png";
@@ -10,7 +11,8 @@ import axios from "axios";
 import { itemsURL } from "./../../constants/api.js";
 import { itemsAllURL } from "./../../constants/api.js";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import PopUp from "../popUp/popUp";
 
 async function getItems() {
   const { data } = await axios.get(itemsAllURL, {
@@ -23,6 +25,8 @@ async function getItems() {
 }
 
 export default function ListOfThings() {
+  const [modalActive, setModalActive] = useState(false);
+  const [idItem, setIdItem] = useState();
   const divUtility = useRef(null);
   // const dataItemArray = useSelector((s) => s.sliceDataItem.dataItem);
   const navigate = useNavigate();
@@ -58,6 +62,11 @@ export default function ListOfThings() {
   const eee = (e) => {
     //  divUtility.current.style.display = "none";
   };
+
+  function deleteFinish(e) {
+    setModalActive(true);
+    setIdItem(e);
+  }
   return (
     <>
       <Row className={st.gridTitle}>
@@ -110,17 +119,27 @@ export default function ListOfThings() {
                     src={share}
                     alt=""
                   />
-                  <img
-                    onClick={() => deletePost.mutate(e.id)}
-                    src={trash}
-                    alt=""
-                  />
+                  <img onClick={() => deleteFinish(e.id)} src={trash} alt="" />
                 </div>
               </Col>
             </Row>
           </div>
         );
       })}
+      <PopUp active={modalActive}>
+        <div className={st.firstWrapper} >
+
+          <div className={st.wrapperModal}>
+            <img onClick={() => setModalActive(false)} src={close} alt="" />
+            <h2>Вы действительно хотите удалить эту вещь?</h2>
+            <div className={st.buttonModal}>
+              <button onClick={() => {deletePost.mutate(idItem); setModalActive(false)}}>Да</button>
+
+              <button onClick={() => setModalActive(false)}>Нет</button>
+            </div>
+          </div>
+        </div>
+      </PopUp>
     </>
   );
 }

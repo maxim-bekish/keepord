@@ -18,6 +18,7 @@ function App() {
   const [auth, setAuth] = useState(false);
   const [category, setCategory] = useState(null);
   const [storage, setStorage] = useState(null);
+
   const [isActiveBaseAndList, setIsActiveBaseAndList] = useState("base");
 
   let stateContext = {

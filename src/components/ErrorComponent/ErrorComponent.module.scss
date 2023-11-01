@@ -1,0 +1,19 @@
+@import "./../../ColorStyle.scss";
+@import "./../../allStyles.scss";
+.h2 {
+  text-align: center;
+  margin-top: 50px;
+}
+.wrapperButton {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+
+  .button {
+    @include button;
+    background-color: $colorBlur;
+    border: 1px;
+    max-width: 400px;
+  }
+}
