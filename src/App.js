@@ -22,6 +22,7 @@ function App() {
   const [isActiveBaseAndList, setIsActiveBaseAndList] = useState("base");
 
   let stateContext = {
+    $state:{},
     $isActiveBaseAndList: {
       isActiveBaseAndList: isActiveBaseAndList,
       setIsActiveBaseAndList: setIsActiveBaseAndList,
