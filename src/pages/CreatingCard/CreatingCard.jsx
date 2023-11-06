@@ -5,15 +5,18 @@ import { PictureOutlined } from "@ant-design/icons";
 import { Form, Upload, Input } from "antd";
 import arrow from "./../../img/svg/arrows_button.svg";
 import close from "./../../img/svg/close.svg";
-import { categoriesAllURL } from "../../constants/api";
+import { categoriesAllURL, storageAllURL } from "../../constants/api";
 import Category from "../../components/mainSelect/Category";
 
 import MainSelectAdd from "../../components/MainSelectAdd/MainSelectAdd";
 import { useNavigate } from "react-router-dom";
 import Context from "../../utilities/Context/Context";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import PopUp from "../../components/popUp/popUp";
+import getUrl from "../../fun/getData";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import Spiner from "../../components/Spiner/Spiner";
 
 const { TextArea } = Input;
 
@@ -30,14 +33,19 @@ async function create(data) {
   );
 }
 export function CreatingCard() {
-  const { $category, $storage } = useContext(Context);
+  const categoryAll = useQuery("categoryAll", () => getUrl(categoriesAllURL));
+  const storageAll = useQuery("storageAll", () => getUrl(storageAllURL));
+
+  const { $category, $storage, $state } = useContext(Context);
   const [modalActive, setModalActive] = useState(false);
 
-  // const [fileList, setFileList] = useState([]);
+  $state.stateStorageAll = storageAll;
+
+  const [fileList, setFileList] = useState([]);
   const [xxx, setXxx] = useState([]);
   // const handleChange = ({ fileList: newFileList }) => {
   //   setFileList(newFileList);
-  //   console.log(fileList);
+  //   console.log(newFileList);
   // };
 
   const handleChange = (e) => {
@@ -51,7 +59,7 @@ export function CreatingCard() {
   const [form] = Form.useForm();
   const name = Form.useWatch("myName", form);
   const description = Form.useWatch("myDescription", form);
-
+  const photo = Form.useWatch("myPhoto", form);
 
   let creatingCard = {
     name: name,
@@ -76,6 +84,32 @@ export function CreatingCard() {
     mutation.mutate(formData);
     navigate("/home");
   };
+
+  if (categoryAll.isLoading || storageAll.isLoading) {
+    return (
+      <div style={{ left: "50vw", top: "50vh", position: "absolute" }}>
+        <Spiner />
+      </div>
+    );
+  }
+
+  if (categoryAll.isError && storageAll.isError) {
+    switch (true) {
+      case categoryAll.isError:
+        // setActiveError(true);
+        return <ErrorComponent props={categoryAll.error}></ErrorComponent>;
+
+      case storageAll.isError:
+        // setActiveError(true);
+        return <ErrorComponent props={storageAll.error}></ErrorComponent>;
+
+      default:
+        break;
+    }
+    // return (
+    //   <ErrorComponent props={$state.stateStorageAll.error}></ErrorComponent>
+    // );
+  }
   return (
     <>
       <div>
@@ -109,7 +143,7 @@ export function CreatingCard() {
                 Категория
               </label>
               <div>
-                <Category width={"500"} url={categoriesAllURL} />
+                <Category width={"500"} data={categoryAll} />
               </div>
             </div>
           </Form.Item>
@@ -134,7 +168,11 @@ export function CreatingCard() {
               onChange={(e) => setValue(e.target.value)}
             />
           </Form.Item>
-          <Form.Item label="Фотографии *" className={st.wrapper}>
+          <Form.Item
+            label="Фотографии *"
+            name={"myPhoto"}
+            className={st.wrapper}
+          >
             <div className={`${st.wrapper} ${st.wrapperUpload} `}>
               <span className={st.miniTitle}>Не более 5</span>
 
@@ -148,18 +186,18 @@ export function CreatingCard() {
               {/* <div className={st.fileUploaderFileName}></div> */}
 
               <input type="file" multiple onChange={handleChange} />
-              {/* <Upload
-              //  onChange={xxx}
-              register="photos"
-              // action="https://rms2022.pythonanywhere.com/items/add/"
-              listType="picture-card"
-              multiple
-              className={st.wrapperUpload}
-              fileList={fileList}
-              onChange={handleChange}
-            >
-              {fileList.length >= 5 ? null : uploadButton}
-            </Upload> */}
+              <Upload
+                //  onChange={xxx}
+                register="photos"
+                action="https://rms2022.pythonanywhere.com/items/add/"
+                listType="picture-card"
+                multiple
+                className={st.wrapperUpload}
+                fileList={fileList}
+                onChange={handleChange}
+              >
+                {fileList.length >= 5 ? null : uploadButton}
+              </Upload>
             </div>
           </Form.Item>
           <button
@@ -182,7 +220,7 @@ export function CreatingCard() {
           <div className={st.buttonModal}>
             <button onClick={submit}>Да</button>
 
-            <button onClick={ ()=> navigate("/home") } >Нет</button>
+            <button onClick={() => navigate("/home")}>Нет</button>
           </div>
         </div>
       </PopUp>

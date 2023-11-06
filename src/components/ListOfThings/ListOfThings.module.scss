@@ -8,8 +8,6 @@
   width: 100%;
   cursor: pointer;
   .grid {
-    // gap: 45px;
-
     .allData {
       padding: 10px;
       border-radius: 10px;
@@ -47,6 +45,8 @@
         display: flex;
         gap: 3px;
         img {
+          width: 40px;
+          display: none;
           &:hover {
             border-radius: 10px;
             background-color: $colorBlur;

@@ -2,24 +2,20 @@ import { ConfigProvider, Select } from "antd";
 import st from "./MainSelect.module.scss";
 import Context from "../../utilities/Context/Context";
 import { useContext } from "react";
-import { useQuery } from "react-query";
-import getUrl from "../../fun/getData";
-import ErrorComponent from "../ErrorComponent/ErrorComponent";
 
-export default function Category(  props) {
 
+export default function Category({ data, width }) {
   const { $category } = useContext(Context);
-  const { data, isLoading, error } = useQuery("qweer", () => getUrl(props.url));
 
-  if (isLoading) {
-    return <h2>Loadinggggg</h2>;
+  if (data.isLoading) {
+    return <>123</>;
   }
 
-  if (error) {
-    return <ErrorComponent props={error}></ErrorComponent>;
+  if (data.error) {
+    return <h2 props={data.error}></h2>;
   }
 
-  const setMainSelectAll = data.map(({ id, name }) => {
+  const setMainSelectAll = data.data.map(({ id, name }) => {
     return {
       value: id,
       label: name,
@@ -50,7 +46,7 @@ export default function Category(  props) {
           $category.setCategory(id); // dispatch(reducersCategoriesAdd({ id }));
         }}
         defaultValue={"Категория"}
-        style={{ width: +props.width }}
+        style={{ width: +width }}
         options={setMainSelectAll}
         className={`${st.select}  ${st.svg}`}
       />

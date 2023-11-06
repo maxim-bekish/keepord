@@ -4,7 +4,12 @@ import BookmarksTitle from "../../components/bookmarksTitle/BookmarksTitle";
 import ThingsData from "./../../components/ThingsData/ThingsData";
 import ListData from "../../components/ListData/ListData";
 
-import { usersURL } from "./../../constants/api";
+import {
+  usersURL,
+  categoriesURL,
+  storageURL,
+  itemsAllURL,
+} from "./../../constants/api";
 import { Spin } from "antd";
 import { useQuery } from "react-query";
 import getUrl from "./../../fun/getData";
@@ -15,10 +20,15 @@ import Context from "../../utilities/Context/Context";
 import Spiner from "../../components/Spiner/Spiner";
 
 export default function Home() {
-  const { $isActiveBaseAndList } = useContext(Context);
-  const { data, isLoading, error } = useQuery("coins", () => getUrl(usersURL));
-
-  if (isLoading) {
+  const { $isActiveBaseAndList, $state } = useContext(Context);
+  const user = useQuery("user", () => getUrl(usersURL));
+  const category = useQuery("category", () => getUrl(categoriesURL));
+  const storage = useQuery("storage", () => getUrl(storageURL));
+  const items = useQuery("items", () => getUrl(itemsAllURL));
+  $state.stateCategory = category;
+  $state.stateStorage = storage;
+  $state.stateItems = items;
+  if (user.isLoading || category.isLoading || storage.isLoading) {
     return (
       <div style={{ left: "50vw", top: "50vh", position: "absolute" }}>
         <Spiner />
@@ -26,8 +36,8 @@ export default function Home() {
     );
   }
 
-  if (error) {
-    return <ErrorComponent props={error}></ErrorComponent>;
+  if (user.error) {
+    return <ErrorComponent props={user.error}></ErrorComponent>;
   }
 
   return (
@@ -39,7 +49,7 @@ export default function Home() {
             + Добавить вещь
           </a>
         </button>
-        <h2 className={st.h2Name}>{data.email}</h2>
+        <h2 className={st.h2Name}>{user.data.email}</h2>
 
         {/* <button onClick={() => getCookie('access')}>куки показить</button> */}
         <div className={st.search}>
@@ -54,7 +64,7 @@ export default function Home() {
               window.location.replace("/login");
               // dispatch(singInAuth(false));
             }}
-            className={st.buttonExit} 
+            className={st.buttonExit}
           >
             {/* <a className={st.textA}></a> */}
             Выход

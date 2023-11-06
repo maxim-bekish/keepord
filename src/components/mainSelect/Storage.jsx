@@ -2,26 +2,21 @@ import { ConfigProvider, Select } from "antd";
 import st from "./MainSelect.module.scss";
 import Context from "./../../utilities/Context/Context";
 import { useContext } from "react";
-import { useQuery } from "react-query";
-import getUrl from "../../fun/getData";
-import { storageURL } from "../../constants/api";
-import ErrorComponent from "../ErrorComponent/ErrorComponent";
+
+// import ErrorComponent from "../ErrorComponent/ErrorComponent";
 
 export default function Storage() {
-  const { $storage } = useContext(Context);
-  const { data, isLoading, error } = useQuery("storage", () =>
-    getUrl(storageURL)
-  );
+  const { $state, $storage } = useContext(Context);
 
-  if (isLoading) {
-    return <h2>Loadinggggg</h2>;
+  if ($state.stateStorage.isLoading) {
+    return <></>;
   }
 
-  if (error) {
-    return <ErrorComponent props={error}></ErrorComponent>;
-  }
+  // if ($state.stateStorage.error) {
+  //   return <ErrorComponent props={$state.stateStorage.error}></ErrorComponent>;
+  // }
 
-  const setMainSelectAll = data.map(({ id, name }) => {
+  const setMainSelectAll = $state.stateStorage.data.map(({ id, name }) => {
     return {
       value: id,
       label: name,

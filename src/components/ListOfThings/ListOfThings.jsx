@@ -11,20 +11,13 @@ import axios from "axios";
 import { itemsURL } from "./../../constants/api.js";
 import { itemsAllURL } from "./../../constants/api.js";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import PopUp from "../popUp/popUp";
-
-async function getItems() {
-  const { data } = await axios.get(itemsAllURL, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
-    },
-  });
-  return data;
-}
+import getUrl from "./../../fun/getData";
+import Context from "../../utilities/Context/Context";
 
 export default function ListOfThings() {
+  const { $state } = useContext(Context);
   const [modalActive, setModalActive] = useState(false);
   const [idItem, setIdItem] = useState();
   const divUtility = useRef(null);
@@ -44,23 +37,23 @@ export default function ListOfThings() {
       onSuccess: () => queryClient.invalidateQueries(["items"]),
     }
   );
-  const { isLoading, isError, error, data } = useQuery(["items"], getItems);
 
-  console.log(data);
-  if (isLoading) {
+  if ($state.stateItems.isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (isError) {
-    return <div>Error! {error.message}</div>;
+  if ($state.stateItems.error) {
+    return <div>Error! {$state.stateItems.error.message}</div>;
   }
+
   const xxx = (e) => {
-    // divUtility.current.style.display='block';
-    // console.log(divUtility);
+    const classUtility = document.querySelectorAll(`.utility${e.id}`);
+    classUtility.forEach((e) => (e.style.display = "block"));
   };
 
   const eee = (e) => {
-    //  divUtility.current.style.display = "none";
+    const classUtility = document.querySelectorAll(`.utility${e.id}`);
+    classUtility.forEach((e) => (e.style.display = "none"));
   };
 
   function deleteFinish(e) {
@@ -75,12 +68,12 @@ export default function ListOfThings() {
         <Col>Категория</Col>
         <Col>Дата добавления</Col>
       </Row>
-      {data.map((e, id) => {
+      {$state.stateItems.data.map((e, id) => {
         return (
           <div
             key={`key${id}`}
-            onMouseEnter={xxx}
-            onMouseLeave={eee}
+            onMouseEnter={() => xxx(e)}
+            onMouseLeave={() => eee(e)}
             className={st.wrapper}
           >
             {/* нужно key */}
@@ -110,16 +103,23 @@ export default function ListOfThings() {
               <Col className={st.endData}>
                 <div id={e.id} ref={divUtility} className={st.allUtility}>
                   <img
+                    className={`utility${e.id}`}
                     onClick={() => console.log(`edit ${e.id}`)}
                     src={edit}
                     alt=""
                   />
                   <img
+                    className={`utility${e.id}`}
                     onClick={() => console.log(`share ${e.id}`)}
                     src={share}
                     alt=""
                   />
-                  <img onClick={() => deleteFinish(e.id)} src={trash} alt="" />
+                  <img
+                    className={`utility${e.id}`}
+                    onClick={() => deleteFinish(e.id)}
+                    src={trash}
+                    alt=""
+                  />
                 </div>
               </Col>
             </Row>
@@ -127,13 +127,19 @@ export default function ListOfThings() {
         );
       })}
       <PopUp active={modalActive}>
-        <div className={st.firstWrapper} >
-
+        <div className={st.firstWrapper}>
           <div className={st.wrapperModal}>
             <img onClick={() => setModalActive(false)} src={close} alt="" />
             <h2>Вы действительно хотите удалить эту вещь?</h2>
             <div className={st.buttonModal}>
-              <button onClick={() => {deletePost.mutate(idItem); setModalActive(false)}}>Да</button>
+              <button
+                onClick={() => {
+                  deletePost.mutate(idItem);
+                  setModalActive(false);
+                }}
+              >
+                Да
+              </button>
 
               <button onClick={() => setModalActive(false)}>Нет</button>
             </div>

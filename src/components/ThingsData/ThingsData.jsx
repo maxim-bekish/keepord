@@ -9,7 +9,7 @@ import { categoriesURL } from "../../constants/api";
 
 
 export default function ThingsData() {
-  const { $category,$storage } = useContext(Context);
+  const { $category,$storage, $state } = useContext(Context);
 let result = {
   category: $category.category,
   storage: $storage.storage,
@@ -17,13 +17,10 @@ let result = {
   return (
     <>
       <div className={st.filter}>
-        <Category width={"300"} url={categoriesURL} />
+        <Category width={"300"} data={$state.stateCategory} />
         <Storage />
 
-        <button
-          onClick={() => console.log(result)}
-          className= {st.buttonSubmit}
-        >
+        <button onClick={() => console.log(result)} className={st.buttonSubmit}>
           Применить
         </button>
       </div>

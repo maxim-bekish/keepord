@@ -21,7 +21,7 @@ async function create(data) {
 
 export default function MainSelectAdd() {
 
-   const {  $storage } = useContext(Context);
+   const {  $storage,$state } = useContext(Context);
   const queryClient = useQueryClient();
   const [name, setName] = useState("");
 
@@ -29,19 +29,19 @@ export default function MainSelectAdd() {
     onSuccess: () => queryClient.invalidateQueries(["storageAll"]),
   });
 
-  const { data, isLoading, error } = useQuery("storageAll", () =>
-    getUrl(storageAllURL)
-  );
+  
 
-  if (isLoading) {
+  if ($state.stateStorageAll.isLoading) {
     return <h2>Loadinggggg</h2>;
   }
 
-  if (error) {
-    return <ErrorComponent props={error}></ErrorComponent>;
+  if ($state.stateStorageAll.error) {
+    return (
+      <ErrorComponent props={$state.stateStorageAll.error}></ErrorComponent>
+    );
   }
 
-  const mainSelectAll = data.map(({ id, name }) => {
+  const mainSelectAll = $state.stateStorageAll.data.map(({ id, name }) => {
     return {
       value: id,
       label: name,

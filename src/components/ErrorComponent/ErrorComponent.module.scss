@@ -1,19 +1,32 @@
 @import "./../../ColorStyle.scss";
 @import "./../../allStyles.scss";
-.h2 {
-  text-align: center;
-  margin-top: 50px;
-}
-.wrapperButton {
-  margin-top: 20px;
-  display: flex;
-  gap: 10px;
-  justify-content: center;
 
-  .button {
-    @include button;
-    background-color: $colorBlur;
-    border: 1px;
-    max-width: 400px;
+.all {
+  position: absolute;
+  z-index: 2;
+
+  top: 0;
+  left: 0;
+  overflow-y: scroll;
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+
+  .h2 {
+    text-align: center;
+    margin-top: 50px;
+  }
+  .wrapperButton {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+
+    .button {
+      @include button;
+      background-color: $colorBlur;
+      border: 1px;
+      max-width: 400px;
+    }
   }
 }
