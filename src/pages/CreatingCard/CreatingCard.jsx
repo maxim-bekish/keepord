@@ -17,6 +17,7 @@ import PopUp from "../../components/popUp/popUp";
 import getUrl from "../../fun/getData";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import Spiner from "../../components/Spiner/Spiner";
+import UploadInput from "../../components/UploadInput/UploadInput";
 
 const { TextArea } = Input;
 
@@ -40,26 +41,12 @@ export function CreatingCard() {
   const [modalActive, setModalActive] = useState(false);
 
   $state.stateStorageAll = storageAll;
+  const [addPhotoForm, setAddPhotoForm] = useState([]);
 
-  const [fileList, setFileList] = useState([]);
-  const [xxx, setXxx] = useState([]);
-  // const handleChange = ({ fileList: newFileList }) => {
-  //   setFileList(newFileList);
-  //   console.log(newFileList);
-  // };
-
-  const handleChange = (e) => {
-    setXxx(e.target.files);
-  };
-  const uploadButton = (
-    <div>
-      <PictureOutlined style={{ fontSize: "32px" }} />
-    </div>
-  );
   const [form] = Form.useForm();
   const name = Form.useWatch("myName", form);
   const description = Form.useWatch("myDescription", form);
-  const photo = Form.useWatch("myPhoto", form);
+  // const photo = Form.useWatch("myPhoto", form);
 
   let creatingCard = {
     name: name,
@@ -71,8 +58,10 @@ export function CreatingCard() {
   const formData = new FormData();
   formData.append("item", JSON.stringify(creatingCard));
 
-  for (let i = 0; i < xxx.length; i++) {
-    formData.append("image_list", xxx[i]);
+  if (addPhotoForm.length > 0) {
+    for (var i = 0; i < addPhotoForm.length; i++) {
+      formData.append("image_list", addPhotoForm[i]);
+    }
   }
 
   const [value, setValue] = useState("");
@@ -168,38 +157,18 @@ export function CreatingCard() {
               onChange={(e) => setValue(e.target.value)}
             />
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             label="Фотографии *"
             name={"myPhoto"}
             className={st.wrapper}
-          >
-            <div className={`${st.wrapper} ${st.wrapperUpload} `}>
-              <span className={st.miniTitle}>Не более 5</span>
+          > */}
+          <div className={`${st.wrapper} ${st.wrapperUpload} `}>
+            {/* <h2>Фотографии *</h2>
+            <span className={st.miniTitle}>Не более 5</span> */}
 
-              {/* <input
-              multiple
-              type="file"
-              id="fileLoaderButton"
-              className={st.fileLoaderButton}
-            /> */}
-              {/* <img src={iconAdd} alt="ppp" className={st.fileUploaderPreview} /> */}
-              {/* <div className={st.fileUploaderFileName}></div> */}
-
-              <input type="file" multiple onChange={handleChange} />
-              <Upload
-                //  onChange={xxx}
-                register="photos"
-                action="https://rms2022.pythonanywhere.com/items/add/"
-                listType="picture-card"
-                multiple
-                className={st.wrapperUpload}
-                fileList={fileList}
-                onChange={handleChange}
-              >
-                {fileList.length >= 5 ? null : uploadButton}
-              </Upload>
-            </div>
-          </Form.Item>
+            <UploadInput setAddPhotoForm={setAddPhotoForm} />
+          </div>
+          {/* </Form.Item> */}
           <button
             className={st.buttonTest}
             onClick={() => setModalActive(true)}

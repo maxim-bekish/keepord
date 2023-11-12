@@ -80,7 +80,11 @@
 
 .buttonAdd {
   max-width: 210px;
-
+  font-size: 1.125rem;
+  line-height: 150%;
+  text-decoration: none;
+  color: $colorBlack;
+  white-space: nowrap;
   @include buttonOne;
 }
 .buttonExit {

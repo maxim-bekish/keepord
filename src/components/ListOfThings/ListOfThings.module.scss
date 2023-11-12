@@ -1,33 +1,64 @@
 @import "./../../ColorStyle.scss";
 @import "./../../allStyles.scss";
-.firstWrapper{
+.firstWrapper {
   @include modalPopUp;
 }
+.section {
+  display: flex;
+  flex-direction: column;
+  max-height: 440px;
+  overflow-y: auto;
+  border-radius: 10px;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
 .wrapper {
   display: flex;
-  width: 100%;
+  // width: 100%;
   cursor: pointer;
+
   .grid {
+    flex-wrap: nowrap;
     .allData {
       padding: 10px;
       border-radius: 10px;
+ 
+
       &:hover {
         background-color: $colorBlur;
       }
       display: flex;
       gap: 45px;
-      :first-of-type {
+      :nth-child(1) {
+  
+        // max-width: 280px;
         width: 280px;
         display: flex;
+
         gap: 10px;
+        // background-color: green;
+        img {
+          max-width: 40px;
+          min-width: 40px;
+        }
+      
       }
+
       div {
+        overflow: hidden;
+        white-space: nowrap;
+
+        text-overflow: ellipsis;
+
         width: 200px;
+   
+              //  min-width: 100px;
+        // max-width: 280px;
         font-size: 1.375rem;
         line-height: 150%; /* 24px */
         color: $colorDarkGreen;
-        display: flex;
-        align-items: center;
       }
       img {
         border-radius: 10px;
@@ -44,6 +75,7 @@
       .allUtility {
         display: flex;
         gap: 3px;
+        width: 126px;
         img {
           width: 40px;
           display: none;
@@ -58,20 +90,22 @@
 }
 
 .gridTitle {
+
   div {
     color: $colorDarkGreen;
     font-size: 16px;
     line-height: 150%; /* 24px */
-    width: 200px; 
-    &:first-of-type {
-        width: 280px;
-    
-      }
+    width: 100%;
 
+    width: 200px;
+    &:first-of-type {
+      width: 280px;
+    }
   }
   padding-left: 10px;
   display: flex;
-  gap: 45px;
+  column-gap: 45px;
+  flex-wrap: nowrap;
   margin-bottom: 15px;
   color: $colorDarkGreen;
   font-size: 1rem;

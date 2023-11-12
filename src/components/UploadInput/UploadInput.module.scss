@@ -1,0 +1,71 @@
+@import "./../../ColorStyle.scss";
+section {
+  display: flex;
+  padding: 0;
+  .title {
+    width: 160px;
+    h4 {
+      font-size: 1.125rem;
+      color: $colorBlack;
+      font-weight: 600;
+    }
+    span {
+      color: $colorDarkGrey;
+
+      font-size: 12px;
+
+      letter-spacing: 0.6px;
+    }
+  }
+}
+.allImg {
+  width: 500px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  flex-wrap: wrap;
+  .boxSubmit {
+    cursor: pointer;
+    display: flex;
+    border: 1px solid $colorBlur;
+    border-radius: 10px;
+    width: 150px;
+    height: 150px;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 45px;
+      height: 45px;
+    }
+  }
+.h6{
+width: 126px;
+}
+  .boxOnePhoto {
+    position: relative;
+    .photo {
+      &:hover {
+        opacity: 0.8;
+      }
+      cursor: pointer;
+      border: 1px solid $colorBlur;
+      border-radius: 10px;
+      width: 150px;
+      height: 150px;
+    }
+    .closed {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+    }
+  }
+}
+.hidden {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  line-height: 0;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}

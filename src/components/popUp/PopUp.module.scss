@@ -16,6 +16,7 @@
   transition: 0.5s;
 }
 .active {
+  overflow: hidden;
   opacity: 1;
   pointer-events: all;
 }

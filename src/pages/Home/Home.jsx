@@ -18,17 +18,19 @@ import { useContext } from "react";
 import Context from "../../utilities/Context/Context";
 
 import Spiner from "../../components/Spiner/Spiner";
+import { useNavigate } from "react-router-dom";
 
-export default function Home() {
+export default function Home() { 
   const { $isActiveBaseAndList, $state } = useContext(Context);
-  const user = useQuery("user", () => getUrl(usersURL));
+  // const user = useQuery("user", () => getUrl(usersURL));
   const category = useQuery("category", () => getUrl(categoriesURL));
   const storage = useQuery("storage", () => getUrl(storageURL));
   const items = useQuery("items", () => getUrl(itemsAllURL));
   $state.stateCategory = category;
   $state.stateStorage = storage;
   $state.stateItems = items;
-  if (user.isLoading || category.isLoading || storage.isLoading) {
+  const navigate = useNavigate();
+  if (category.isLoading || storage.isLoading) {
     return (
       <div style={{ left: "50vw", top: "50vh", position: "absolute" }}>
         <Spiner />
@@ -36,20 +38,28 @@ export default function Home() {
     );
   }
 
-  if (user.error) {
-    return <ErrorComponent props={user.error}></ErrorComponent>;
+  // if (user.error) {
+  //   return <ErrorComponent props={user.error}></ErrorComponent>;
+  // }
+  function nextPage() {
+    $isActiveBaseAndList.isActiveBaseAndList === "base"
+      ? navigate("/creatingCard")
+      : navigate("/dvcsdv");
   }
 
   return (
     <>
       {/* <Spiner /> */}
       <header className={`${st.header}`}>
-        <button className={st.buttonAdd}>
-          <a className={st.textA} href="/creatingCard">
-            + Добавить вещь
-          </a>
+        <button className={st.buttonAdd} onClick={nextPage}>
+          {/* <a className={st.textA} href="/creatingCard">
+  
+          </a> */}
+          {$isActiveBaseAndList.isActiveBaseAndList === "base"
+            ? "+ Добавить вещь"
+            : "+ Добавить список"}
         </button>
-        <h2 className={st.h2Name}>{user.data.email}</h2>
+        {/* <h2 className={st.h2Name}>{user.data.email}</h2> */}
 
         {/* <button onClick={() => getCookie('access')}>куки показить</button> */}
         <div className={st.search}>

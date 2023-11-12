@@ -9,6 +9,7 @@ import ErrorComponent from "../ErrorComponent/ErrorComponent";
 import PopUp from "../popUp/popUp";
 import { useState } from "react";
 import close from "./../../img/svg/close.svg";
+import Spiner from "../Spiner/Spiner";
 
 export default function Card() {
   const [modalActive, setModalActive] = useState(false);
@@ -17,18 +18,20 @@ export default function Card() {
 
   const url = `${itemsURL}/${location.state}/delete/`;
 
-  const { data, isLoading, error } = useQuery("card", () =>
+  const { data, isLoading, error } = useQuery(`card${location.state}`, () =>
     getUrl(`${itemsURL}/${location.state}`)
   );
 
   if (isLoading) {
-    return <h2>Loadinggggg</h2>;
+     return (
+       <div style={{ left: "50vw", top: "50vh", position: "absolute" }}>
+         <Spiner />
+       </div>
+     );
   }
 
   if (error) {
-
-      return <ErrorComponent props={error}></ErrorComponent>;
-    
+    return <ErrorComponent props={error}></ErrorComponent>;
   }
 
   const deletedItems = async () => {
@@ -43,7 +46,6 @@ export default function Card() {
   };
 
   return (
-    
     <div className={st.all}>
       <main className={`${st.container}  `}>
         <div className={st.wrapper}>

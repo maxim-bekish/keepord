@@ -16,8 +16,17 @@ import { singInAuth } from "./../../store/sliceAuth";
 import { useContext } from "react";
 import Context from "./../../utilities/Context/Context";
 const SignUpSchema = yup.object().shape({
-  email: yup.string().email("Введите верный email").required("Обязательно"),
-  password: yup.string().min(4, "min 4").required("Обязательно"),
+  email: yup
+    .string()
+    .trim("The contact name cannot include leading and trailing spaces")
+    .email("Введите верный email")
+    .required("Обязательно"),
+  password: yup
+    .string()
+    // .matches('', "Is not in correct format")
+    .min(4, "min 4")
+    .required("Обязательно")
+    .trim("The contact name cannot include leading and trailing spaces"),
 });
 
 export default function LoginForm(props) {
@@ -38,6 +47,7 @@ export default function LoginForm(props) {
   const [err, setErr] = useState("");
 
   const onSubmit = (event) => {
+    console.log(event)
     axios
       .post(loginURL, {
         email: event.email,
@@ -76,6 +86,7 @@ export default function LoginForm(props) {
           errors={errors}
           fieldName="email"
           label="Логин"
+          type="email"
         />
         <Input
           register={register}
