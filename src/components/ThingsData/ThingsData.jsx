@@ -16,12 +16,10 @@ export default function ThingsData() {
     $category.setCategory(null);
     $storage.setStorage(null);
   }
-  // function applyFilter() {
-  //   console.log(result);
-  // }
+
   return (
     <>
-      <div className={st.filter}>
+      {/* <div className={st.filter}>
         <Category width={"300"} data={$state.stateCategory} />
         <Storage />
 
@@ -29,7 +27,7 @@ export default function ThingsData() {
           Применить
         </button>
         <button onClick={reset}>Сбросить</button>
-      </div>
+      </div> */}
 
       <ListOfThings  />
     </>

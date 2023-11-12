@@ -9,20 +9,23 @@ import iconPhoto from "./../../img/png/iconPhoto.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { itemsURL } from "./../../constants/api.js";
-import { itemsAllURL } from "./../../constants/api.js";
+
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import PopUp from "../popUp/popUp";
-import getUrl from "./../../fun/getData";
+
 import Context from "../../utilities/Context/Context";
+import Category from "../mainSelect/Category.jsx";
+import Storage from "../mainSelect/Storage.jsx";
 
 export default function ListOfThings({ applyFilter }) {
-  const { $state, $category } = useContext(Context);
+  const { $state, $category, $storage } = useContext(Context);
   const [newState, setNewState] = useState($state.stateItems.data);
   const [modalActive, setModalActive] = useState(false);
   const [idItem, setIdItem] = useState();
   const divUtility = useRef(null);
   const navigate = useNavigate();
+  
   const queryClient = useQueryClient();
   const deletePost = useMutation(
     (e) => {
@@ -34,15 +37,22 @@ export default function ListOfThings({ applyFilter }) {
       });
     },
     {
-      onSuccess: () => queryClient.invalidateQueries(["items"]),
+      onSuccess: () => queryClient.invalidateQueries("items"),
     }
   );
+   useEffect(() => {
+
+
+     setNewState($state.stateItems.data);
+    
+   }, [$state.stateItems.data]);
   if ($state.stateItems.isLoading) {
     return <div>Loading...</div>;
   }
   if ($state.stateItems.error) {
     return <div>Error! {$state.stateItems.error.message}</div>;
   }
+  
   const xxx = (e) => {
     const classUtility = document.querySelectorAll(`.utility${e.id}`);
     classUtility.forEach((e) => (e.style.display = "block"));
@@ -55,23 +65,56 @@ export default function ListOfThings({ applyFilter }) {
     setModalActive(true);
     setIdItem(e);
   }
-  //  setNewState(x);
 
   function applyFilter() {
+
     let x = [];
     $state.stateItems.data.map((e) => {
-      if (e.category !== null) {
+      if (e.storage !== null && e.category !== null) {
+        if (
+          e.storage.id === $storage.storage &&
+          e.category.id === $category.category
+        ) {
+          return x.push(e);
+        }
+      }
+      if (e.category !== null && $storage.storage === null) {
         if (e.category.id === $category.category) {
           x.push(e);
+        }
+      }
+      if (e.storage !== null && $category.category === null) {
+        if (e.storage.id === $storage.storage) {
+          return x.push(e);
         }
       }
     });
     setNewState(x);
   }
 
+  function reset() {
+    $category.setCategory(null);
+    $storage.setStorage(null);
+    setNewState($state.stateItems.data);
+    const filter = document.querySelectorAll(".ant-select-selection-item");
+    filter[0].innerHTML = "Категория";
+    filter[1].innerHTML = "Места храниния";
+  }
+
+ 
   return (
     <>
-      <button onClick={applyFilter}>click</button>
+      <div className={st.filter}>
+        <Category width={300} data={$state.stateCategory} />
+        <Storage />
+
+        <button onClick={applyFilter} className={st.buttonSubmit}>
+          Применить
+        </button>
+        <button onClick={reset}>Сбросить</button>
+      </div>
+      {/* <button onClick={applyFilter}>click</button>
+      <button onClick={reset}>reset</button> */}
       <Row className={st.gridTitle}>
         <Col>Наименование</Col>
         <Col>Место хранения</Col>
@@ -149,6 +192,7 @@ export default function ListOfThings({ applyFilter }) {
               <button
                 onClick={() => {
                   deletePost.mutate(idItem);
+                 
                   setModalActive(false);
                 }}
               >
