@@ -1,7 +1,7 @@
 import search from "./../../img/svg/search.svg";
 import st from "./Home.module.scss";
 import BookmarksTitle from "../../components/bookmarksTitle/BookmarksTitle";
-import ThingsData from "./../../components/ThingsData/ThingsData";
+
 import ListData from "../../components/ListData/ListData";
 
 import {
@@ -19,6 +19,7 @@ import Context from "../../utilities/Context/Context";
 
 import Spiner from "../../components/Spiner/Spiner";
 import { useNavigate } from "react-router-dom";
+import ListOfThings from "../../components/ListOfThings/ListOfThings";
 
 export default function Home() { 
   const { $isActiveBaseAndList, $state } = useContext(Context);
@@ -26,6 +27,7 @@ export default function Home() {
   const category = useQuery("category", () => getUrl(categoriesURL));
   const storage = useQuery("storage", () => getUrl(storageURL));
   const items = useQuery("items", () => getUrl(itemsAllURL));
+
   $state.stateCategory = category;
   $state.stateStorage = storage;
   $state.stateItems = items;
@@ -93,7 +95,8 @@ export default function Home() {
       >
         <BookmarksTitle />
         {$isActiveBaseAndList.isActiveBaseAndList === "base" ? (
-          <ThingsData />
+          
+          <ListOfThings />
         ) : (
           <ListData />
         )}

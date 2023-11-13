@@ -1,16 +1,16 @@
 import st from "./Card.module.scss";
-import eee from "./../../img/png/google.png";
-import { itemsURL } from "./../../constants/api";
-import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "react-query";
-import getUrl from "../../fun/getData";
-import ErrorComponent from "../ErrorComponent/ErrorComponent";
-import PopUp from "../popUp/popUp";
 import { useState } from "react";
-import close from "./../../img/svg/close.svg";
-import Spiner from "../Spiner/Spiner";
+import { useLocation, useNavigate } from "react-router-dom";
 
+import { itemsURL } from "../../constants/api";
+import getUrl from "../../fun/getData";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import PopUp from "../../components/popUp/popUp";
+import close from "./../../img/svg/close.svg";
+import Spiner from "../../components/Spiner/Spiner";
+import HeaderCard from "../../components/HeaderCard/HeaderCard";
 export default function Card() {
   const [modalActive, setModalActive] = useState(false);
   const navigate = useNavigate();
@@ -23,11 +23,11 @@ export default function Card() {
   );
 
   if (isLoading) {
-     return (
-       <div style={{ left: "50vw", top: "50vh", position: "absolute" }}>
-         <Spiner />
-       </div>
-     );
+    return (
+      <div style={{ left: "50vw", top: "50vh", position: "absolute" }}>
+        <Spiner />
+      </div>
+    );
   }
 
   if (error) {
@@ -47,6 +47,7 @@ export default function Card() {
 
   return (
     <div className={st.all}>
+      <HeaderCard text={"Карточка вещи"} />
       <main className={`${st.container}  `}>
         <div className={st.wrapper}>
           <h2 className={st.name}>{data.name}</h2>

@@ -111,7 +111,9 @@ export default function ListOfThings({ applyFilter }) {
         <button onClick={applyFilter} className={st.buttonSubmit}>
           Применить
         </button>
-        <button onClick={reset}>Сбросить</button>
+        <button className={st.buttonSubmit} onClick={reset}>
+          Сбросить
+        </button>
       </div>
       {/* <button onClick={applyFilter}>click</button>
       <button onClick={reset}>reset</button> */}
@@ -192,7 +194,7 @@ export default function ListOfThings({ applyFilter }) {
               <button
                 onClick={() => {
                   deletePost.mutate(idItem);
-                 
+
                   setModalActive(false);
                 }}
               >

@@ -1,9 +1,6 @@
 import React, { useContext, useState } from "react";
-
 import st from "./CreatingCard.module.scss";
-import { PictureOutlined } from "@ant-design/icons";
-import { Form, Upload, Input } from "antd";
-import arrow from "./../../img/svg/arrows_button.svg";
+import { Form, Input } from "antd";
 import close from "./../../img/svg/close.svg";
 import { categoriesAllURL, storageAllURL } from "../../constants/api";
 import Category from "../../components/mainSelect/Category";
@@ -18,7 +15,7 @@ import getUrl from "../../fun/getData";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import Spiner from "../../components/Spiner/Spiner";
 import UploadInput from "../../components/UploadInput/UploadInput";
-
+import HeaderCard from "../../components/HeaderCard/HeaderCard";
 const { TextArea } = Input;
 
 async function create(data) {
@@ -102,17 +99,8 @@ export function CreatingCard() {
   return (
     <>
       <div>
-        <header className={st.header}>
-          <div>
-            <div onClick={() => navigate(-1)}>
-              <img className={st.imgAll} src={arrow} alt="arrow" />
-            </div>
-            <span>Создать карточку вещи </span>
-          </div>
-          <a className={st.down} href="#">
-            <img className={st.imgAll} src={close} alt="close" />
-          </a>
-        </header>
+        <HeaderCard text={"Создать карточку вещи"} />
+
         <Form form={form} className={st.form} colon={false}>
           <Form.Item
             label="Наименование *"
