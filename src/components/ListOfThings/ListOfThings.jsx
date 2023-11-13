@@ -52,7 +52,9 @@ export default function ListOfThings({ applyFilter }) {
   if ($state.stateItems.error) {
     return <div>Error! {$state.stateItems.error.message}</div>;
   }
-  
+   if (newState === undefined) {
+     return <div>Error! Undefined!</div>;
+   }
   const xxx = (e) => {
     const classUtility = document.querySelectorAll(`.utility${e.id}`);
     classUtility.forEach((e) => (e.style.display = "block"));
@@ -101,7 +103,7 @@ export default function ListOfThings({ applyFilter }) {
     filter[1].innerHTML = "Места храниния";
   }
 
- 
+  console.log(newState);
   return (
     <>
       <div className={st.filter}>
@@ -115,8 +117,7 @@ export default function ListOfThings({ applyFilter }) {
           Сбросить
         </button>
       </div>
-      {/* <button onClick={applyFilter}>click</button>
-      <button onClick={reset}>reset</button> */}
+
       <Row className={st.gridTitle}>
         <Col>Наименование</Col>
         <Col>Место хранения</Col>
@@ -135,7 +136,7 @@ export default function ListOfThings({ applyFilter }) {
               {/* нужно key */}
               <Row className={st.grid}>
                 <div
-                  onClick={() => navigate("/thingsCard", { state: e.id })}
+                  onClick={() => navigate("/card", { state: e.id })}
                   className={st.allData}
                 >
                   <Col>
@@ -162,7 +163,7 @@ export default function ListOfThings({ applyFilter }) {
                   <div id={e.id} ref={divUtility} className={st.allUtility}>
                     <img
                       className={`utility${e.id}`}
-                      onClick={() => console.log(`edit ${e.id}`)}
+                      onClick={() => navigate("/editCard", { state: e.id })}
                       src={edit}
                       alt=""
                     />

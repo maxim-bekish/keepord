@@ -124,15 +124,12 @@ export function CreatingCard() {
               </div>
             </div>
           </Form.Item>
-
           <div className={`${st.wrapper} ${st.svg}`}>
             <label className={st.text} htmlFor="storage">
               Место хранения
             </label>
-
             <MainSelectAdd />
           </div>
-
           <Form.Item
             label="Описание *"
             name={"myDescription"}
@@ -145,31 +142,17 @@ export function CreatingCard() {
               onChange={(e) => setValue(e.target.value)}
             />
           </Form.Item>
-          {/* <Form.Item
-            label="Фотографии *"
-            name={"myPhoto"}
-            className={st.wrapper}
-          > */}
           <div className={`${st.wrapper} ${st.wrapperUpload} `}>
-            {/* <h2>Фотографии *</h2>
-            <span className={st.miniTitle}>Не более 5</span> */}
-
             <UploadInput setAddPhotoForm={setAddPhotoForm} />
           </div>
-          {/* </Form.Item> */}
           <button
             className={st.buttonTest}
             onClick={() => setModalActive(true)}
           >
             Отправить
           </button>
-          {/* <button style={{ width: "500px" }} onClick={submit}>
-          Отправить
-        </button> */}
         </Form>
-        {/* <button className={st.button}>Отпраddddвить</button> */}
       </div>
-
       <PopUp active={modalActive} setActive={setModalActive}>
         <div className={st.wrapperModal}>
           <img onClick={() => setModalActive(false)} src={close} alt="" />

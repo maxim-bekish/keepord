@@ -42,41 +42,6 @@ body {
   margin: 0;
 }
 
-.wrapperModal {
-    border-radius: 20px;
-    background-color: white;
-    box-sizing: border-box;
-    width: 470px;
-    height: 285px;
-    position: relative;
-    padding: 50px 90px 60px 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 80px;
-    img {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      @include icon;
-    }
-    .buttonModal {
-      display: flex;
-      justify-content: space-between;
-
-      button {
-        &:first-of-type {
-          @include buttonOne;
-          width: 90px;
-          height: 50px;
-        }
-        &:last-of-type {
-          @include buttonTwo;
-          width: 90px;
-          height: 50px;
-        }
-      }
-    }
-  }
 
 
 .wrapper {
@@ -218,3 +183,38 @@ body {
   max-width: 500px;
   @include buttonOne;
 }
+.wrapperModal {
+    border-radius: 20px;
+    background-color: white;
+    box-sizing: border-box;
+    width: 470px;
+    height: 285px;
+    position: relative;
+    padding: 50px 90px 60px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+    img {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      @include icon;
+    }
+    .buttonModal {
+      display: flex;
+      justify-content: space-between;
+
+      button {
+        &:first-of-type {
+          @include buttonOne;
+          width: 90px;
+          height: 50px;
+        }
+        &:last-of-type {
+          @include buttonTwo;
+          width: 90px;
+          height: 50px;
+        }
+      }
+    }
+  }

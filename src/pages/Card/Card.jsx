@@ -86,7 +86,12 @@ export default function Card() {
       </main>
       <div className={`${st.buttonAll} ${st.container}`}>
         <div>
-          <button className={st.button}>Редактировать</button>
+          <button
+            onClick={() => navigate("/editCard")}
+            className={st.button}
+          >
+            Редактировать
+          </button>
         </div>
         <div>
           <button className={st.button} onClick={() => setModalActive(true)}>

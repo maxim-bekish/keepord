@@ -5,10 +5,11 @@ import { Input, Select, Space, Button, ConfigProvider } from "antd";
 
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import getUrl from "../../fun/getData";
+// import getUrl from "../../fun/getData";
 import Context from "../../utilities/Context/Context";
 import ErrorComponent from "../ErrorComponent/ErrorComponent";
 import { storageAllURL } from "./../../constants/api";
+import getUrl from "../../fun/getData";
 
 async function create(data) {
   return await axios.post(storageAddURL, data, {
@@ -20,8 +21,8 @@ async function create(data) {
 }
 
 export default function MainSelectAdd() {
-
-   const {  $storage,$state } = useContext(Context);
+  const storage = useQuery("storageAll", () => getUrl(storageAllURL));
+   const {  $storage } = useContext(Context);
   const queryClient = useQueryClient();
   const [name, setName] = useState("");
 
@@ -31,17 +32,15 @@ export default function MainSelectAdd() {
 
   
 
-  if ($state.stateStorageAll.isLoading) {
+  if (storage.isLoading) {
     return <h2>Loadinggggg</h2>;
   }
 
-  if ($state.stateStorageAll.error) {
-    return (
-      <ErrorComponent props={$state.stateStorageAll.error}></ErrorComponent>
-    );
+  if (storage.error) {
+    return <ErrorComponent props={storage.error}></ErrorComponent>;
   }
 
-  const mainSelectAll = $state.stateStorageAll.data.map(({ id, name }) => {
+  const mainSelectAll = storage.data.map(({ id, name }) => {
     return {
       value: id,
       label: name,
