@@ -20,7 +20,7 @@ async function create(data) {
   });
 }
 
-export default function MainSelectAdd() {
+export default function MainSelectAdd( {storageDefault}) {
   const storage = useQuery("storageAll", () => getUrl(storageAllURL));
    const {  $storage } = useContext(Context);
   const queryClient = useQueryClient();
@@ -79,7 +79,8 @@ export default function MainSelectAdd() {
           width: 500,
         }}
         onChange={(id) => $storage.setStorage(id)}
-        defaultValue={"defaultValue"}
+        // defaultValue={"defaultValue"}
+        placeholder={storageDefault}
         dropdownRender={(menu) => (
           <>
             {menu}

@@ -1,21 +1,12 @@
 import { ConfigProvider, Select } from "antd";
 import st from "./MainSelect.module.scss";
 import Context from "../../utilities/Context/Context";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
-
-export default function Category({ data, width }) {
+export default function Category({ data, width, category }) {
   const { $category } = useContext(Context);
 
-  if (data.isLoading) {
-    return <>123</>;
-  }
-
-  if (data.error) {
-    return <h2 props={data.error}></h2>;
-  }
-
-  const setMainSelectAll = data.data.map(({ id, name }) => {
+  const setMainSelectAll = data.map(({ id, name }) => {
     return {
       value: id,
       label: name,
@@ -45,7 +36,8 @@ export default function Category({ data, width }) {
         onChange={(id) => {
           $category.setCategory(id); // dispatch(reducersCategoriesAdd({ id }));
         }}
-        defaultValue={"Категория"}
+        placeholder={category}
+      
         style={{ width: +width }}
         options={setMainSelectAll}
         className={`${st.select}  ${st.svg}`}

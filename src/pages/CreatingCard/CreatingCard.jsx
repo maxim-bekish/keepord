@@ -120,7 +120,7 @@ export function CreatingCard() {
                 Категория
               </label>
               <div>
-                <Category width={"500"} data={categoryAll} />
+                <Category width={"500"} data={categoryAll.data} />
               </div>
             </div>
           </Form.Item>
