@@ -11,9 +11,7 @@ section {
     }
     span {
       color: $colorDarkGrey;
-
       font-size: 12px;
-
       letter-spacing: 0.6px;
     }
   }
@@ -38,14 +36,16 @@ section {
       height: 45px;
     }
   }
-.h6{
-width: 126px;
-}
+  .h6 {
+    width: 126px;
+  }
   .boxOnePhoto {
     position: relative;
+ 
     .photo {
-      &:hover {
-        opacity: 0.8;
+     &:hover {
+        opacity: 0.5;
+        
       }
       cursor: pointer;
       border: 1px solid $colorBlur;
@@ -54,6 +54,7 @@ width: 126px;
       height: 150px;
     }
     .closed {
+      opacity: 1 !important;
       position: absolute;
       right: 5px;
       top: 5px;
