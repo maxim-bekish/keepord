@@ -47,7 +47,7 @@ export default function LoginForm(props) {
   const [err, setErr] = useState("");
 
   const onSubmit = (event) => {
-    console.log(event)
+
     axios
       .post(loginURL, {
         email: event.email,

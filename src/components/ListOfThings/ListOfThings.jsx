@@ -103,7 +103,7 @@ export default function ListOfThings({ applyFilter }) {
     filter[1].innerHTML = "Места храниния";
   }
 
-  console.log(newState);
+
   return (
     <>
       <div className={st.filter}>

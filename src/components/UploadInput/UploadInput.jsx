@@ -9,11 +9,12 @@ export default function UploadInput({ dataPhoto, setAddPhotoForm }) {
   const handleChange = (e) => {
     setAddPhotoForm(e.target.files);
     let imagesData = [];
-
+    console.log(e.target.files);
     for (let i = 0; i < e.target.files.length; i++) {
       var reader = new FileReader();
       reader.onload = (e) => {
-        imagesData.push(e.target.result);
+        imagesData.push(e.target);
+
         setFileList(imagesData);
       };
       reader.readAsDataURL(e.target.files[i]);
@@ -21,7 +22,19 @@ export default function UploadInput({ dataPhoto, setAddPhotoForm }) {
   };
   function closeImg() {
     const closeImg = document.querySelectorAll(".close");
-    console.log(closeImg);
+
+  }
+  const allImages = [];
+  if (dataPhoto) {
+    for (let i = 0; i < dataPhoto.length; i++) {
+      allImages.push({
+        image_url: `https://rms2022.pythonanywhere.com${dataPhoto[i].image_url}`,
+        id: dataPhoto[i].id,
+      });
+    }
+  }
+  for (let i = 0; i < fileList.length; i++) {
+    allImages.push({ image_url: fileList[i].result });
   }
 
   return (
@@ -35,15 +48,20 @@ export default function UploadInput({ dataPhoto, setAddPhotoForm }) {
           onChange={handleChange}
         />
         <div className={st.allImg}>
-          {fileList.map((e) => (
+          {allImages.map((e) => (
             <div
-              key={e}
-              className={`${st.boxOnePhoto} close closed${e.substring(
-                1000,
-                1010
+              key={e.image_url}
+              className={`${st.boxOnePhoto} close closed${e.image_url.substring(
+                10,
+                20
               )} `}
             >
-              <img className={st.photo} key={e} src={e} alt="111" />
+              <img
+                className={st.photo}
+                key={e.image_url}
+                src={e.image_url}
+                alt="111"
+              />
               <img
                 onClick={closeImg}
                 className={st.closed}

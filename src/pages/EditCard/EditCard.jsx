@@ -101,6 +101,16 @@ export default function EditCard() {
             <label className={st.title}>Фотографии *</label>
             <span className={st.miniTitle}>Не более 5</span>
           </div>
+         {/* <div>
+             <img
+              onClick={(e) => console.log(e.target)}
+              id={itemsData.images[0].id}
+              style={{ width: "150px", height: "150px" }}
+              src={`https://rms2022.pythonanywhere.com${itemsData.images[0].image_url}`}
+              alt=""
+            /> 
+        
+          </div>*/}
           <UploadInput
             dataPhoto={itemsData.images}
             setAddPhotoForm={setAddPhotoForm}
