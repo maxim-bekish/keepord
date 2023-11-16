@@ -70,7 +70,11 @@ export function CreatingCard() {
     mutation.mutate(formData);
     navigate("/home");
   };
-
+  // const {
+  //   data: categoryAllData,
+  //   isLoading: categoryAllIsLoading,
+  //   isError: categoryAllIsError,
+  // } = useQuery("categoryAll", () => getUrl(categoriesAllURL));
   if (categoryAll.isLoading || storageAll.isLoading) {
     return (
       <div style={{ left: "50vw", top: "50vh", position: "absolute" }}>
@@ -98,7 +102,7 @@ export function CreatingCard() {
   }
   return (
     <>
-      <div>
+      {/* <div>
         <HeaderCard text={"Создать карточку вещи"} />
 
         <Form form={form} className={st.form} colon={false}>
@@ -106,11 +110,6 @@ export function CreatingCard() {
             label="Наименование *"
             name={"myName"}
             className={st.wrapper}
-            // rules={[
-            //   {
-            //     required: true,
-            //   },
-            // ]}
           >
             <Input className={st.input} type="text" />
           </Form.Item>
@@ -143,6 +142,10 @@ export function CreatingCard() {
             />
           </Form.Item>
           <div className={`${st.wrapper} ${st.wrapperUpload} `}>
+            <div>
+              <label className={st.title}>Фотографии *</label>
+              <span className={st.miniTitle}>Не более 5</span>
+            </div>
             <UploadInput setAddPhotoForm={setAddPhotoForm} />
           </div>
           <button
@@ -152,7 +155,62 @@ export function CreatingCard() {
             Отправить
           </button>
         </Form>
-      </div>
+      </div> */}
+
+      <HeaderCard text={"Создать карточку вещи"} />
+      <form className={st.form}>
+        <div className={st.miniWrapper}>
+          <label className={st.title}>Наименование *</label>
+          <input className={st.input} type="text" />
+        </div>
+        <div className={st.miniWrapper}>
+          <label className={st.title}>Категория</label>
+          <Category category={""} width={"500"} data={categoryAll.data} />
+        </div>
+        <div className={st.miniWrapper}>
+          <label className={st.title}>Место хранения</label>
+          <MainSelectAdd storageDefault={""} />
+        </div>
+        <div className={st.miniWrapper}>
+          <label className={st.title}>Описание *</label>
+          <textarea
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            className={st.textarea}
+            type="text"
+          />
+        </div>
+        <div className={st.miniWrapper}>
+          <div>
+            <label className={st.title}>Фотографии *</label>
+            <span className={st.miniTitle}>Не более 5</span>
+          </div>
+          {/* <div>
+             <img
+              onClick={(e) => console.log(e.target)}
+              id={itemsData.images[0].id}
+              style={{ width: "150px", height: "150px" }}
+              src={`https://rms2022.pythonanywhere.com${itemsData.images[0].image_url}`}
+              alt=""
+            /> 
+        
+          </div>*/}
+          <UploadInput
+            // dataPhoto={itemsData.images}
+            setAddPhotoForm={setAddPhotoForm}
+          />
+        </div>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            setModalActive(true);
+          }}
+          className={st.buttonTest}
+        >
+          Отправить
+        </button>
+      </form>
+
       <PopUp active={modalActive} setActive={setModalActive}>
         <div className={st.wrapperModal}>
           <img onClick={() => setModalActive(false)} src={close} alt="" />

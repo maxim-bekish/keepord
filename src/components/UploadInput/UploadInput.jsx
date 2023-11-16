@@ -1,41 +1,51 @@
 import addImages from "./../../img/svg/addImages.svg";
 import closed from "./../../img/svg/close.svg";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import st from "./UploadInput.module.scss";
 
 export default function UploadInput({ dataPhoto, setAddPhotoForm }) {
   const filePicker = useRef(null);
-  const [fileList, setFileList] = useState([]);
+  const [allImages, setAllImages] = useState([]);
+  // const [deleteImages, setDeleteAllImages] = useState([]);
+
   const handleChange = (e) => {
     setAddPhotoForm(e.target.files);
-    let imagesData = [];
     console.log(e.target.files);
     for (let i = 0; i < e.target.files.length; i++) {
       var reader = new FileReader();
       reader.onload = (e) => {
-        imagesData.push(e.target);
-
-        setFileList(imagesData);
+        setAllImages((allImg) => {
+          return [...allImg, { image_url: e.target.result }];
+        });
       };
+
       reader.readAsDataURL(e.target.files[i]);
     }
   };
-  function closeImg() {
-    const closeImg = document.querySelectorAll(".close");
+  console.log(allImages);
+  const close = (url, id) => () => {
+    const newArray = allImages.filter((e) => {
+      if (url !== e.image_url) {
+        return e;
+      }
+    });
+    setAllImages(newArray);
+  };
 
-  }
-  const allImages = [];
-  if (dataPhoto) {
-    for (let i = 0; i < dataPhoto.length; i++) {
-      allImages.push({
-        image_url: `https://rms2022.pythonanywhere.com${dataPhoto[i].image_url}`,
-        id: dataPhoto[i].id,
-      });
+  useEffect(() => {
+    if (dataPhoto) {
+      const mapDataPhoto = dataPhoto.reduce((result, { image_url, id }) => {
+        return [
+          ...result,
+          {
+            image_url: `https://rms2022.pythonanywhere.com${image_url}`,
+            id: id,
+          },
+        ];
+      }, []);
+      setAllImages((allImages) => [...allImages, ...mapDataPhoto]);
     }
-  }
-  for (let i = 0; i < fileList.length; i++) {
-    allImages.push({ image_url: fileList[i].result });
-  }
+  }, [dataPhoto]);
 
   return (
     <section>
@@ -49,21 +59,15 @@ export default function UploadInput({ dataPhoto, setAddPhotoForm }) {
         />
         <div className={st.allImg}>
           {allImages.map((e) => (
-            <div
-              key={e.image_url}
-              className={`${st.boxOnePhoto} close closed${e.image_url.substring(
-                10,
-                20
-              )} `}
-            >
+            <div key={e.image_url} className={`${st.boxOnePhoto} close `}>
               <img
                 className={st.photo}
                 key={e.image_url}
                 src={e.image_url}
-                alt="111"
+                alt=""
               />
               <img
-                onClick={closeImg}
+                onClick={close(e.image_url)}
                 className={st.closed}
                 src={closed}
                 alt=""

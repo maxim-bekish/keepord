@@ -36,12 +36,7 @@ export default function EditCard() {
   const [storage, setStorage] = useState("");
   const [description, setDescription] = useState("");
   const [addPhotoForm, setAddPhotoForm] = useState([]);
-  // console.log(itemsData);
-  // if (addPhotoForm.length > 0) {
-  //   for (var i = 0; i < addPhotoForm.length; i++) {
-  //     formData.append("image_list", addPhotoForm[i]);
-  //   }
-  // }
+
 
   useEffect(() => {
     if (itemsIsSuccess) {

@@ -89,14 +89,15 @@ body {
   padding: 10px;
   border-radius: 5px;
 }
-.wrapperUpload {
-  width: 600px !important ;
-}
+
 .miniTitle {
   color: $colorDarkGrey;
   font-size: 0.75rem;
   line-height: 150%; /* 18px */
   font-weight: 400;
+}
+.title{
+  display: block;
 }
 .input {
   box-sizing: border-box;

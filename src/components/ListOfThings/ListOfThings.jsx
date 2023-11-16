@@ -107,7 +107,7 @@ export default function ListOfThings({ applyFilter }) {
   return (
     <>
       <div className={st.filter}>
-        <Category width={300} data={$state.stateCategory.data} />
+        <Category category={'Категории'} width={300} data={$state.stateCategory.data} />
         <Storage />
 
         <button onClick={applyFilter} className={st.buttonSubmit}>

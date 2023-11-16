@@ -87,7 +87,7 @@ export default function MainSelectAdd( {storageDefault}) {
             <Space className={st.wrapperStorageAdd}>
               <Input
                 className={st.inputStorageAdd}
-                placeholder="Введите наемонавние места хранения"
+                placeholder="Введите наименование места хранения"
                 // ref={inputRef}
                 value={name}
                 onChange={(e) => setName(e.target.value)}

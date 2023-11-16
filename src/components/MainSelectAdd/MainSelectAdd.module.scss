@@ -24,14 +24,10 @@
 }
 .select {
   div {
-    span {
-      color: $colorDarkGreen;
-
+    :nth-child(2) {
       font-size: 1.375rem;
+      color: $colorDarkGreen;
     }
-    // :nth-child(2){
-    //   color:red;
-    // }
   }
 }
 
