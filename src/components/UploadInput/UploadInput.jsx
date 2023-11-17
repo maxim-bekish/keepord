@@ -7,28 +7,42 @@ export default function UploadInput({ dataPhoto, setAddPhotoForm }) {
   const filePicker = useRef(null);
   const [allImages, setAllImages] = useState([]);
   // const [deleteImages, setDeleteAllImages] = useState([]);
+  const [timeOffArray, setTimeOffArray] = useState([]);
 
   const handleChange = (e) => {
-    setAddPhotoForm(e.target.files);
+    setTimeOffArray(e.target.files);
     console.log(e.target.files);
     for (let i = 0; i < e.target.files.length; i++) {
       var reader = new FileReader();
       reader.onload = (e) => {
         setAllImages((allImg) => {
-          return [...allImg, { image_url: e.target.result }];
+          return [...allImg, { id: e.total, image_url: e.target.result }];
         });
       };
 
       reader.readAsDataURL(e.target.files[i]);
     }
   };
-  console.log(allImages);
+  let fileArray = [];
+  for (var i = 0; i < timeOffArray.length; i++) {
+    fileArray.push(timeOffArray[i]);
+  }
+
   const close = (url, id) => () => {
+    for (let i = 0; i < fileArray.length; i++) {
+      if (fileArray[i].size === id) {
+        fileArray.splice(i, 1);
+        setTimeOffArray(fileArray);
+      }
+    }
+
+    setAddPhotoForm(fileArray);
     const newArray = allImages.filter((e) => {
       if (url !== e.image_url) {
         return e;
       }
     });
+
     setAllImages(newArray);
   };
 
@@ -67,7 +81,7 @@ export default function UploadInput({ dataPhoto, setAddPhotoForm }) {
                 alt=""
               />
               <img
-                onClick={close(e.image_url)}
+                onClick={close(e.image_url, e.id)}
                 className={st.closed}
                 src={closed}
                 alt=""

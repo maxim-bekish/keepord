@@ -39,29 +39,25 @@ export function CreatingCard() {
 
   $state.stateStorageAll = storageAll;
   const [addPhotoForm, setAddPhotoForm] = useState([]);
-
-  const [form] = Form.useForm();
-  const name = Form.useWatch("myName", form);
-  const description = Form.useWatch("myDescription", form);
-  // const photo = Form.useWatch("myPhoto", form);
+  const [nameForm, setNameForm] = useState();
+  const [descriptionForm, setDescriptionForm] = useState();
 
   let creatingCard = {
-    name: name,
+    name: nameForm,
     category: $category.category,
     storage: $storage.storage,
-    description: description,
+    description: descriptionForm,
   };
 
   const formData = new FormData();
   formData.append("item", JSON.stringify(creatingCard));
-
+  // console.log(addPhotoForm, "test");
   if (addPhotoForm.length > 0) {
     for (var i = 0; i < addPhotoForm.length; i++) {
       formData.append("image_list", addPhotoForm[i]);
     }
   }
 
-  const [value, setValue] = useState("");
   const mutation = useMutation((newProduct) => create(newProduct));
   const navigate = useNavigate();
 
@@ -70,11 +66,7 @@ export function CreatingCard() {
     mutation.mutate(formData);
     navigate("/home");
   };
-  // const {
-  //   data: categoryAllData,
-  //   isLoading: categoryAllIsLoading,
-  //   isError: categoryAllIsError,
-  // } = useQuery("categoryAll", () => getUrl(categoriesAllURL));
+
   if (categoryAll.isLoading || storageAll.isLoading) {
     return (
       <div style={{ left: "50vw", top: "50vh", position: "absolute" }}>
@@ -102,66 +94,15 @@ export function CreatingCard() {
   }
   return (
     <>
-      {/* <div>
-        <HeaderCard text={"Создать карточку вещи"} />
-
-        <Form form={form} className={st.form} colon={false}>
-          <Form.Item
-            label="Наименование *"
-            name={"myName"}
-            className={st.wrapper}
-          >
-            <Input className={st.input} type="text" />
-          </Form.Item>
-          <Form.Item lebel="Категория">
-            <div className={`${st.wrapper} ${st.svg}`}>
-              <label className={st.text} htmlFor="categories">
-                Категория
-              </label>
-              <div>
-                <Category width={"500"} data={categoryAll.data} />
-              </div>
-            </div>
-          </Form.Item>
-          <div className={`${st.wrapper} ${st.svg}`}>
-            <label className={st.text} htmlFor="storage">
-              Место хранения
-            </label>
-            <MainSelectAdd />
-          </div>
-          <Form.Item
-            label="Описание *"
-            name={"myDescription"}
-            className={st.wrapper}
-          >
-            <TextArea
-              type="text"
-              className={`${st.input} ${st.description}`}
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-            />
-          </Form.Item>
-          <div className={`${st.wrapper} ${st.wrapperUpload} `}>
-            <div>
-              <label className={st.title}>Фотографии *</label>
-              <span className={st.miniTitle}>Не более 5</span>
-            </div>
-            <UploadInput setAddPhotoForm={setAddPhotoForm} />
-          </div>
-          <button
-            className={st.buttonTest}
-            onClick={() => setModalActive(true)}
-          >
-            Отправить
-          </button>
-        </Form>
-      </div> */}
-
       <HeaderCard text={"Создать карточку вещи"} />
       <form className={st.form}>
         <div className={st.miniWrapper}>
           <label className={st.title}>Наименование *</label>
-          <input className={st.input} type="text" />
+          <input
+            onChange={(e) => setNameForm(e.target.value)}
+            className={st.input}
+            type="text"
+          />
         </div>
         <div className={st.miniWrapper}>
           <label className={st.title}>Категория</label>
@@ -174,8 +115,7 @@ export function CreatingCard() {
         <div className={st.miniWrapper}>
           <label className={st.title}>Описание *</label>
           <textarea
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={(e) => setDescriptionForm(e.target.value)}
             className={st.textarea}
             type="text"
           />
@@ -185,16 +125,7 @@ export function CreatingCard() {
             <label className={st.title}>Фотографии *</label>
             <span className={st.miniTitle}>Не более 5</span>
           </div>
-          {/* <div>
-             <img
-              onClick={(e) => console.log(e.target)}
-              id={itemsData.images[0].id}
-              style={{ width: "150px", height: "150px" }}
-              src={`https://rms2022.pythonanywhere.com${itemsData.images[0].image_url}`}
-              alt=""
-            /> 
-        
-          </div>*/}
+
           <UploadInput
             // dataPhoto={itemsData.images}
             setAddPhotoForm={setAddPhotoForm}

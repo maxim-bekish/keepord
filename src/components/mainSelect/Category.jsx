@@ -34,7 +34,7 @@ export default function Category({ data, width, category }) {
     >
       <Select
         onChange={(id) => {
-          $category.setCategory(id); // dispatch(reducersCategoriesAdd({ id }));
+          $category.setCategory(id); 
         }}
         placeholder={category}
       

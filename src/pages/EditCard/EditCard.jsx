@@ -7,21 +7,20 @@ import Category from "../../components/mainSelect/Category";
 import MainSelectAdd from "../../components/MainSelectAdd/MainSelectAdd";
 
 import UploadInput from "../../components/UploadInput/UploadInput";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import getUrl from "../../fun/getData";
 import { categoriesAllURL, itemsURL } from "../../constants/api";
-import axios from "axios";
+import Context from "../../utilities/Context/Context";
 
 export default function EditCard() {
-  const formData = new FormData();
+    const { $category, $storage } = useContext(Context);
   const location = useLocation();
-  const {
-    data: categoryAllData,
-    isLoading: categoryAllIsLoading,
-    isError: categoryAllIsError,
-  } = useQuery("categoryAll", () => getUrl(categoriesAllURL));
-
+  const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
+  const [storage, setStorage] = useState("");
+  const [description, setDescription] = useState("");
+  const [addPhotoForm, setAddPhotoForm] = useState([]);
   const {
     data: itemsData,
     isSuccess: itemsIsSuccess,
@@ -31,19 +30,28 @@ export default function EditCard() {
     getUrl(`${itemsURL}/${location.state}`)
   );
 
-  const [name, setName] = useState("");
-  const [category, setCategory] = useState("");
-  const [storage, setStorage] = useState("");
-  const [description, setDescription] = useState("");
-  const [addPhotoForm, setAddPhotoForm] = useState([]);
+  let resultData = {
+    name: name,
+    description: description,
+    category: $category.category ,
+    storage: $storage.storage,
+  };
+  const formData = new FormData();
+
+  const {
+    data: categoryAllData,
+    isLoading: categoryAllIsLoading,
+    isError: categoryAllIsError,
+  } = useQuery("categoryAll", () => getUrl(categoriesAllURL));
+
 
 
   useEffect(() => {
     if (itemsIsSuccess) {
       setName(itemsData.name);
-      setCategory(itemsData.category.name);
+      setCategory(itemsData.category ? itemsData.category.name : "Не добавили");
       setDescription(itemsData.description);
-      setStorage(itemsData.storage.name);
+      setStorage(itemsData.storage ? itemsData.storage.name : "Не добавили");
       // setAddPhotoForm(itemsData.images);
     }
   }, [itemsIsSuccess]);
@@ -96,22 +104,18 @@ export default function EditCard() {
             <label className={st.title}>Фотографии *</label>
             <span className={st.miniTitle}>Не более 5</span>
           </div>
-         {/* <div>
-             <img
-              onClick={(e) => console.log(e.target)}
-              id={itemsData.images[0].id}
-              style={{ width: "150px", height: "150px" }}
-              src={`https://rms2022.pythonanywhere.com${itemsData.images[0].image_url}`}
-              alt=""
-            /> 
-        
-          </div>*/}
+
           <UploadInput
             dataPhoto={itemsData.images}
             setAddPhotoForm={setAddPhotoForm}
           />
         </div>
-        <button className={st.buttonTest}>Отправить</button>
+        <button
+          onClick={() => console.log(resultData)}
+          className={st.buttonTest}
+        >
+          Отправить
+        </button>
       </section>
     </>
   );
