@@ -8,19 +8,35 @@ import MainSelectAdd from "../../components/MainSelectAdd/MainSelectAdd";
 
 import UploadInput from "../../components/UploadInput/UploadInput";
 import { useContext, useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import getUrl from "../../fun/getData";
 import { categoriesAllURL, itemsURL } from "../../constants/api";
 import Context from "../../utilities/Context/Context";
+import axios from "axios";
+
+async function create({ url, formData }) {
+  return await axios.put(
+    `https://rms2022.pythonanywhere.com/items/${url}/update/`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      },
+    }
+  );
+}
 
 export default function EditCard() {
-    const { $category, $storage } = useContext(Context);
+  const { $category, $storage, $state } = useContext(Context);
   const location = useLocation();
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [storage, setStorage] = useState("");
   const [description, setDescription] = useState("");
   const [addPhotoForm, setAddPhotoForm] = useState([]);
+  const [deleteAllImages, setDeleteAllImages] = useState([]);
+  const [disabled, setDisabled] = useState(true);
   const {
     data: itemsData,
     isSuccess: itemsIsSuccess,
@@ -29,14 +45,25 @@ export default function EditCard() {
   } = useQuery(`items${location.state}`, () =>
     getUrl(`${itemsURL}/${location.state}`)
   );
+  const formData = new FormData();
 
   let resultData = {
     name: name,
     description: description,
-    category: $category.category ,
+    category: $category.category,
     storage: $storage.storage,
   };
-  const formData = new FormData();
+  formData.append("item", JSON.stringify(resultData));
+
+  if (deleteAllImages.length > 0) {
+    formData.append("image_delete_list", deleteAllImages);
+  }
+
+  if (addPhotoForm.length > 0) {
+    for (let i = 0; i < addPhotoForm.length; i++) {
+      formData.append("image_list", addPhotoForm[i]);
+    }
+  }
 
   const {
     data: categoryAllData,
@@ -44,17 +71,25 @@ export default function EditCard() {
     isError: categoryAllIsError,
   } = useQuery("categoryAll", () => getUrl(categoriesAllURL));
 
-
-
   useEffect(() => {
     if (itemsIsSuccess) {
       setName(itemsData.name);
       setCategory(itemsData.category ? itemsData.category.name : "Не добавили");
       setDescription(itemsData.description);
       setStorage(itemsData.storage ? itemsData.storage.name : "Не добавили");
-      // setAddPhotoForm(itemsData.images);
     }
   }, [itemsIsSuccess]);
+  const mutation = useMutation((newProduct) => create(newProduct));
+  const submit = (e) => {
+    e.preventDefault();
+
+    mutation.mutate({ formData: formData, url: location.state });
+  };
+
+  useEffect(() => {
+   console.log( $state.photo?.length)
+ 
+  }, [$state.photo]);
 
   if (itemsIsLoading) {
     return <div>loadingloadingloadingloading itemsitemsitemsitems</div>;
@@ -106,16 +141,18 @@ export default function EditCard() {
           </div>
 
           <UploadInput
+            setDeleteAllImages={setDeleteAllImages}
             dataPhoto={itemsData.images}
             setAddPhotoForm={setAddPhotoForm}
           />
         </div>
-        <button
-          onClick={() => console.log(resultData)}
-          className={st.buttonTest}
-        >
-          Отправить
+        <button disabled={disabled} onClick={submit} className={st.buttonTest}>
+          Сохранить
         </button>
+        {/* <button onClick={() => console.log(addPhotoForm, deleteAllImages)}>
+          1231231231232131
+        </button> */}
+
       </section>
     </>
   );

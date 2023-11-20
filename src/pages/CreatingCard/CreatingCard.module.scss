@@ -86,6 +86,12 @@
         border: 2px solid #3c6255;
       }
     }
+    .error{
+      font-size: 1.25rem;
+      color: red;
+      display: flex;
+      align-items: center;
+    }
   }
   .buttonTest {
     max-width: 500px;

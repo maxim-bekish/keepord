@@ -10,11 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { loginURL } from "./../../constants/api";
-// import { useDispatch } from "react-redux";
-import { singInAuth } from "./../../store/sliceAuth";
-// import { useSelector } from "react-redux";
-import { useContext } from "react";
-import Context from "./../../utilities/Context/Context";
+
+
 const SignUpSchema = yup.object().shape({
   email: yup
     .string()
@@ -23,17 +20,12 @@ const SignUpSchema = yup.object().shape({
     .required("Обязательно"),
   password: yup
     .string()
-    // .matches('', "Is not in correct format")
     .min(4, "min 4")
     .required("Обязательно")
     .trim("The contact name cannot include leading and trailing spaces"),
 });
 
 export default function LoginForm(props) {
-  const xxx = useContext(Context);
-
-  // const dispatch = useDispatch();
-
   const navigation = useNavigate();
   const {
     register,
@@ -47,7 +39,6 @@ export default function LoginForm(props) {
   const [err, setErr] = useState("");
 
   const onSubmit = (event) => {
-
     axios
       .post(loginURL, {
         email: event.email,
@@ -64,7 +55,7 @@ export default function LoginForm(props) {
         }
       })
       .catch(function (error) {
-        console.log(error);
+
         if (error.response.status === 401) {
           reset();
           setErr("не вырный логин или пароль");

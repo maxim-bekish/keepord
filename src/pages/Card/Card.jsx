@@ -87,7 +87,7 @@ export default function Card() {
       <div className={`${st.buttonAll} ${st.container}`}>
         <div>
           <button
-            onClick={() => navigate("/editCard")}
+            onClick={() => navigate("/editCard", { state: location.state })}
             className={st.button}
           >
             Редактировать
