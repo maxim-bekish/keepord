@@ -2,29 +2,42 @@
 .div {
   display: flex;
   flex-direction: row;
+  margin-top: -10px;
+
+  // "#f2ffe3"
+  // "#A6BB8D"
+
   .spanTitle {
+    // border-color: #f2ffe3;
     display: flex;
     justify-content: center;
     color: #00000066;
     cursor: pointer;
+    box-sizing: border-box;
     width: 160px;
     font-size: 1.25rem;
     line-height: 150%;
-    background-color: $colorWhite;
-    padding: 24px 0px 15px 0px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+    background-color: #00000000;
+    padding: 17px 0px 15px 0px;
   }
   .spanTitleActive {
+    padding: 7px 0px 5px 0px;
+    // border-color: #a6bb8d;
+    border-top-color: #ffffff !important;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-sizing: border-box;
+    border-style: solid;
+    border-width: 10px;
+    border-top-width: 11px;
     cursor: pointer;
     display: flex;
     justify-content: center;
     width: 160px;
-    padding: 24px 0px 15px 0px;
+    
     font-size: 1.25rem;
     line-height: 150%;
     font-weight: 900;
     color: $colorDarkGreen;
   }
 }
-

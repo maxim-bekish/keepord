@@ -85,7 +85,7 @@ export default function Home() {
       </header>
       <main
         style={{
-          backgroundColor: ` ${`${
+          'border-color': ` ${`${
             $isActiveBaseAndList.isActiveBaseAndList === "base"
               ? "#f2ffe3"
               : "#A6BB8D"

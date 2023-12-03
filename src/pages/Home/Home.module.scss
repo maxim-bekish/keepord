@@ -24,6 +24,8 @@
   margin: 40px auto 0 auto;
   padding: 0px 25px;
   border-radius: 20px;
+  border-width: 10px;
+  border-style: solid;
   // background-color: $colorBase;
 }
 
@@ -91,7 +93,7 @@
   @include buttonTwo;
   width: 115px;
   margin-left: 30px;
-  &:hover{
+  &:hover {
     border-width: 1px;
   }
 }

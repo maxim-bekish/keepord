@@ -20,19 +20,32 @@ export default function BookmarksTitle() {
             ? `${st.spanTitleActive}`
             : `${st.spanTitle}`
         }
+        style={{
+          "border-color": ` ${`${
+            $isActiveBaseAndList.isActiveBaseAndList === "base"
+              ? "#f2ffe3"
+              : "#A6BB8D"
+          }`}    `,
+        }}
       >
         Вещи в базе
       </div>
       <div
         onClick={() => {
           $isActiveBaseAndList.setIsActiveBaseAndList("list");
-          // dispatch(add(isActive));
         }}
         className={
           $isActiveBaseAndList.isActiveBaseAndList === "list"
             ? `${st.spanTitleActive}`
             : `${st.spanTitle}`
         }
+        style={{
+          "border-color": ` ${`${
+            $isActiveBaseAndList.isActiveBaseAndList === "base"
+              ? "#f2ffe3"
+              : "#A6BB8D"
+          }`}    `,
+        }}
       >
         Списки
       </div>
