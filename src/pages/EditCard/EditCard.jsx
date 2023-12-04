@@ -46,7 +46,14 @@ export default function EditCard() {
     getUrl(`${itemsURL}/${location.state}`)
   );
   const formData = new FormData();
-
+  useEffect(() => {
+    if (name.trim().length === 0 || description.trim().length === 0) {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+    console.log();
+  }, [name, description]);
   let resultData = {
     name: name,
     description: description,
@@ -87,8 +94,7 @@ export default function EditCard() {
   };
 
   useEffect(() => {
-   console.log( $state.photo?.length)
- 
+    console.log($state.photo?.length);
   }, [$state.photo]);
 
   if (itemsIsLoading) {
@@ -152,7 +158,6 @@ export default function EditCard() {
         {/* <button onClick={() => console.log(addPhotoForm, deleteAllImages)}>
           1231231231232131
         </button> */}
-
       </section>
     </>
   );
