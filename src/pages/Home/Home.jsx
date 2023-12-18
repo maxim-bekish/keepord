@@ -1,7 +1,6 @@
 import search from "./../../img/svg/search.svg";
 import st from "./Home.module.scss";
 import BookmarksTitle from "../../components/bookmarksTitle/BookmarksTitle";
-
 import ListData from "../../components/ListData/ListData";
 
 import {
@@ -10,13 +9,12 @@ import {
   storageURL,
   itemsAllURL,
 } from "./../../constants/api";
-import { Spin } from "antd";
-import refreshToken from "./../../fun/refreshToken";
+import { getCookie } from "../../fun/getCookie";
 
 import { useQuery } from "react-query";
 import getUrl from "./../../fun/getData";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import Context from "../../utilities/Context/Context";
 
 import Spiner from "../../components/Spiner/Spiner";
@@ -26,23 +24,12 @@ import ListOfThings from "../../components/ListOfThings/ListOfThings";
 export default function Home() {
   const { $isActiveBaseAndList, $state } = useContext(Context);
 
-  const user = useQuery(["user"], () => getUrl(usersURL), {
-    retry: (failureCount, error) => {
-      if (error?.response?.status === 401) {
-        refreshToken();
-        return (failureCount = 1);
-      } else {
-        return <ErrorComponent props={error}></ErrorComponent>;
-      }
-    },
-  });
+  const user = useQuery(["user"], () => getUrl(usersURL));
 
-  const category = useQuery("category", () => getUrl(categoriesURL), {
-    retry: 2,
-  });
-  const storage = useQuery("storage", () => getUrl(storageURL), { retry: 1 });
-  const items = useQuery("items", () => getUrl(itemsAllURL), { retry: 1 });
-  //  console.log(user)
+  const category = useQuery("category", () => getUrl(categoriesURL));
+  const storage = useQuery("storage", () => getUrl(storageURL));
+  const items = useQuery("items", () => getUrl(itemsAllURL));
+
   $state.stateCategory = category;
   $state.stateStorage = storage;
   $state.stateItems = items;
@@ -55,16 +42,7 @@ export default function Home() {
       </div>
     );
   }
-  // if(user.isError){
-  //  ;}
-  // if (user.status === "error") {
 
-  //   // if (user.error.response.status === 401) {
-  //   //   refreshToken();
-  //   // } else {
-  //   return (<ErrorComponent props={user.error}></ErrorComponent>)
-  //   // }
-  // }
   if (category.isError) {
     return <ErrorComponent props={user.error}></ErrorComponent>;
   }
@@ -88,7 +66,6 @@ export default function Home() {
         </button>
         <h2 className={st.h2Name}>{user.data.email}</h2>
 
-        {/* <button onClick={() => getCookie('access')}>куки показить</button> */}
         <div className={st.search}>
           <input placeholder="Поиск" className={st.inputSearch} type="text" />
           <button className={st.buttonSearch}>
@@ -96,10 +73,9 @@ export default function Home() {
           </button>
           <button
             onClick={() => {
-              localStorage.removeItem("token");
-              localStorage.removeItem("tokenRefresh");
+              document.cookie = `access=${getCookie("access")}; max-age=-1`;
+              document.cookie = `refresh=${getCookie("refresh")}; max-age=-1`;
               window.location.replace("/login");
-              // dispatch(singInAuth(false));
             }}
             className={st.buttonExit}
           >

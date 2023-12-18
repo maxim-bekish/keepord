@@ -46,10 +46,13 @@ export default function LoginForm(props) {
       })
       .then(function (response) {
         if (response.status === 200) {
-          console.log('status = '+response.status);
-          localStorage.setItem("token", JSON.stringify(response.data.access));
-          localStorage.setItem("tokenR", JSON.stringify(response.data.refresh));
-          // document.cookie = `refresh=${JSON.stringify(response.data.refresh)}`;
+          // +1 день от текущей даты
+       
+          let date = new Date(Date.now() + 86400e3);
+          date = date.toUTCString();
+          document.cookie = `access=${response.data.access};max-age:300`;
+          document.cookie = `refresh=${response.data.refresh};max-age:${date}`;
+      
 
           reset();
 

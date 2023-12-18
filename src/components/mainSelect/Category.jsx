@@ -5,7 +5,7 @@ import { useContext, useEffect } from "react";
 
 export default function Category({ data, width, category }) {
   const { $category } = useContext(Context);
-console.log(data);
+
   const setMainSelectAll = data.map(({ id, name }) => {
     return {
       value: id,

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { getCookie } from "../../fun/getCookie";
 
 import { itemsURL } from "../../constants/api";
 import getUrl from "../../fun/getData";
@@ -38,7 +39,7 @@ export default function Card() {
     await axios.delete(url, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        Authorization: `Bearer ${getCookie("access")}`,
       },
     });
 

@@ -17,6 +17,7 @@ import PopUp from "../popUp/popUp";
 import Context from "../../utilities/Context/Context";
 import Category from "../mainSelect/Category.jsx";
 import Storage from "../mainSelect/Storage.jsx";
+import { getCookie } from "../../fun/getCookie.js";
 
 export default function ListOfThings({ applyFilter }) {
   const { $state, $category, $storage } = useContext(Context);
@@ -32,7 +33,7 @@ export default function ListOfThings({ applyFilter }) {
       return axios.delete(`${itemsURL}/${e}/delete`, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+          Authorization: `Bearer ${getCookie("access")}`,
         },
       });
     },
@@ -94,9 +95,8 @@ export default function ListOfThings({ applyFilter }) {
     $category.setCategory(null);
     $storage.setStorage(null);
     setNewState($state.stateItems.data);
-   
+
     const filter = document.querySelectorAll(".ant-select-selection-item");
-    console.log(filter);
 
     filter[0].innerHTML = "Категория";
     filter[1].innerHTML = "Места хранения";

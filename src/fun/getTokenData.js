@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getCookie } from "../fun/getCookie";
 
 // import refreshToken from "./refreshToken";
 import Error from "./../components/Error/Error";
@@ -6,13 +7,12 @@ import Error from "./../components/Error/Error";
 // withcredentials: true;
 
 async function getTokenData(url) {
-  // const access = JSON.parse(localStorage.getItem("token"));
 
   try {
     const response = await axios.get(url, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        Authorization: `Bearer ${getCookie("access")}`,
       },
     });
 

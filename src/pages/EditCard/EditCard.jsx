@@ -13,6 +13,7 @@ import getUrl from "../../fun/getData";
 import { categoriesAllURL, itemsURL } from "../../constants/api";
 import Context from "../../utilities/Context/Context";
 import axios from "axios";
+import { getCookie } from "../../fun/getCookie";
 
 async function create({ url, formData }) {
   return await axios.put(
@@ -21,7 +22,7 @@ async function create({ url, formData }) {
     {
       headers: {
         "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        Authorization: `Bearer ${getCookie("access")}`,
       },
     }
   );

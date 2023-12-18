@@ -19,6 +19,7 @@ import HeaderCard from "../../components/HeaderCard/HeaderCard";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { getCookie } from "../../fun/getCookie";
 
 const { TextArea } = Input;
 
@@ -29,7 +30,7 @@ async function create(data) {
     {
       headers: {
         "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+        Authorization: `Bearer ${getCookie("access")}`,
       },
     }
   );

@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import st from "./MainSelectAdd.module.scss";
 import { storageAddURL } from "./../../constants/api";
 import { Input, Select, Space, Button, ConfigProvider } from "antd";
+import { getCookie } from "../../fun/getCookie";
 
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -15,22 +16,20 @@ async function create(data) {
   return await axios.post(storageAddURL, data, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+      Authorization: `Bearer ${getCookie("access")}`,
     },
   });
 }
 
-export default function MainSelectAdd( {storageDefault}) {
+export default function MainSelectAdd({ storageDefault }) {
   const storage = useQuery("storageAll", () => getUrl(storageAllURL));
-   const {  $storage } = useContext(Context);
+  const { $storage } = useContext(Context);
   const queryClient = useQueryClient();
   const [name, setName] = useState("");
 
   const mutation = useMutation((newProduct) => create(newProduct), {
     onSuccess: () => queryClient.invalidateQueries(["storageAll"]),
   });
-
-  
 
   if (storage.isLoading) {
     return <h2>Loadinggggg</h2>;

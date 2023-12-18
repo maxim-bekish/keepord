@@ -1,5 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { itemsAllURL  } from "./../constants/api";
+import { getCookie } from "./getCookie";
+
+
 export const fetchDataItem = createAsyncThunk(
   "stateName/fetchDataItem",
   async function (_, { rejectWithValue }) {
@@ -7,7 +10,7 @@ export const fetchDataItem = createAsyncThunk(
       const response = await fetch(itemsAllURL, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`,
+          Authorization: `Bearer ${getCookie("access")}`,
         },
       });
       if (response.status === 401) {
