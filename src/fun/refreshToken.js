@@ -1,30 +1,31 @@
 import axios from "axios";
 
-import {refreshURL} from "./../constants/api";
+import { refreshURL } from "./../constants/api";
+import { getCookie } from "./getCookie";
+
 function refreshToken() {
+  // let x = getCookie("refresh");
+  let x = JSON.parse(localStorage.getItem("tokenR"));
+  // console.log(x);
+
   axios
-    .post(refreshURL, {})
-    .then((res) => {
-      console.log("refreshToken");
-      console.log(res);
+    .post(refreshURL, {
+      refresh: x,
     })
-    // .catch(function (error) {
-    //   console.error("ошибка в refreshToken: " + error);
-    // });
+    .then((res) => {
+      // console.log(res.data.access);
+      localStorage.setItem("token", JSON.stringify(res.data.access));
+      localStorage.setItem("worked", "worked refresh");
+      
+    })
+    .catch(function (error) {
+      // console.error("ошибка в refreshToken: " + error);
+
+      if (error.response.status === 400) {
+        window.location.replace("/login");
+
+      }
+    });
 }
 
 export default refreshToken;
-
-
-
-
-// function getCookie(name) {
-//   let matches = document.cookie.match(
-//     new RegExp(
-//       "(?:^|; )" +
-//         name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
-//         "=([^;]*)"
-//     )
-//   );
-//  return matches ? decodeURIComponent(matches[1]) : undefined;
-// }

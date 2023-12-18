@@ -5,7 +5,7 @@ import { useContext, useEffect } from "react";
 
 export default function Category({ data, width, category }) {
   const { $category } = useContext(Context);
-
+console.log(data);
   const setMainSelectAll = data.map(({ id, name }) => {
     return {
       value: id,
@@ -34,10 +34,10 @@ export default function Category({ data, width, category }) {
     >
       <Select
         onChange={(id) => {
-          $category.setCategory(id); 
+          $category.setCategory(id);
         }}
-        placeholder={category}
       
+        defaultValue={category}
         style={{ width: +width }}
         options={setMainSelectAll}
         className={`${st.select}  ${st.svg}`}

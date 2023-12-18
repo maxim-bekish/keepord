@@ -46,8 +46,10 @@ export default function LoginForm(props) {
       })
       .then(function (response) {
         if (response.status === 200) {
+          console.log('status = '+response.status);
           localStorage.setItem("token", JSON.stringify(response.data.access));
-          document.cookie = `refresh=${JSON.stringify(response.data.refresh)}`;
+          localStorage.setItem("tokenR", JSON.stringify(response.data.refresh));
+          // document.cookie = `refresh=${JSON.stringify(response.data.refresh)}`;
 
           reset();
 

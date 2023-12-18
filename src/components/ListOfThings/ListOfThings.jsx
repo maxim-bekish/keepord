@@ -25,7 +25,7 @@ export default function ListOfThings({ applyFilter }) {
   const [idItem, setIdItem] = useState();
   const divUtility = useRef(null);
   const navigate = useNavigate();
-  
+
   const queryClient = useQueryClient();
   const deletePost = useMutation(
     (e) => {
@@ -40,21 +40,18 @@ export default function ListOfThings({ applyFilter }) {
       onSuccess: () => queryClient.invalidateQueries("items"),
     }
   );
-   useEffect(() => {
-
-
-     setNewState($state.stateItems.data);
-    
-   }, [$state.stateItems.data]);
+  useEffect(() => {
+    setNewState($state.stateItems.data);
+  }, [$state.stateItems.data]);
   if ($state.stateItems.isLoading) {
     return <div>Loading...</div>;
   }
   if ($state.stateItems.error) {
     return <div>Error! {$state.stateItems.error.message}</div>;
   }
-   if (newState === undefined) {
-     return <div>Error! Undefined!</div>;
-   }
+  if (newState === undefined) {
+    return <div>Error! Undefined!</div>;
+  }
   const xxx = (e) => {
     const classUtility = document.querySelectorAll(`.utility${e.id}`);
     classUtility.forEach((e) => (e.style.display = "block"));
@@ -69,7 +66,6 @@ export default function ListOfThings({ applyFilter }) {
   }
 
   function applyFilter() {
-
     let x = [];
     $state.stateItems.data.map((e) => {
       if (e.storage !== null && e.category !== null) {
@@ -98,16 +94,22 @@ export default function ListOfThings({ applyFilter }) {
     $category.setCategory(null);
     $storage.setStorage(null);
     setNewState($state.stateItems.data);
+   
     const filter = document.querySelectorAll(".ant-select-selection-item");
-    filter[0].innerHTML = "Категория";
-    filter[1].innerHTML = "Места храниния";
-  }
+    console.log(filter);
 
+    filter[0].innerHTML = "Категория";
+    filter[1].innerHTML = "Места хранения";
+  }
 
   return (
     <>
       <div className={st.filter}>
-        <Category category={'Категории'} width={300} data={$state.stateCategory.data} />
+        <Category
+          category={"Категории"}
+          width={300}
+          data={$state.stateCategory.data}
+        />
         <Storage />
 
         <button onClick={applyFilter} className={st.buttonSubmit}>

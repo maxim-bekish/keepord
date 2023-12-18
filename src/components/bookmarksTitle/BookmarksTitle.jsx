@@ -21,7 +21,7 @@ export default function BookmarksTitle() {
             : `${st.spanTitle}`
         }
         style={{
-          "border-color": ` ${`${
+          "borderColor": ` ${`${
             $isActiveBaseAndList.isActiveBaseAndList === "base"
               ? "#f2ffe3"
               : "#A6BB8D"
@@ -40,7 +40,7 @@ export default function BookmarksTitle() {
             : `${st.spanTitle}`
         }
         style={{
-          "border-color": ` ${`${
+          "borderColor": ` ${`${
             $isActiveBaseAndList.isActiveBaseAndList === "base"
               ? "#f2ffe3"
               : "#A6BB8D"

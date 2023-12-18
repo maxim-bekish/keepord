@@ -11,36 +11,61 @@ import {
   itemsAllURL,
 } from "./../../constants/api";
 import { Spin } from "antd";
+import refreshToken from "./../../fun/refreshToken";
+
 import { useQuery } from "react-query";
 import getUrl from "./../../fun/getData";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Context from "../../utilities/Context/Context";
 
 import Spiner from "../../components/Spiner/Spiner";
 import { useNavigate } from "react-router-dom";
 import ListOfThings from "../../components/ListOfThings/ListOfThings";
 
-export default function Home() { 
+export default function Home() {
   const { $isActiveBaseAndList, $state } = useContext(Context);
-  const user = useQuery("user", () => getUrl(usersURL));
-  const category = useQuery("category", () => getUrl(categoriesURL));
-  const storage = useQuery("storage", () => getUrl(storageURL));
-  const items = useQuery("items", () => getUrl(itemsAllURL));
 
+  const user = useQuery(["user"], () => getUrl(usersURL), {
+    retry: (failureCount, error) => {
+      if (error?.response?.status === 401) {
+        refreshToken();
+        return (failureCount = 1);
+      } else {
+        return <ErrorComponent props={error}></ErrorComponent>;
+      }
+    },
+  });
+
+  const category = useQuery("category", () => getUrl(categoriesURL), {
+    retry: 2,
+  });
+  const storage = useQuery("storage", () => getUrl(storageURL), { retry: 1 });
+  const items = useQuery("items", () => getUrl(itemsAllURL), { retry: 1 });
+  //  console.log(user)
   $state.stateCategory = category;
   $state.stateStorage = storage;
   $state.stateItems = items;
   const navigate = useNavigate();
-  if (category.isLoading || storage.isLoading) {
+
+  if (category.isLoading || storage.isLoading || user.isLoading) {
     return (
       <div style={{ left: "50vw", top: "50vh", position: "absolute" }}>
         <Spiner />
       </div>
     );
   }
+  // if(user.isError){
+  //  ;}
+  // if (user.status === "error") {
 
-  if (user.error) {
+  //   // if (user.error.response.status === 401) {
+  //   //   refreshToken();
+  //   // } else {
+  //   return (<ErrorComponent props={user.error}></ErrorComponent>)
+  //   // }
+  // }
+  if (category.isError) {
     return <ErrorComponent props={user.error}></ErrorComponent>;
   }
   function nextPage() {
@@ -85,7 +110,7 @@ export default function Home() {
       </header>
       <main
         style={{
-          'border-color': ` ${`${
+          borderColor: ` ${`${
             $isActiveBaseAndList.isActiveBaseAndList === "base"
               ? "#f2ffe3"
               : "#A6BB8D"
@@ -95,7 +120,6 @@ export default function Home() {
       >
         <BookmarksTitle />
         {$isActiveBaseAndList.isActiveBaseAndList === "base" ? (
-          
           <ListOfThings />
         ) : (
           <ListData />

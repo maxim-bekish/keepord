@@ -1,22 +1,24 @@
-export const categoriesURL =
-  "https://rms2022.pythonanywhere.com/categories/with_things";
-export const storageURL =
-  "https://rms2022.pythonanywhere.com/storage/with_things";
+const URL = "https://rms2022.pythonanywhere.com/";
+// const URL = "http://127.0.0.1:8000/";
 
-export const refreshURL =
-  "https://rms2022.pythonanywhere.com/users/token/refresh_cookies/";
+export const categoriesURL = URL + "categories/with_things";
 
-export const loginURL = "https://rms2022.pythonanywhere.com/users/sign_in/";
+export const storageURL = URL + "storage/with_things";
 
-export const storageAddURL = "https://rms2022.pythonanywhere.com/storage/add/";
+export const loginURL = URL + "users/sign_in/";
 
-export const categoriesAllURL =
-  "https://rms2022.pythonanywhere.com/categories/all";
+export const storageAddURL = URL + "storage/add/";
 
-export const storageAllURL = "https://rms2022.pythonanywhere.com/storage/all";
+export const categoriesAllURL = URL + "categories/all";
 
-export const itemsAllURL = "https://rms2022.pythonanywhere.com/items/all";
+export const storageAllURL = URL + "storage/all";
 
-export const itemsURL = "https://rms2022.pythonanywhere.com/items";
+export const itemsAllURL = URL + "items/all";
 
-export const usersURL = "https://rms2022.pythonanywhere.com/users/info/";
+export const itemsURL = URL + "items";
+
+export const usersURL = URL + "users/info/";
+
+export const refreshURL = URL + "users/token/refresh/";
+
+// export const refreshURL = URL + "users/token/refresh_cookies/";
