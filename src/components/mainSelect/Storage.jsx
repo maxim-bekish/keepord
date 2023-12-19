@@ -3,7 +3,7 @@ import st from "./MainSelect.module.scss";
 import Context from "./../../utilities/Context/Context";
 import { useContext } from "react";
 
-// import ErrorComponent from "../ErrorComponent/ErrorComponent";
+
 
 export default function Storage() {
   const { $state, $storage } = useContext(Context);
@@ -12,9 +12,7 @@ export default function Storage() {
     return <></>;
   }
 
-  // if ($state.stateStorage.error) {
-  //   return <ErrorComponent props={$state.stateStorage.error}></ErrorComponent>;
-  // }
+
 
   const setMainSelectAll = $state.stateStorage.data.map(({ id, name }) => {
     return {

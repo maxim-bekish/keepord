@@ -1,7 +1,7 @@
 import axios from "axios";
-import { getCookie } from "./../fun/getCookie";
+import { getCookie } from "./getCookie";
 
-async function getUrl(url) {
+async function getRequest(url) {
   const res = await axios.get(url, {
     headers: {
       "Content-Type": "application/json",
@@ -11,4 +11,4 @@ async function getUrl(url) {
 
   return res.data;
 }
-export default getUrl;
+export default getRequest;

@@ -8,11 +8,12 @@ import {
   categoriesURL,
   storageURL,
   itemsAllURL,
+  logoutURL,
 } from "./../../constants/api";
 import { getCookie } from "../../fun/getCookie";
 
 import { useQuery } from "react-query";
-import getUrl from "./../../fun/getData";
+import getRequest from "./../../fun/getRequest";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import { useContext } from "react";
 import Context from "../../utilities/Context/Context";
@@ -24,11 +25,11 @@ import ListOfThings from "../../components/ListOfThings/ListOfThings";
 export default function Home() {
   const { $isActiveBaseAndList, $state } = useContext(Context);
 
-  const user = useQuery(["user"], () => getUrl(usersURL));
+  const user = useQuery(["user"], () => getRequest(usersURL));
 
-  const category = useQuery("category", () => getUrl(categoriesURL));
-  const storage = useQuery("storage", () => getUrl(storageURL));
-  const items = useQuery("items", () => getUrl(itemsAllURL));
+  const category = useQuery("category", () => getRequest(categoriesURL));
+  const storage = useQuery("storage", () => getRequest(storageURL));
+  const items = useQuery("items", () => getRequest(itemsAllURL));
 
   $state.stateCategory = category;
   $state.stateStorage = storage;
@@ -43,8 +44,16 @@ export default function Home() {
     );
   }
 
-  if (category.isError) {
-    return <ErrorComponent props={user.error}></ErrorComponent>;
+  if (category.isError || storage.isError || user.isError) {
+    return (
+      <ErrorComponent
+        props={{
+          user: user?.error?.request?.status,
+          category: category?.error?.request?.status,
+          storage: storage?.error?.request?.status,
+        }}
+      ></ErrorComponent>
+    );
   }
   function nextPage() {
     $isActiveBaseAndList.isActiveBaseAndList === "base"

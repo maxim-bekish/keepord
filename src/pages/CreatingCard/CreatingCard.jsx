@@ -2,16 +2,19 @@ import React, { useContext, useState } from "react";
 import st from "./CreatingCard.module.scss";
 import { Form, Input } from "antd";
 import close from "./../../img/svg/close.svg";
-import { categoriesAllURL, storageAllURL } from "../../constants/api";
+import {
+  categoriesAllURL,
+  storageAllURL,
+  itemsAddURL,
+} from "../../constants/api";
 import Category from "../../components/mainSelect/Category";
 
 import MainSelectAdd from "../../components/MainSelectAdd/MainSelectAdd";
 import { useNavigate } from "react-router-dom";
 import Context from "../../utilities/Context/Context";
 import { useMutation, useQuery } from "react-query";
-import axios from "axios";
 import PopUp from "../../components/popUp/popUp";
-import getUrl from "../../fun/getData";
+import getRequest from "../../fun/getRequest";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import Spiner from "../../components/Spiner/Spiner";
 import UploadInput from "../../components/UploadInput/UploadInput";
@@ -19,22 +22,9 @@ import HeaderCard from "../../components/HeaderCard/HeaderCard";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { getCookie } from "../../fun/getCookie";
+import postURL from "../../fun/postRequest";
 
 const { TextArea } = Input;
-
-async function create(data) {
-  return await axios.post(
-    `https://rms2022.pythonanywhere.com/items/add/`,
-    data,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${getCookie("access")}`,
-      },
-    }
-  );
-}
 
 const schema = yup.object().shape({
   productName: yup
@@ -50,8 +40,10 @@ const schema = yup.object().shape({
 });
 
 export function CreatingCard() {
-  const categoryAll = useQuery("categoryAll", () => getUrl(categoriesAllURL));
-  const storageAll = useQuery("storageAll", () => getUrl(storageAllURL));
+  const categoryAll = useQuery("categoryAll", () =>
+    getRequest(categoriesAllURL)
+  );
+  const storageAll = useQuery("storageAll", () => getRequest(storageAllURL));
 
   const { $category, $storage, $state } = useContext(Context);
   const [modalActive, setModalActive] = useState(false);
@@ -70,7 +62,7 @@ export function CreatingCard() {
 
   const formData = new FormData();
   formData.append("item", JSON.stringify(creatingCard));
-  console.log(addPhotoForm, "test");
+
   if (addPhotoForm.length > 0) {
     for (var i = 0; i < addPhotoForm.length; i++) {
       formData.append("image_list", addPhotoForm[i]);
@@ -86,7 +78,9 @@ export function CreatingCard() {
   });
   const onSubmit = (data) => console.log(data);
 
-  const mutation = useMutation((newProduct) => create(newProduct));
+  const mutation = useMutation((newProduct) =>
+    postURL(itemsAddURL, newProduct)
+  );
   const navigate = useNavigate();
 
   const submit = (e) => {
@@ -103,22 +97,15 @@ export function CreatingCard() {
     );
   }
 
-  if (categoryAll.isError && storageAll.isError) {
-    switch (true) {
-      case categoryAll.isError:
-        // setActiveError(true);
-        return <ErrorComponent props={categoryAll.error}></ErrorComponent>;
-
-      case storageAll.isError:
-        // setActiveError(true);
-        return <ErrorComponent props={storageAll.error}></ErrorComponent>;
-
-      default:
-        break;
-    }
-    // return (
-    //   <ErrorComponent props={$state.stateStorageAll.error}></ErrorComponent>
-    // );
+  if (categoryAll.isError || storageAll.isError) {
+    return (
+      <ErrorComponent
+        props={{
+          category: categoryAll?.error?.request?.status,
+          storage: storageAll?.error?.request?.status,
+        }}
+      ></ErrorComponent>
+    );
   }
   return (
     <>
@@ -178,7 +165,6 @@ export function CreatingCard() {
           Отправить
         </button>
         {/* <input className={st.buttonTest} type="submit" /> */}
-        
       </form>
 
       <PopUp active={modalActive} setActive={setModalActive}>

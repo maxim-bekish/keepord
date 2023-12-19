@@ -9,23 +9,23 @@ import MainSelectAdd from "../../components/MainSelectAdd/MainSelectAdd";
 import UploadInput from "../../components/UploadInput/UploadInput";
 import { useContext, useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-query";
-import getUrl from "../../fun/getData";
+import getRequest from "../../fun/getRequest";
 import { categoriesAllURL, itemsURL } from "../../constants/api";
 import Context from "../../utilities/Context/Context";
 import axios from "axios";
 import { getCookie } from "../../fun/getCookie";
+import refreshToken from "../../fun/refreshToken";
 
 async function create({ url, formData }) {
-  return await axios.put(
-    `https://rms2022.pythonanywhere.com/items/${url}/update/`,
-    formData,
-    {
+  return await axios
+    .put(`https://rms2022.pythonanywhere.com/items/${url}/update/`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${getCookie("access")}`,
       },
-    }
-  );
+    })
+    .then((res)=>console.log(res))
+    .catch(() => refreshToken() );
 }
 
 export default function EditCard() {
@@ -44,7 +44,7 @@ export default function EditCard() {
     isLoading: itemsIsLoading,
     isError: itemsIsError,
   } = useQuery(`items${location.state}`, () =>
-    getUrl(`${itemsURL}/${location.state}`)
+    getRequest(`${itemsURL}/${location.state}`)
   );
   const formData = new FormData();
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function EditCard() {
     } else {
       setDisabled(false);
     }
-    console.log();
+   
   }, [name, description]);
   let resultData = {
     name: name,
@@ -77,7 +77,7 @@ export default function EditCard() {
     data: categoryAllData,
     isLoading: categoryAllIsLoading,
     isError: categoryAllIsError,
-  } = useQuery("categoryAll", () => getUrl(categoriesAllURL));
+  } = useQuery("categoryAll", () => getRequest(categoriesAllURL));
 
   useEffect(() => {
     if (itemsIsSuccess) {

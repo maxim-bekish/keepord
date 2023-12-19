@@ -2,41 +2,40 @@ import React, { useState, useContext } from "react";
 import st from "./MainSelectAdd.module.scss";
 import { storageAddURL } from "./../../constants/api";
 import { Input, Select, Space, Button, ConfigProvider } from "antd";
-import { getCookie } from "../../fun/getCookie";
 
-import axios from "axios";
+import postRequest from "../../fun/postRequest";
+
 import { useMutation, useQuery, useQueryClient } from "react-query";
-// import getUrl from "../../fun/getData";
+
 import Context from "../../utilities/Context/Context";
 import ErrorComponent from "../ErrorComponent/ErrorComponent";
 import { storageAllURL } from "./../../constants/api";
-import getUrl from "../../fun/getData";
-
-async function create(data) {
-  return await axios.post(storageAddURL, data, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getCookie("access")}`,
-    },
-  });
-}
+import getRequest from "../../fun/getRequest";
 
 export default function MainSelectAdd({ storageDefault }) {
-  const storage = useQuery("storageAll", () => getUrl(storageAllURL));
+  const storage = useQuery("storageAll", () => getRequest(storageAllURL));
   const { $storage } = useContext(Context);
   const queryClient = useQueryClient();
   const [name, setName] = useState("");
 
-  const mutation = useMutation((newProduct) => create(newProduct), {
-    onSuccess: () => queryClient.invalidateQueries(["storageAll"]),
-  });
+  const mutation = useMutation(
+    (newProduct) => postRequest(storageAddURL, newProduct),
+    {
+      onSuccess: () => queryClient.invalidateQueries(["storageAll"]),
+    }
+  );
 
   if (storage.isLoading) {
     return <h2>Loadinggggg</h2>;
   }
 
-  if (storage.error) {
-    return <ErrorComponent props={storage.error}></ErrorComponent>;
+  if (storage.isError) {
+
+    return (
+      <ErrorComponent
+        props={{ storage: storage?.error?.request?.status }}
+      ></ErrorComponent>
+    );
   }
 
   const mainSelectAll = storage.data.map(({ id, name }) => {

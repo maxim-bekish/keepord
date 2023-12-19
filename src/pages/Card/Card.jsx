@@ -1,12 +1,10 @@
 import st from "./Card.module.scss";
-import axios from "axios";
 import { useQuery } from "react-query";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getCookie } from "../../fun/getCookie";
-
+import deleteRequest from "../../fun/deleteRequest";
 import { itemsURL } from "../../constants/api";
-import getUrl from "../../fun/getData";
+import getRequest from "../../fun/getRequest";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import PopUp from "../../components/popUp/popUp";
 import close from "./../../img/svg/close.svg";
@@ -17,10 +15,8 @@ export default function Card() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const url = `${itemsURL}/${location.state}/delete/`;
-
   const { data, isLoading, error } = useQuery(`card${location.state}`, () =>
-    getUrl(`${itemsURL}/${location.state}`)
+    getRequest(`${itemsURL}/${location.state}`)
   );
 
   if (isLoading) {
@@ -32,17 +28,13 @@ export default function Card() {
   }
 
   if (error) {
-    return <ErrorComponent props={error}></ErrorComponent>;
+    return (
+      <ErrorComponent props={{ card: error.request.status }}></ErrorComponent>
+    );
   }
 
-  const deletedItems = async () => {
-    await axios.delete(url, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getCookie("access")}`,
-      },
-    });
-
+  const deletedItems = () => {
+    deleteRequest(`${itemsURL}/${location.state}/delete/`);
     navigate("/home");
   };
 

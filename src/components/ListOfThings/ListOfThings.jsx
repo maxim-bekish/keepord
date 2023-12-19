@@ -7,17 +7,14 @@ import trash from "./../../img/svg/trash.svg";
 import edit from "./../../img/svg/edit.svg";
 import iconPhoto from "./../../img/png/iconPhoto.png";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { itemsURL } from "./../../constants/api.js";
-
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useContext, useEffect, useRef, useState } from "react";
 import PopUp from "../popUp/popUp";
-
 import Context from "../../utilities/Context/Context";
 import Category from "../mainSelect/Category.jsx";
 import Storage from "../mainSelect/Storage.jsx";
-import { getCookie } from "../../fun/getCookie.js";
+import deleteRequest from "../../fun/deleteRequest.js";
 
 export default function ListOfThings({ applyFilter }) {
   const { $state, $category, $storage } = useContext(Context);
@@ -30,12 +27,7 @@ export default function ListOfThings({ applyFilter }) {
   const queryClient = useQueryClient();
   const deletePost = useMutation(
     (e) => {
-      return axios.delete(`${itemsURL}/${e}/delete`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getCookie("access")}`,
-        },
-      });
+      return deleteRequest(`${itemsURL}/${e}/delete`);
     },
     {
       onSuccess: () => queryClient.invalidateQueries("items"),
