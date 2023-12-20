@@ -3,14 +3,15 @@ import { getCookie } from "./getCookie";
 import refreshToken from "./refreshToken";
 
 async function getRequest(url) {
-  const res = await axios
+  let res
+  await axios
     .get(url, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getCookie("access")}`,
       },
     })
-// .then((www)=>this.www.data)
+.then((result)=>res=result.data)
     // .catch(  (error) => {
     //   if (error.request.status === 401) {
     //    refreshToken();
@@ -21,6 +22,8 @@ async function getRequest(url) {
     //     console.log(error.request);
     //   }
     // });
-  return res?.data;
+    // console.log(res)
+
+  // return res.data
 }
 export default getRequest;

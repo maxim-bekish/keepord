@@ -14,7 +14,7 @@ export default function Storage() {
 
 
 
-  const setMainSelectAll = $state.stateStorage.data.map(({ id, name }) => {
+  const setMainSelectAll = $state.stateStorage.data?.map(({ id, name }) => {
     return {
       value: id,
       label: name,

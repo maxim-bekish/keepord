@@ -18,6 +18,7 @@ import deleteRequest from "../../fun/deleteRequest.js";
 
 export default function ListOfThings({ applyFilter }) {
   const { $state, $category, $storage } = useContext(Context);
+
   const [newState, setNewState] = useState($state.stateItems.data);
   const [modalActive, setModalActive] = useState(false);
   const [idItem, setIdItem] = useState();
