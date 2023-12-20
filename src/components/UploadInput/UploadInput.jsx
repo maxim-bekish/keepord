@@ -30,7 +30,7 @@ export default function UploadInput({
       let newArray = [...fileArray, ...timeOffArray];
       setTimeOffArray(newArray);
       setAddPhotoForm(newArray);
-      console.log(newArray);
+      // console.log(newArray);
     }
   };
 

@@ -21,12 +21,13 @@ import Context from "../../utilities/Context/Context";
 import Spiner from "../../components/Spiner/Spiner";
 import { useNavigate } from "react-router-dom";
 import ListOfThings from "../../components/ListOfThings/ListOfThings";
+import refreshToken from "../../fun/refreshToken";
 
 export default function Home() {
   const { $isActiveBaseAndList, $state } = useContext(Context);
 
   const user = useQuery(["user"], () => getRequest(usersURL));
-
+// console.log(user);
   const category = useQuery("category", () => getRequest(categoriesURL));
   const storage = useQuery("storage", () => getRequest(storageURL));
   const items = useQuery("items", () => getRequest(itemsAllURL));
@@ -45,15 +46,24 @@ export default function Home() {
   }
 
   if (category.isError || storage.isError || user.isError) {
-    return (
-      <ErrorComponent
-        props={{
-          user: user?.error?.request?.status,
-          category: category?.error?.request?.status,
-          storage: storage?.error?.request?.status,
-        }}
-      ></ErrorComponent>
-    );
+   if (
+     user.error.request.status === 401 ||
+     category.error.request.status === 410 ||
+     storage.error.request.status===401
+   ){
+    refreshToken()
+    
+   }else{
+     return (
+       <ErrorComponent
+         props={{
+           user: user?.error?.request?.status,
+           category: category?.error?.request?.status,
+           storage: storage?.error?.request?.status,
+         }}
+       ></ErrorComponent>
+     );
+   }
   }
   function nextPage() {
     $isActiveBaseAndList.isActiveBaseAndList === "base"

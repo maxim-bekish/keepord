@@ -9,8 +9,9 @@ function refreshToken() {
       refresh: getCookie("refresh"),
     })
     .then((res) => {
-      document.cookie = `access=${res.data.access}`;
-      alert("access update");
+      document.cookie = `access=${res.data.access}; max-age=3600`;
+      // console.log(getCookie('access'));
+      // console.log(document.cookie);
     })
     .catch(function (error) {
       console.error("ошибка в refreshToken: " + error);

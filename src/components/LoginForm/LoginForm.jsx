@@ -11,7 +11,6 @@ import { useState } from "react";
 import axios from "axios";
 import { loginURL } from "./../../constants/api";
 
-
 const SignUpSchema = yup.object().shape({
   email: yup
     .string()
@@ -47,12 +46,12 @@ export default function LoginForm(props) {
       .then(function (response) {
         if (response.status === 200) {
           // +1 день от текущей даты
-       
+
           let date = new Date(Date.now() + 86400e3);
           date = date.toUTCString();
-          document.cookie = `access=${response.data.access};max-age:300`;
-          document.cookie = `refresh=${response.data.refresh};max-age:${date}`;
-      
+          // console.log(date);
+          document.cookie = `access=${response.data.access};max-age=3600`;
+          document.cookie = `refresh=${response.data.refresh};max-age=${date}`;
 
           reset();
 
@@ -60,7 +59,6 @@ export default function LoginForm(props) {
         }
       })
       .catch(function (error) {
-
         if (error.response.status === 401) {
           reset();
           setErr("не вырный логин или пароль");

@@ -12,13 +12,15 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      retry: (failureCount, error) => {
-        if (error.response.status === 401) {
-          refreshToken();
-          return (failureCount = 1);
+      retry: 1
+      // (failureCount, error) => {
+      //   if (error.response.status === 401) {
+      //     refreshToken();
+      //     return (failureCount = 1);
         
-        }
-      },
+      //   }
+      // }
+      ,
       retryDelay: 1000,
     },
   },
