@@ -1,22 +1,10 @@
-
-
-
-
 const URL = "https://rms2022.pythonanywhere.com/";
 
 
 
-
-
-
-
-
-
-
-
-// const URL = "http:// 0.0.0.0:8000/";
-
 // const URL = "http://127.0.0.1:8000/";
+
+
 
 export const logoutURL = URL + "users/logout/";
 

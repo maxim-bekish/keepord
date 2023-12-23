@@ -7,7 +7,7 @@ import trash from "./../../img/svg/trash.svg";
 import edit from "./../../img/svg/edit.svg";
 import iconPhoto from "./../../img/png/iconPhoto.png";
 import { useNavigate } from "react-router-dom";
-import { itemsURL } from "./../../constants/api.js";
+import { itemsURL, itemsAllURL } from "./../../constants/api.js";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useContext, useEffect, useRef, useState } from "react";
 import PopUp from "../popUp/popUp";
@@ -15,37 +15,48 @@ import Context from "../../utilities/Context/Context";
 import Category from "../mainSelect/Category.jsx";
 import Storage from "../mainSelect/Storage.jsx";
 import deleteRequest from "../../fun/deleteRequest.js";
+import getRequest from "../../fun/getRequest.js";
+import Spiner from "../Spiner/Spiner.jsx";
+import ErrorComponent from "../ErrorComponent/ErrorComponent.jsx";
+import refreshToken from "../../fun/refreshToken.js";
 
-export default function ListOfThings({ applyFilter }) {
+export default function ListOfThings() {
+  const [newState, setNewState] = useState(null);
+  const {
+    isLoading: itemsLoading,
+    isError: itemsIsError,
+    error: itemsError,
+    data: itemsData,
+    refetch: itemsRefetch,
+  } = useQuery("items", () => getRequest(itemsAllURL), {
+    onSuccess: (data) => {
+      setNewState(data);
+    },
+  });
+
   const { $state, $category, $storage } = useContext(Context);
 
-  const [newState, setNewState] = useState($state.stateItems.data);
   const [modalActive, setModalActive] = useState(false);
   const [idItem, setIdItem] = useState();
   const divUtility = useRef(null);
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();
-  const deletePost = useMutation(
-    (e) => {
-      return deleteRequest(`${itemsURL}/${e}/delete`);
-    },
-    {
-      onSuccess: () => queryClient.invalidateQueries("items"),
+
+  const mutation = useMutation(deleteRequest);
+  const handleDelete = async (id) => {
+    try {
+      setModalActive(false);
+      await mutation.mutateAsync(id);
+      // Инвалидация кэша запроса 'myQueryKey' через 1000 миллисекунд (1 секунда)
+      setTimeout(() => {
+        queryClient.invalidateQueries("items");
+      }, 1000);
+    } catch (error) {
+      console.error("Error deleting data:", error);
     }
-  );
-  useEffect(() => {
-    setNewState($state.stateItems.data);
-  }, [$state.stateItems.data]);
-  if ($state.stateItems.isLoading) {
-    return <div>Loading...</div>;
-  }
-  if ($state.stateItems.error) {
-    return <div>Error! {$state.stateItems.error.message}</div>;
-  }
-  if (newState === undefined) {
-    return <div>Error! Undefined!</div>;
-  }
+  };
+
   const xxx = (e) => {
     const classUtility = document.querySelectorAll(`.utility${e.id}`);
     classUtility.forEach((e) => (e.style.display = "block"));
@@ -57,11 +68,13 @@ export default function ListOfThings({ applyFilter }) {
   function deleteFinish(e) {
     setModalActive(true);
     setIdItem(e);
+    console.log("add id in state");
   }
 
   function applyFilter() {
-    let x = [];
-    $state.stateItems.data.map((e) => {
+    const x = [];
+
+    newState.map((e) => {
       if (e.storage !== null && e.category !== null) {
         if (
           e.storage.id === $storage.storage &&
@@ -72,7 +85,7 @@ export default function ListOfThings({ applyFilter }) {
       }
       if (e.category !== null && $storage.storage === null) {
         if (e.category.id === $category.category) {
-          x.push(e);
+          return x.push(e);
         }
       }
       if (e.storage !== null && $category.category === null) {
@@ -81,18 +94,43 @@ export default function ListOfThings({ applyFilter }) {
         }
       }
     });
-    setNewState(x);
+    if (x.length !== 0) {
+      setNewState(x);
+    }
   }
 
   function reset() {
     $category.setCategory(null);
     $storage.setStorage(null);
-    setNewState($state.stateItems.data);
+    setNewState(itemsData);
 
     const filter = document.querySelectorAll(".ant-select-selection-item");
 
     filter[0].innerHTML = "Категория";
     filter[1].innerHTML = "Места хранения";
+    console.log(newState);
+  }
+
+  if (itemsLoading) {
+    return (
+      <div style={{ left: "50vw", top: "50vh", position: "absolute" }}>
+        <Spiner />
+      </div>
+    );
+  }
+  if (itemsIsError) {
+    if (itemsError?.response?.status === 401) {
+      console.log("popal");
+      refreshToken();
+      itemsRefetch();
+    }
+    return (
+      <ErrorComponent
+        props={{
+          items: itemsError?.response?.status,
+        }}
+      ></ErrorComponent>
+    );
   }
 
   return (
@@ -101,7 +139,7 @@ export default function ListOfThings({ applyFilter }) {
         <Category
           category={"Категории"}
           width={300}
-          data={$state.stateCategory.data}
+          data={$state.stateCategory}
         />
         <Storage />
 
@@ -120,7 +158,7 @@ export default function ListOfThings({ applyFilter }) {
         <Col>Дата добавления</Col>
       </Row>
       <section className={st.section}>
-        {newState.map((e, id) => {
+        {newState?.map((e, id) => {
           return (
             <div
               key={`key${id}`}
@@ -187,15 +225,7 @@ export default function ListOfThings({ applyFilter }) {
             <img onClick={() => setModalActive(false)} src={close} alt="" />
             <h2>Вы действительно хотите удалить эту вещь?</h2>
             <div className={st.buttonModal}>
-              <button
-                onClick={() => {
-                  deletePost.mutate(idItem);
-
-                  setModalActive(false);
-                }}
-              >
-                Да
-              </button>
+              <button onClick={() => handleDelete(idItem)}>Да</button>
 
               <button onClick={() => setModalActive(false)}>Нет</button>
             </div>

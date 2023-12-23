@@ -8,13 +8,9 @@ import { useContext } from "react";
 export default function Storage() {
   const { $state, $storage } = useContext(Context);
 
-  if ($state.stateStorage.isLoading) {
-    return <></>;
-  }
 
 
-
-  const setMainSelectAll = $state.stateStorage.data?.map(({ id, name }) => {
+  const setMainSelectAll = $state.stateStorage.map(({ id, name }) => {
     return {
       value: id,
       label: name,

@@ -23,6 +23,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import postURL from "../../fun/postRequest";
+import refreshToken from "../../fun/refreshToken";
 
 const { TextArea } = Input;
 
@@ -98,6 +99,15 @@ export function CreatingCard() {
   }
 
   if (categoryAll.isError || storageAll.isError) {
+    if (
+      categoryAll.error?.response?.status === 401 ||
+      storageAll.error?.response?.status === 401
+    ) {
+      refreshToken();
+      categoryAll.refetch();
+      storageAll.refetch();
+    }
+
     return (
       <ErrorComponent
         props={{

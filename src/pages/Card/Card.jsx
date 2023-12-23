@@ -10,13 +10,15 @@ import PopUp from "../../components/popUp/popUp";
 import close from "./../../img/svg/close.svg";
 import Spiner from "../../components/Spiner/Spiner";
 import HeaderCard from "../../components/HeaderCard/HeaderCard";
+import refreshToken from "../../fun/refreshToken";
 export default function Card() {
   const [modalActive, setModalActive] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { data, isLoading, error } = useQuery(`card${location.state}`, () =>
-    getRequest(`${itemsURL}/${location.state}`)
+  const { data, isLoading, error, refetch } = useQuery(
+    `card${location.state}`,
+    () => getRequest(`${itemsURL}/${location.state}`)
   );
 
   if (isLoading) {
@@ -28,6 +30,11 @@ export default function Card() {
   }
 
   if (error) {
+    if (error?.response?.status === 401) {
+      refreshToken();
+      refetch();
+    }
+
     return (
       <ErrorComponent props={{ card: error.request.status }}></ErrorComponent>
     );

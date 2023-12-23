@@ -13,7 +13,7 @@ import { getCookie } from "../../fun/getCookie";
 import { useQuery } from "react-query";
 import getRequest from "./../../fun/getRequest";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import Context from "../../utilities/Context/Context";
 import Spiner from "../../components/Spiner/Spiner";
 import { useNavigate } from "react-router-dom";
@@ -22,28 +22,43 @@ import refreshToken from "../../fun/refreshToken";
 
 export default function Home() {
   const { $isActiveBaseAndList, $state } = useContext(Context);
-  const [test, setTest] = useState(null);
-  const [x, setX] = useState(true);
 
-  const user = useQuery(["user"], () => getRequest(usersURL));
-  // console.log(user)
-  const category = useQuery("category", () => getRequest(categoriesURL));
-  const storage = useQuery("storage", () => getRequest(storageURL));
-  const items = useQuery("items", () => getRequest(itemsAllURL));
-  // console.log(items)
-  $state.stateCategory = category;
-  $state.stateStorage = storage;
-  $state.stateItems = items;
+  const {
+    isLoading: userLoading,
+    isError: userIsError,
+    error: userError,
+    data: userData,
+    refetch: userRefetch,
+  } = useQuery(["user"], () => getRequest(usersURL));
+  const {
+    isLoading: categoryLoading,
+    isError: categoryIsError,
+    error: categoryError,
+    data: categoryData,
+    refetch: categoryRefetch,
+  } = useQuery("category", () => getRequest(categoriesURL));
+  const {
+    isLoading: storageLoading,
+    isError: storageIsError,
+    error: storageError,
+    data: storageData,
+    refetch: storageRefetch,
+  } = useQuery("storage", () => getRequest(storageURL));
+  // const {
+  //   isLoading: itemsLoading,
+  //   isError: itemsIsError,
+  //   error: itemsError,
+  //   data: itemsData,
+  //   refetch: itemsRefetch,
+  // } = useQuery("items", () => getRequest(itemsAllURL));
 
-  useEffect(() => {
-    setTest(user);
+  $state.stateCategory = categoryData;
+  $state.stateStorage = storageData;
+ 
 
-    // console.log(test);
-  }, [user.status]);
-  // console.log(user)
   const navigate = useNavigate();
 
-  if (category.isLoading || storage.isLoading || user.isLoading) {
+  if (categoryLoading || storageLoading || userLoading ) {
     return (
       <div style={{ left: "50vw", top: "50vh", position: "absolute" }}>
         <Spiner />
@@ -51,25 +66,30 @@ export default function Home() {
     );
   }
 
-  if (category.isError || storage.isError || user.isError) {
+  if (categoryIsError || storageIsError || userIsError ) {
     if (
-      user?.error?.request?.status === 401 &&
-      category.error.request.status === 410 &&
-      storage.error.request.status === 401
+      userError?.response?.status === 401 ||
+      categoryError?.response?.status === 401 ||
+      storageError?.response?.status === 401 
+    
     ) {
+      console.log("popal");
       refreshToken();
+      userRefetch();
+      categoryRefetch();
+      storageRefetch();
+    
     }
-    //  else {
     return (
       <ErrorComponent
         props={{
-          user: user?.error?.request?.status,
-          category: category?.error?.request?.status,
-          storage: storage?.error?.request?.status,
+          user: userError?.response?.status,
+          category: categoryError?.response?.status,
+          storage: storageError?.response?.status,
         }}
       ></ErrorComponent>
     );
-    // }
+   
   }
   function nextPage() {
     $isActiveBaseAndList.isActiveBaseAndList === "base"
@@ -85,7 +105,7 @@ export default function Home() {
             ? "+ Добавить вещь"
             : "+ Добавить список"}
         </button>
-        <h2 className={st.h2Name}>{test?.data?.email}</h2>
+        <h2 className={st.h2Name}>{userData?.email}</h2>
 
         <div className={st.search}>
           <input placeholder="Поиск" className={st.inputSearch} type="text" />
@@ -102,7 +122,6 @@ export default function Home() {
           >
             Выход
           </button>
-          <button onClick={() => setX(!x)}></button>
         </div>
       </header>
       <main
@@ -117,7 +136,7 @@ export default function Home() {
       >
         <BookmarksTitle />
         {$isActiveBaseAndList.isActiveBaseAndList === "base" ? (
-          <ListOfThings />
+          <ListOfThings  />
         ) : (
           <ListData />
         )}

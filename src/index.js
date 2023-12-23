@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import refreshToken from "./fun/refreshToken";
 
 import { QueryClient, QueryClientProvider } from "react-query";
 
@@ -12,16 +11,8 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      retry: 1
-      // (failureCount, error) => {
-      //   if (error.response.status === 401) {
-      //     refreshToken();
-      //     return (failureCount = 1);
-        
-      //   }
-      // }
-      ,
-      retryDelay: 1000,
+      retry: false,
+ 
     },
   },
 });

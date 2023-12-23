@@ -11,9 +11,17 @@ import Context from "../../utilities/Context/Context";
 import ErrorComponent from "../ErrorComponent/ErrorComponent";
 import { storageAllURL } from "./../../constants/api";
 import getRequest from "../../fun/getRequest";
+import refreshToken from "../../fun/refreshToken";
+import Spiner from "../Spiner/Spiner";
 
 export default function MainSelectAdd({ storageDefault }) {
-  const storage = useQuery("storageAll", () => getRequest(storageAllURL));
+  const {
+    data: storageData,
+    isLoading: storageIsLoading,
+    isError: storageIsError,
+    error: storageError,
+    refetch: storageRefetch,
+  } = useQuery("storageAll", () => getRequest(storageAllURL));
   const { $storage } = useContext(Context);
   const queryClient = useQueryClient();
   const [name, setName] = useState("");
@@ -25,20 +33,29 @@ export default function MainSelectAdd({ storageDefault }) {
     }
   );
 
-  if (storage.isLoading) {
-    return <h2>Loadinggggg</h2>;
+  if (storageIsLoading) {
+       return (
+         <div style={{ left: "50vw", top: "50vh", position: "absolute" }}>
+           <Spiner />
+         </div>
+       );
   }
 
-  if (storage.isError) {
-
+  if (storageIsError) {
+    if (storageError?.response?.status === 401) {
+      refreshToken();
+      storageRefetch();
+    }
     return (
       <ErrorComponent
-        props={{ storage: storage?.error?.request?.status }}
+        props={{
+          storage: storageError?.response?.status,
+        }}
       ></ErrorComponent>
     );
   }
 
-  const mainSelectAll = storage.data.map(({ id, name }) => {
+  const mainSelectAll = storageData.map(({ id, name }) => {
     return {
       value: id,
       label: name,

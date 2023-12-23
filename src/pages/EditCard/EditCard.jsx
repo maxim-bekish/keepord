@@ -15,6 +15,8 @@ import Context from "../../utilities/Context/Context";
 import axios from "axios";
 import { getCookie } from "../../fun/getCookie";
 import refreshToken from "../../fun/refreshToken";
+import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
+import Spiner from "../../components/Spiner/Spiner";
 
 async function create({ url, formData }) {
   return await axios
@@ -24,8 +26,8 @@ async function create({ url, formData }) {
         Authorization: `Bearer ${getCookie("access")}`,
       },
     })
-    .then((res)=>console.log(res))
-    .catch(() => refreshToken() );
+    .then((res) => console.log(res))
+    .catch(() => refreshToken());
 }
 
 export default function EditCard() {
@@ -43,6 +45,8 @@ export default function EditCard() {
     isSuccess: itemsIsSuccess,
     isLoading: itemsIsLoading,
     isError: itemsIsError,
+    error: itemsError,
+    refetch: itemsRefetch,
   } = useQuery(`items${location.state}`, () =>
     getRequest(`${itemsURL}/${location.state}`)
   );
@@ -53,7 +57,6 @@ export default function EditCard() {
     } else {
       setDisabled(false);
     }
-   
   }, [name, description]);
   let resultData = {
     name: name,
@@ -77,6 +80,8 @@ export default function EditCard() {
     data: categoryAllData,
     isLoading: categoryAllIsLoading,
     isError: categoryAllIsError,
+    error: categoryAllError,
+    refetch: categoryAllRefetch,
   } = useQuery("categoryAll", () => getRequest(categoriesAllURL));
 
   useEffect(() => {
@@ -94,21 +99,35 @@ export default function EditCard() {
     mutation.mutate({ formData: formData, url: location.state });
   };
 
-  useEffect(() => {
-    console.log($state.photo?.length);
-  }, [$state.photo]);
+  // useEffect(() => {
+  //   console.log($state.photo?.length);
+  // }, [$state.photo]);
 
-  if (itemsIsLoading) {
-    return <div>loadingloadingloadingloading itemsitemsitemsitems</div>;
+  if (itemsIsLoading || categoryAllIsLoading) {
+    return (
+      <div style={{ left: "50vw", top: "50vh", position: "absolute" }}>
+        <Spiner />
+      </div>
+    );
   }
-  if (categoryAllIsLoading) {
-    return <div>loadingloadingloading categoryAllcategoryAllcategory</div>;
-  }
-  if (itemsIsError) {
-    return <div>isError items </div>;
-  }
-  if (categoryAllIsError) {
-    return <div>isError category </div>;
+
+  if (itemsIsError || categoryAllIsError) {
+    if (
+      categoryAllError?.response?.status === 401 ||
+      itemsError?.response?.status === 401
+    ) {
+      refreshToken();
+      itemsRefetch();
+      categoryAllRefetch();
+    }
+    return (
+      <ErrorComponent
+        props={{
+          categoryAll: categoryAllError?.response?.status,
+          items: itemsError?.response?.status,
+        }}
+      ></ErrorComponent>
+    );
   }
 
   return (
