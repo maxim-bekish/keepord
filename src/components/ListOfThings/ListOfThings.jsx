@@ -1,6 +1,7 @@
 import { Col, Row } from "antd";
 import st from "./ListOfThings.module.scss";
-// import { useSelector } from "react-redux";
+import { Link, NavLink } from "react-router-dom";
+
 import share from "./../../img/svg/share.svg";
 import close from "./../../img/svg/close.svg";
 import trash from "./../../img/svg/trash.svg";
@@ -68,35 +69,29 @@ export default function ListOfThings() {
   function deleteFinish(e) {
     setModalActive(true);
     setIdItem(e);
-    console.log("add id in state");
   }
 
   function applyFilter() {
-    const x = [];
-
-    newState.map((e) => {
-      if (e.storage !== null && e.category !== null) {
-        if (
-          e.storage.id === $storage.storage &&
-          e.category.id === $category.category
-        ) {
-          return x.push(e);
-        }
+    const filteredItems = newState.filter((item) => {
+      // Проверка, что выбраны как категория, так и место хранения
+      if ($category.category && $storage.storage) {
+        return (
+          item.category?.id === $category.category &&
+          item.storage?.id === $storage.storage
+        );
       }
-      if (e.category !== null && $storage.storage === null) {
-        if (e.category.id === $category.category) {
-          return x.push(e);
-        }
+      // Проверка, если выбрана только категория
+      if ($category.category && !$storage.storage) {
+        return item.category?.id === $category.category;
       }
-      if (e.storage !== null && $category.category === null) {
-        if (e.storage.id === $storage.storage) {
-          return x.push(e);
-        }
+      // Проверка, если выбрано только место хранения
+      if (!$category.category && $storage.storage) {
+        return item.storage?.id === $storage.storage;
       }
+      // Если не выбрана ни категория, ни место хранения, возвращаем true, чтобы элемент был включен в список
+      return true;
     });
-    if (x.length !== 0) {
-      setNewState(x);
-    }
+    setNewState(filteredItems);
   }
 
   function reset() {
@@ -124,6 +119,7 @@ export default function ListOfThings() {
       refreshToken();
       itemsRefetch();
     }
+
     return (
       <ErrorComponent
         props={{
@@ -172,25 +168,27 @@ export default function ListOfThings() {
                   onClick={() => navigate("/card", { state: e.id })}
                   className={st.allData}
                 >
-                  <Col>
-                    {e.images.length === 0 ? (
-                      <img src={iconPhoto} />
-                    ) : (
-                      <img
-                        src={`https://rms2022.pythonanywhere.com${e.images[0].image_url}`}
-                        alt=""
-                      />
-                    )}
+                 
+                    <Col>
+                      {e.images.length === 0 ? (
+                        <img src={iconPhoto} />
+                      ) : (
+                        <img
+                          src={`https://rms2022.pythonanywhere.com${e.images[0].image_url}`}
+                          alt=""
+                        />
+                      )}
 
-                    <div>{e.name}</div>
-                  </Col>
-                  <Col>
-                    {e.storage === null ? "Не добавили" : e.storage.name}
-                  </Col>
-                  <Col>
-                    {e.category === null ? "Не добавили" : e.category.name}
-                  </Col>
-                  <Col>{e.created_at}</Col>
+                      <div>{e.name}</div>
+                    </Col>
+                    <Col>
+                      {e.storage === null ? "Не добавили" : e.storage.name}
+                    </Col>
+                    <Col>
+                      {e.category === null ? "Не добавили" : e.category.name}
+                    </Col>
+                    <Col>{e.created_at}</Col>
+                
                 </div>
                 <Col className={st.endData}>
                   <div id={e.id} ref={divUtility} className={st.allUtility}>

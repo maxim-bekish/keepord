@@ -49,9 +49,9 @@ function First_page() {
                 </button>
               </div>
             </div>
-            <a href="#" className={st.a}>
+            {/* <a href="#" className={st.a}>
               Продолжить без авторизации
-            </a>
+            </a> */}
           </section>
         </div>
       </div>

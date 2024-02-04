@@ -25,7 +25,7 @@ import * as yup from "yup";
 import postURL from "../../fun/postRequest";
 import refreshToken from "../../fun/refreshToken";
 
-const { TextArea } = Input;
+
 
 const schema = yup.object().shape({
   productName: yup
@@ -79,8 +79,10 @@ export function CreatingCard() {
   });
   const onSubmit = (data) => console.log(data);
 
-  const mutation = useMutation((newProduct) =>
-    postURL(itemsAddURL, newProduct)
+  const mutation = useMutation((newProduct) =>{
+  
+    postURL(itemsAddURL, newProduct)}
+  
   );
   const navigate = useNavigate();
 

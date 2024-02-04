@@ -1,7 +1,7 @@
 import { ConfigProvider, Select } from "antd";
 import st from "./MainSelect.module.scss";
 import Context from "../../utilities/Context/Context";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 
 export default function Category({ data, width, category }) {
   const { $category } = useContext(Context);
@@ -36,7 +36,6 @@ export default function Category({ data, width, category }) {
         onChange={(id) => {
           $category.setCategory(id);
         }}
-      
         defaultValue={category}
         style={{ width: +width }}
         options={setMainSelectAll}

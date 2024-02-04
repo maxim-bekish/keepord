@@ -19,7 +19,7 @@ async function postRequest(url, startingInformation) {
     .catch((error) => {
       if (error.request.status === 401) {
         refreshToken();
-        postRequest(url);
+        postRequest(url, startingInformation);
       }
     });
 }

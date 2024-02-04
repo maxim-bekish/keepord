@@ -54,11 +54,10 @@ export default function Home() {
 
   $state.stateCategory = categoryData;
   $state.stateStorage = storageData;
- 
 
   const navigate = useNavigate();
 
-  if (categoryLoading || storageLoading || userLoading ) {
+  if (categoryLoading || storageLoading || userLoading) {
     return (
       <div style={{ left: "50vw", top: "50vh", position: "absolute" }}>
         <Spiner />
@@ -66,30 +65,34 @@ export default function Home() {
     );
   }
 
-  if (categoryIsError || storageIsError || userIsError ) {
+  if (categoryIsError || storageIsError || userIsError) {
+
+
     if (
-      userError?.response?.status === 401 ||
-      categoryError?.response?.status === 401 ||
-      storageError?.response?.status === 401 
-    
+      userError?.response.status === 401 ||
+      categoryError?.response.status === 401 ||
+      storageError?.response.status === 401
     ) {
-      console.log("popal");
-      refreshToken();
-      userRefetch();
       categoryRefetch();
       storageRefetch();
-    
+      refreshToken();
+      userRefetch();
+      return (
+        <div style={{ left: "50vw", top: "50vh", position: "absolute" }}>
+          <Spiner />
+        </div>
+      );
+    } else {
+      return (
+        <ErrorComponent
+          props={{
+            user: userError?.response?.status,
+            category: categoryError?.response?.status,
+            storage: storageError?.response?.status,
+          }}
+        ></ErrorComponent>
+      );
     }
-    return (
-      <ErrorComponent
-        props={{
-          user: userError?.response?.status,
-          category: categoryError?.response?.status,
-          storage: storageError?.response?.status,
-        }}
-      ></ErrorComponent>
-    );
-   
   }
   function nextPage() {
     $isActiveBaseAndList.isActiveBaseAndList === "base"
@@ -136,7 +139,7 @@ export default function Home() {
       >
         <BookmarksTitle />
         {$isActiveBaseAndList.isActiveBaseAndList === "base" ? (
-          <ListOfThings  />
+          <ListOfThings />
         ) : (
           <ListData />
         )}

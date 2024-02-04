@@ -20,7 +20,7 @@ import Spiner from "../../components/Spiner/Spiner";
 
 async function create({ url, formData }) {
   return await axios
-    .put(`https://rms2022.pythonanywhere.com/items/${url}/update/`, formData, {
+    .put(`http://dscode.ru:8000/items/${url}/update/`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${getCookie("access")}`,

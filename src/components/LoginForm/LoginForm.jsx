@@ -8,6 +8,8 @@ import * as yup from "yup";
 
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+
+
 import axios from "axios";
 import { loginURL } from "./../../constants/api";
 
@@ -49,7 +51,6 @@ export default function LoginForm(props) {
 
           let date = new Date(Date.now() + 86400e3);
           date = date.toUTCString();
-          // console.log(date);
           document.cookie = `access=${response.data.access};max-age=3600`;
           document.cookie = `refresh=${response.data.refresh};max-age=${date}`;
 
@@ -59,13 +60,16 @@ export default function LoginForm(props) {
         }
       })
       .catch(function (error) {
-        if (error.response.status === 401) {
+        console.log(error);
+        //  debugger
+        if (error.response?.status === 401) {
           reset();
           setErr("не вырный логин или пароль");
         }
+        console.log(error);
       });
   };
-
+  //
   return (
     <form className={st.pagesLeft} onSubmit={handleSubmit(onSubmit)}>
       <a className={st.down} href="/">
@@ -90,7 +94,8 @@ export default function LoginForm(props) {
           label="Пароль"
         />
         <p>
-          {err} <br />
+          {err}
+          <br />
           login: user1@example.com <br />
           Password: qwerty1234
         </p>
