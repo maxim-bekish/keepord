@@ -3,7 +3,7 @@ import st from "./Methods.module.scss";
 
 function LoginMethod(props) {
   const navigate = useNavigate();
-  navigate("/home");
+  navigate("/");
   function sendGoggle() {
     localStorage.setItem("methodsRegistration", "Google");
     navigate("/methodsPage");

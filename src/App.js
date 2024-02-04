@@ -14,6 +14,7 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import PrivateRoute from "./utilities/router/PrivateRoute";
 import Context from "./utilities/Context/Context";
 import { useState } from "react";
+import ListOfThings from "./components/ListOfThings/ListOfThings";
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -38,17 +39,19 @@ function App() {
       <Router>
         <Routes>
           <Route path="*" element={<NotFoundPage />} />
-          <Route path="/" element={<First_page />} />
+          <Route path="/first_page" element={<First_page />} />
           <Route path="/login" element={<LoginPages />} />
           <Route path="/registration" element={<Registration_page />} />
           <Route path="/methodsPage" element={<MethodsPage />} />
-
           <Route element={<PrivateRoute />}>
             <Route path="/editCard" element={<EditCard />} />
-            <Route path="/home" element={<Home />} />
             <Route path="/creatingCard" element={<CreatingCard />} />
             <Route path="/card" element={<Card />} />
-            <Route path="/home/:id" element={<ListData />} />
+
+            <Route path="/" element={<Home />}>
+              <Route path="listOfThings" element={<ListOfThings />} />
+              <Route path="listData" element={<ListData />} />
+            </Route>
           </Route>
         </Routes>
       </Router>

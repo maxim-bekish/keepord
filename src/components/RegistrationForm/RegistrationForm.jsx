@@ -54,7 +54,7 @@ export default function Registration_form(props) {
 
           reset();
 
-          navigation("/home", { replace: true });
+          navigation("/", { replace: true });
         }
       })
       .catch((error) => {

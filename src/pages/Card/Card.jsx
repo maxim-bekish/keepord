@@ -42,7 +42,7 @@ export default function Card() {
 
   const deletedItems = () => {
     deleteRequest(`${itemsURL}/${location.state}/delete/`);
-    navigate("/home");
+    navigate("/");
   };
 
   return (

@@ -19,6 +19,7 @@ import Spiner from "../../components/Spiner/Spiner";
 import { useNavigate } from "react-router-dom";
 import ListOfThings from "../../components/ListOfThings/ListOfThings";
 import refreshToken from "../../fun/refreshToken";
+import { Outlet } from "react-router-dom";
 
 export default function Home() {
   const { $isActiveBaseAndList, $state } = useContext(Context);
@@ -119,7 +120,7 @@ export default function Home() {
             onClick={() => {
               document.cookie = `access=${getCookie("access")}; max-age=-1`;
               document.cookie = `refresh=${getCookie("refresh")}; max-age=-1`;
-              window.location.replace("/login");
+              window.location.replace("/first_page");
             }}
             className={st.buttonExit}
           >
@@ -138,11 +139,13 @@ export default function Home() {
         className={st.container}
       >
         <BookmarksTitle />
-        {$isActiveBaseAndList.isActiveBaseAndList === "base" ? (
+        {/* {$isActiveBaseAndList.isActiveBaseAndList === "base" ? (
           <ListOfThings />
         ) : (
           <ListData />
-        )}
+        )} */}
+
+        <Outlet />
       </main>
     </>
   );

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 let width = document.body.clientWidth;
 function First_page() {
   const navigate = useNavigate();
-  navigate("/home");
+  navigate("/");
   return (
     <>
       <div className={st.firstPage}>
@@ -30,7 +30,7 @@ function First_page() {
                 <span>У Вас уже есть профиль?</span>
                 <button
                   onClick={() => {
-                    navigate("/login");
+                    navigate("/first_page");
                   }}
                   className={st.button}
                 >

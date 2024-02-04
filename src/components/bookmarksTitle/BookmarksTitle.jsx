@@ -1,16 +1,13 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import st from "./BookmarksTitle.module.scss";
 import Context from "../../utilities/Context/Context";
-// import { useDispatch } from "react-redux";
-// import {add} from './../../store/slice'
-// $isActiveBaseAndList:{ isActiveBaseAndList:isActiveBaseAndList,setIsActiveBaseAndList: setIsActiveBaseAndList},
+import { Link } from "react-router-dom";
+
 export default function BookmarksTitle() {
   const { $isActiveBaseAndList } = useContext(Context);
-
-  // const dispatch= useDispatch()
   return (
     <div className={st.div}>
-      <div
+      <Link
         onClick={() => {
           $isActiveBaseAndList.setIsActiveBaseAndList("base");
           // dispatch(add(isActive))
@@ -21,16 +18,18 @@ export default function BookmarksTitle() {
             : `${st.spanTitle}`
         }
         style={{
-          "borderColor": ` ${`${
+          borderColor: `${`${
             $isActiveBaseAndList.isActiveBaseAndList === "base"
               ? "#f2ffe3"
               : "#A6BB8D"
           }`}    `,
         }}
+        to="/listOfThings"
       >
         Вещи в базе
-      </div>
-      <div
+      </Link>
+
+      <Link
         onClick={() => {
           $isActiveBaseAndList.setIsActiveBaseAndList("list");
         }}
@@ -40,15 +39,16 @@ export default function BookmarksTitle() {
             : `${st.spanTitle}`
         }
         style={{
-          "borderColor": ` ${`${
+          borderColor: ` ${`${
             $isActiveBaseAndList.isActiveBaseAndList === "base"
               ? "#f2ffe3"
               : "#A6BB8D"
           }`}    `,
         }}
+        to="/listData"
       >
         Списки
-      </div>
+      </Link>
     </div>
   );
 }

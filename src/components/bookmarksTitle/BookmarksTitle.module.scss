@@ -19,10 +19,12 @@
     line-height: 150%;
     background-color: #00000000;
     padding: 17px 0px 15px 0px;
+    text-decoration: none;
   }
   .spanTitleActive {
+    text-decoration: none;
     padding: 7px 0px 5px 0px;
-    // border-color: #a6bb8d;
+
     border-top-color: #ffffff !important;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
@@ -34,7 +36,6 @@
     display: flex;
     justify-content: center;
     width: 160px;
-    
     font-size: 1.25rem;
     line-height: 150%;
     font-weight: 900;

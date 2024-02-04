@@ -26,7 +26,7 @@ export default function ErrorComponent({ props }) {
         <div className={st.wrapperButton}>
           <button
             className={st.button}
-            onClick={() => navigate("/login", { replace: true })}
+            onClick={() => navigate("/first_page", { replace: true })}
           >
             Bернуься на страницу входа
           </button>

@@ -1,7 +1,6 @@
 import st from "./MethodsPage.module.scss";
 export default function methodsPage() {
   function send() {
-    // to_do Отправить на регистрацию или на вход
   }
   let label = "";
   let url = "";

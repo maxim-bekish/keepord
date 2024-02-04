@@ -13,7 +13,7 @@ export const thingsCards = createAsyncThunk(
         },
       });
       if (response.status === 401) {
-        window.location.replace("/login");
+        window.location.replace("/first_page");
       }
       if (!response.ok) {
         throw new Error(`${response.statusText}. Status: ${response.status}`);

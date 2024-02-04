@@ -89,7 +89,7 @@ export function CreatingCard() {
   const submit = (e) => {
     e.preventDefault();
     mutation.mutate(formData);
-    navigate("/home");
+    navigate("/");
   };
 
   if (categoryAll.isLoading || storageAll.isLoading) {
@@ -186,7 +186,7 @@ export function CreatingCard() {
           <div className={st.buttonModal}>
             <button onClick={submit}>Да</button>
 
-            <button onClick={() => navigate("/home")}>Нет</button>
+            <button onClick={() => navigate("/")}>Нет</button>
           </div>
         </div>
       </PopUp>

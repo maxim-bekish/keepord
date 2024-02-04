@@ -56,7 +56,7 @@ export default function LoginForm(props) {
 
           reset();
 
-          navigation("/home", { replace: true });
+          navigation("/", { replace: true });
         }
       })
       .catch(function (error) {
