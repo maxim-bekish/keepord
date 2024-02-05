@@ -11,13 +11,15 @@ import ListData from "./components/ListData/ListData";
 
 import { CreatingCard } from "./pages/CreatingCard/CreatingCard";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
-import PrivateRoute from "./utilities/router/PrivateRoute";
 import Context from "./utilities/Context/Context";
 import { useState } from "react";
 import ListOfThings from "./components/ListOfThings/ListOfThings";
+// import PrivateRoute from "./utilities/router/PrivateRoute";
+import { RequireAuth } from "./utilities/router/RequireAuth.jsx";
+import { AuthProvider } from "./utilities/router/AuthProvider.jsx";
 
 function App() {
-  const [auth, setAuth] = useState(false);
+
   const [category, setCategory] = useState(null);
   const [storage, setStorage] = useState(null);
 
@@ -29,33 +31,76 @@ function App() {
       isActiveBaseAndList: isActiveBaseAndList,
       setIsActiveBaseAndList: setIsActiveBaseAndList,
     },
-    $auth: { auth: auth, setAuth: setAuth },
     $category: { category: category, setCategory: setCategory },
     $storage: { storage: storage, setStorage: setStorage },
   };
 
   return (
-    <Context.Provider value={stateContext}>
-      <Router>
-        <Routes>
-          <Route path="*" element={<NotFoundPage />} />
-          <Route path="/first_page" element={<First_page />} />
-          <Route path="/login" element={<LoginPages />} />
-          <Route path="/registration" element={<Registration_page />} />
-          <Route path="/methodsPage" element={<MethodsPage />} />
-          <Route element={<PrivateRoute />}>
-            <Route path="/editCard" element={<EditCard />} />
-            <Route path="/creatingCard" element={<CreatingCard />} />
-            <Route path="/card" element={<Card />} />
+    <AuthProvider>
+      <Context.Provider value={stateContext}>
+        <Router>
+          <Routes>
+            <Route path="*" element={<NotFoundPage />} />
+            <Route path="/first_page" element={<First_page />} />
+            <Route path="/login" element={<LoginPages />} />
+            <Route path="/registration" element={<Registration_page />} />
+            <Route path="/methodsPage" element={<MethodsPage />} />
+            {/* <Route element={<PrivateRoute />}> */}
 
-            <Route path="/" element={<Home />}>
-              <Route path="listOfThings" element={<ListOfThings />} />
-              <Route path="listData" element={<ListData />} />
+            <Route
+              path="/creatingCard"
+              element={
+                <RequireAuth>
+                  <CreatingCard />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/card/:idCard"
+              element={
+                <RequireAuth>
+                  <Card />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/card/:idCard/editCard"
+              element={
+                <RequireAuth>
+                  <EditCard />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <RequireAuth>
+                  <Home />
+                </RequireAuth>
+              }
+            >
+              <Route
+                index
+                element={
+                  <RequireAuth>
+                    <ListOfThings />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="listData"
+                element={
+                  <RequireAuth>
+                    <ListData />
+                  </RequireAuth>
+                }
+              />
             </Route>
-          </Route>
-        </Routes>
-      </Router>
-    </Context.Provider>
+            {/* </Route> */}
+          </Routes>
+        </Router>
+      </Context.Provider>
+    </AuthProvider>
   );
 }
 

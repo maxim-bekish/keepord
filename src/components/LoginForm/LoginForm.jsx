@@ -6,12 +6,12 @@ import Input from "../Input/Input";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-
 
 import axios from "axios";
 import { loginURL } from "./../../constants/api";
+import { useAuth } from "../../utilities/router/useAuth";
 
 const SignUpSchema = yup.object().shape({
   email: yup
@@ -27,7 +27,12 @@ const SignUpSchema = yup.object().shape({
 });
 
 export default function LoginForm(props) {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
+
+  const location = useLocation();
+  const { signIn } = useAuth();
+
+  const fromPage = location.state?.from?.pathname || "/";
   const {
     register,
     reset,
@@ -53,20 +58,16 @@ export default function LoginForm(props) {
           date = date.toUTCString();
           document.cookie = `access=${response.data.access};max-age=3600`;
           document.cookie = `refresh=${response.data.refresh};max-age=${date}`;
-
+          signIn(true, () => navigate(fromPage, { replace: true }));
           reset();
-
-          navigation("/", { replace: true });
         }
       })
       .catch(function (error) {
-        console.log(error);
-        //  debugger
+        // signIn(error.response?.status);
         if (error.response?.status === 401) {
           reset();
           setErr("не вырный логин или пароль");
         }
-        console.log(error);
       });
   };
   //

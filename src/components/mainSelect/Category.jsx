@@ -3,8 +3,9 @@ import st from "./MainSelect.module.scss";
 import Context from "../../utilities/Context/Context";
 import { useContext } from "react";
 
-export default function Category({ data, width, category }) {
+export default function Category({ category, width, data }) {
   const { $category } = useContext(Context);
+
 
   const setMainSelectAll = data.map(({ id, name }) => {
     return {
@@ -36,7 +37,8 @@ export default function Category({ data, width, category }) {
         onChange={(id) => {
           $category.setCategory(id);
         }}
-        defaultValue={category}
+        placeholder={category}
+        // defaultValue={category}
         style={{ width: +width }}
         options={setMainSelectAll}
         className={`${st.select}  ${st.svg}`}

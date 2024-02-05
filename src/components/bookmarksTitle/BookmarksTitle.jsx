@@ -10,7 +10,7 @@ export default function BookmarksTitle() {
       <Link
         onClick={() => {
           $isActiveBaseAndList.setIsActiveBaseAndList("base");
-          // dispatch(add(isActive))
+    
         }}
         className={
           $isActiveBaseAndList.isActiveBaseAndList === "base"
@@ -24,7 +24,7 @@ export default function BookmarksTitle() {
               : "#A6BB8D"
           }`}    `,
         }}
-        to="/listOfThings"
+        to="/"
       >
         Вещи в базе
       </Link>

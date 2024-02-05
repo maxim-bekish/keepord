@@ -1,16 +1,14 @@
 import { Col, Row } from "antd";
 import st from "./ListOfThings.module.scss";
-import { Link, NavLink } from "react-router-dom";
-
+import { Link } from "react-router-dom";
 import share from "./../../img/svg/share.svg";
 import close from "./../../img/svg/close.svg";
 import trash from "./../../img/svg/trash.svg";
 import edit from "./../../img/svg/edit.svg";
 import iconPhoto from "./../../img/png/iconPhoto.png";
-import { useNavigate } from "react-router-dom";
 import { itemsURL, itemsAllURL } from "./../../constants/api.js";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import PopUp from "../popUp/popUp";
 import Context from "../../utilities/Context/Context";
 import Category from "../mainSelect/Category.jsx";
@@ -40,7 +38,6 @@ export default function ListOfThings() {
   const [modalActive, setModalActive] = useState(false);
   const [idItem, setIdItem] = useState();
   const divUtility = useRef(null);
-  const navigate = useNavigate();
 
   const queryClient = useQueryClient();
 
@@ -72,26 +69,31 @@ export default function ListOfThings() {
   }
 
   function applyFilter() {
-    const filteredItems = newState.filter((item) => {
-      // Проверка, что выбраны как категория, так и место хранения
-      if ($category.category && $storage.storage) {
-        return (
-          item.category?.id === $category.category &&
-          item.storage?.id === $storage.storage
-        );
+    const x = [];
+
+    newState.map((e) => {
+      if (e.storage !== null && e.category !== null) {
+        if (
+          e.storage.id === $storage.storage &&
+          e.category.id === $category.category
+        ) {
+          return x.push(e);
+        }
       }
-      // Проверка, если выбрана только категория
-      if ($category.category && !$storage.storage) {
-        return item.category?.id === $category.category;
+      if (e.category !== null && $storage.storage === null) {
+        if (e.category.id === $category.category) {
+          return x.push(e);
+        }
       }
-      // Проверка, если выбрано только место хранения
-      if (!$category.category && $storage.storage) {
-        return item.storage?.id === $storage.storage;
+      if (e.storage !== null && $category.category === null) {
+        if (e.storage.id === $storage.storage) {
+          return x.push(e);
+        }
       }
-      // Если не выбрана ни категория, ни место хранения, возвращаем true, чтобы элемент был включен в список
-      return true;
     });
-    setNewState(filteredItems);
+    if (x.length !== 0) {
+      setNewState(x);
+    }
   }
 
   function reset() {
@@ -100,10 +102,10 @@ export default function ListOfThings() {
     setNewState(itemsData);
 
     const filter = document.querySelectorAll(".ant-select-selection-item");
-
+    console.log(filter);
     filter[0].innerHTML = "Категория";
     filter[1].innerHTML = "Места хранения";
-    console.log(newState);
+    // console.log(newState);
   }
 
   if (itemsLoading) {
@@ -164,46 +166,40 @@ export default function ListOfThings() {
             >
               {/* нужно key */}
               <Row className={st.grid}>
-                <div
-                  onClick={() => navigate("/card", { state: e.id })}
+                <Link
+                  // onClick={() => navigate("/card/", { state: e.id })}
+                  to={`/card/${e.id}`}
                   className={st.allData}
                 >
-                 
-                    <Col>
-                      {e.images.length === 0 ? (
-                        <img src={iconPhoto} />
-                      ) : (
-                        <img
-                          src={`https://rms2022.pythonanywhere.com${e.images[0].image_url}`}
-                          alt=""
-                        />
-                      )}
+                  <Col>
+                    {e.images.length === 0 ? (
+                      <img src={iconPhoto} />
+                    ) : (
+                      <img
+                        src={`https://rms2022.pythonanywhere.com${e.images[0].image_url}`}
+                        alt=""
+                      />
+                    )}
 
-                      <div>{e.name}</div>
-                    </Col>
-                    <Col>
-                      {e.storage === null ? "Не добавили" : e.storage.name}
-                    </Col>
-                    <Col>
-                      {e.category === null ? "Не добавили" : e.category.name}
-                    </Col>
-                    <Col>{e.created_at}</Col>
-                
-                </div>
+                    <div>{e.name}</div>
+                  </Col>
+                  <Col>
+                    {e.storage === null ? "Не добавили" : e.storage.name}
+                  </Col>
+                  <Col>
+                    {e.category === null ? "Не добавили" : e.category.name}
+                  </Col>
+                  <Col>{e.created_at}</Col>
+                </Link>
                 <Col className={st.endData}>
                   <div id={e.id} ref={divUtility} className={st.allUtility}>
-                    <img
-                      className={`utility${e.id}`}
-                      onClick={() => navigate("/editCard", { state: e.id })}
-                      src={edit}
-                      alt=""
-                    />
-                    <img
-                      className={`utility${e.id}`}
-                      onClick={() => console.log(`share ${e.id}`)}
-                      src={share}
-                      alt=""
-                    />
+                    <Link to={`card/${e.id}/editCard`}>
+                      <img className={`utility${e.id}`} src={edit} alt="" />
+                    </Link>
+                    <Link to={`/utility/${e.id}`}>
+                      <img className={`utility${e.id}`} src={share} alt="" />
+                    </Link>
+
                     <img
                       className={`utility${e.id}`}
                       onClick={() => deleteFinish(e.id)}

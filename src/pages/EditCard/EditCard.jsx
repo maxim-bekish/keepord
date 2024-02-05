@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import HeaderCard from "../../components/HeaderCard/HeaderCard";
 import st from "./EditCard.module.scss";
 
@@ -18,21 +18,31 @@ import refreshToken from "../../fun/refreshToken";
 import ErrorComponent from "../../components/ErrorComponent/ErrorComponent";
 import Spiner from "../../components/Spiner/Spiner";
 
-async function create({ url, formData }) {
+async function create({ url, formData, navigate }) {
   return await axios
-    .put(`http://dscode.ru:8000/items/${url}/update/`, formData, {
+
+    .put(`https://rms2022.pythonanywhere.com/items/${url}/update/`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${getCookie("access")}`,
       },
     })
-    .then((res) => console.log(res))
-    .catch(() => refreshToken());
+    .then((res) => {
+      navigate(`/card/${url}`);
+    })
+    .catch((error) => {
+      if (error.response.status === 401) {
+        refreshToken();
+        create({ url, formData, navigate });
+      }
+    });
 }
 
 export default function EditCard() {
-  const { $category, $storage, $state } = useContext(Context);
-  const location = useLocation();
+  const navigate = useNavigate();
+  const { idCard } = useParams();
+
+  const { $category, $storage } = useContext(Context);
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [storage, setStorage] = useState("");
@@ -40,6 +50,7 @@ export default function EditCard() {
   const [addPhotoForm, setAddPhotoForm] = useState([]);
   const [deleteAllImages, setDeleteAllImages] = useState([]);
   const [disabled, setDisabled] = useState(true);
+
   const {
     data: itemsData,
     isSuccess: itemsIsSuccess,
@@ -47,10 +58,23 @@ export default function EditCard() {
     isError: itemsIsError,
     error: itemsError,
     refetch: itemsRefetch,
-  } = useQuery(`items${location.state}`, () =>
-    getRequest(`${itemsURL}/${location.state}`)
-  );
+  } = useQuery(`items${idCard}`, () => getRequest(`${itemsURL}/${idCard}`));
+
   const formData = new FormData();
+  const {
+    data: categoryAllData,
+    isLoading: categoryAllIsLoading,
+    isError: categoryAllIsError,
+    error: categoryAllError,
+    refetch: categoryAllRefetch,
+  } = useQuery("categoryAll", () => getRequest(categoriesAllURL));
+
+  const mutation = useMutation((newProduct) => create(newProduct));
+  const submit = (e) => {
+    e.preventDefault();
+    mutation.mutate({ formData: formData, url: idCard, navigate: navigate });
+  };
+
   useEffect(() => {
     if (name.trim().length === 0 || description.trim().length === 0) {
       setDisabled(true);
@@ -58,12 +82,24 @@ export default function EditCard() {
       setDisabled(false);
     }
   }, [name, description]);
+
+  useEffect(() => {
+    if (itemsIsSuccess) {
+      setName(itemsData.name);
+      setCategory(itemsData.category ? itemsData.category : "Не добавили");
+      console.log(itemsData);
+      setDescription(itemsData.description);
+      setStorage(itemsData.storage ? itemsData.storage : "Не добавили");
+    }
+  }, [itemsData]);
+
   let resultData = {
     name: name,
     description: description,
     category: $category.category,
     storage: $storage.storage,
   };
+
   formData.append("item", JSON.stringify(resultData));
 
   if (deleteAllImages.length > 0) {
@@ -75,33 +111,6 @@ export default function EditCard() {
       formData.append("image_list", addPhotoForm[i]);
     }
   }
-
-  const {
-    data: categoryAllData,
-    isLoading: categoryAllIsLoading,
-    isError: categoryAllIsError,
-    error: categoryAllError,
-    refetch: categoryAllRefetch,
-  } = useQuery("categoryAll", () => getRequest(categoriesAllURL));
-
-  useEffect(() => {
-    if (itemsIsSuccess) {
-      setName(itemsData.name);
-      setCategory(itemsData.category ? itemsData.category.name : "Не добавили");
-      setDescription(itemsData.description);
-      setStorage(itemsData.storage ? itemsData.storage.name : "Не добавили");
-    }
-  }, [itemsIsSuccess]);
-  const mutation = useMutation((newProduct) => create(newProduct));
-  const submit = (e) => {
-    e.preventDefault();
-
-    mutation.mutate({ formData: formData, url: location.state });
-  };
-
-  // useEffect(() => {
-  //   console.log($state.photo?.length);
-  // }, [$state.photo]);
 
   if (itemsIsLoading || categoryAllIsLoading) {
     return (
@@ -145,11 +154,15 @@ export default function EditCard() {
         </div>
         <div className={st.miniWrapper}>
           <label className={st.title}>Категория</label>
-          <Category category={category} width={"500"} data={categoryAllData} />
+          <Category
+            category={category.name}
+            width={"500"}
+            data={categoryAllData}
+          />
         </div>
         <div className={st.miniWrapper}>
           <label className={st.title}>Место хранения</label>
-          <MainSelectAdd storageDefault={storage} />
+          <MainSelectAdd storageDefault={storage.name} />
         </div>
         <div className={st.miniWrapper}>
           <label className={st.title}>Описание *</label>

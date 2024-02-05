@@ -1,7 +1,13 @@
 import st from "./Card.module.scss";
 import { useQuery } from "react-query";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import deleteRequest from "../../fun/deleteRequest";
 import { itemsURL } from "../../constants/api";
 import getRequest from "../../fun/getRequest";
@@ -12,14 +18,17 @@ import Spiner from "../../components/Spiner/Spiner";
 import HeaderCard from "../../components/HeaderCard/HeaderCard";
 import refreshToken from "../../fun/refreshToken";
 export default function Card() {
+  const { idCard } = useParams();
+
   const [modalActive, setModalActive] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
 
-  const { data, isLoading, error, refetch } = useQuery(
-    `card${location.state}`,
-    () => getRequest(`${itemsURL}/${location.state}`)
+  const { data, isLoading, error, refetch } = useQuery(`card${idCard}`, () =>
+    getRequest(`${itemsURL}/${idCard}`)
   );
+  if (data) {
+    console.log(data.category);
+  }
 
   if (isLoading) {
     return (
@@ -41,7 +50,7 @@ export default function Card() {
   }
 
   const deletedItems = () => {
-    deleteRequest(`${itemsURL}/${location.state}/delete/`);
+    deleteRequest(`${itemsURL}/${idCard}/delete/`);
     navigate("/");
   };
 
@@ -86,12 +95,9 @@ export default function Card() {
       </main>
       <div className={`${st.buttonAll} ${st.container}`}>
         <div>
-          <button
-            onClick={() => navigate("/editCard", { state: location.state })}
-            className={st.button}
-          >
-            Редактировать
-          </button>
+          <Link to={`editCard`}>
+            <button className={st.button}>Редактировать</button>
+          </Link>
         </div>
         <div>
           <button className={st.button} onClick={() => setModalActive(true)}>
