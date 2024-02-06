@@ -58,6 +58,7 @@ export default function LoginForm(props) {
           date = date.toUTCString();
           document.cookie = `access=${response.data.access};max-age=3600`;
           document.cookie = `refresh=${response.data.refresh};max-age=${date}`;
+          console.log("signIn");
           signIn(true, () => navigate(fromPage, { replace: true }));
           reset();
         }
