@@ -10,13 +10,14 @@ import Context from "../../utilities/Context/Context";
 import Spiner from "../../components/Spiner/Spiner";
 import { useNavigate } from "react-router-dom";
 
+import { getCookie } from "../../fun/getCookie";
 import refreshToken from "../../fun/refreshToken";
 import { Outlet } from "react-router-dom";
-import { useAuth } from "../../utilities/router/useAuth";
+//import { useAuth } from "../../utilities/router/useAuth";
 
 export default function Home() {
   const { $isActiveBaseAndList, $state } = useContext(Context);
-const { signOut } = useAuth()
+  //const { signOut } = useAuth()
   const {
     isLoading: userLoading,
     isError: userIsError,
@@ -84,7 +85,14 @@ const { signOut } = useAuth()
       ? navigate("/creatingCard")
       : navigate("/dvcsdv");
   }
+  const exit = () => {
 
+    navigate("/first_page", { replace: true })
+
+    document.cookie = `access=${getCookie("access")}; max-age=-1`;
+    document.cookie = `refresh=${getCookie("refresh")}; max-age=-1`;
+
+  }
   return (
     <>
       <header className={`${st.header}`}>
@@ -101,9 +109,10 @@ const { signOut } = useAuth()
             <img src={search} alt="searchSVG" />
           </button>
           <button
-            onClick={() => {
-              signOut(() => navigate("/first_page", { replace: true }));
-            }}
+            //onClick={() => {
+            //  signOut(() => navigate("/first_page", { replace: true }));
+            //}}
+            onClick={() => exit()}
             className={st.buttonExit}
           >
             Выход
@@ -112,11 +121,10 @@ const { signOut } = useAuth()
       </header>
       <main
         style={{
-          borderColor: ` ${`${
-            $isActiveBaseAndList.isActiveBaseAndList === "base"
-              ? "#f2ffe3"
-              : "#A6BB8D"
-          }`}    `,
+          borderColor: ` ${`${$isActiveBaseAndList.isActiveBaseAndList === "base"
+            ? "#f2ffe3"
+            : "#A6BB8D"
+            }`}    `,
         }}
         className={st.container}
       >

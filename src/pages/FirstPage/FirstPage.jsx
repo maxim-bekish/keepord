@@ -30,7 +30,7 @@ function First_page() {
                 <span>У Вас уже есть профиль?</span>
                 <button
                   onClick={() => {
-                    navigate("/first_page");
+                    navigate("/login");
                   }}
                   className={st.button}
                 >

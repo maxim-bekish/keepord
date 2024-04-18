@@ -16,7 +16,7 @@ import { useState } from "react";
 import ListOfThings from "./components/ListOfThings/ListOfThings";
 // import PrivateRoute from "./utilities/router/PrivateRoute";
 import { RequireAuth } from "./utilities/router/RequireAuth.jsx";
-import { AuthProvider } from "./utilities/router/AuthProvider.jsx";
+//import { AuthProvider } from "./utilities/router/AuthProvider.jsx";
 
 function App() {
 
@@ -36,7 +36,7 @@ function App() {
   };
 
   return (
-    <AuthProvider>
+    //<AuthProvider>
       <Context.Provider value={stateContext}>
         <Router>
           <Routes>
@@ -50,49 +50,49 @@ function App() {
             <Route
               path="/creatingCard"
               element={
-                <RequireAuth>
+                //<RequireAuth>
                   <CreatingCard />
-                </RequireAuth>
+                //</RequireAuth>
               }
             />
             <Route
               path="/card/:idCard"
               element={
-                <RequireAuth>
+                //<RequireAuth>
                   <Card />
-                </RequireAuth>
+                //</RequireAuth>
               }
             />
             <Route
               path="/card/:idCard/editCard"
               element={
-                <RequireAuth>
+                //<RequireAuth>
                   <EditCard />
-                </RequireAuth>
+                //</RequireAuth>
               }
             />
             <Route
               path="/"
               element={
-                <RequireAuth>
+                //<RequireAuth>
                   <Home />
-                </RequireAuth>
+                //</RequireAuth>
               }
             >
               <Route
                 index
                 element={
-                  <RequireAuth>
+                  //<RequireAuth>
                     <ListOfThings />
-                  </RequireAuth>
+                  //</RequireAuth>
                 }
               />
               <Route
                 path="listData"
                 element={
-                  <RequireAuth>
+                  //<RequireAuth>
                     <ListData />
-                  </RequireAuth>
+                  //</RequireAuth>
                 }
               />
             </Route>
@@ -100,7 +100,9 @@ function App() {
           </Routes>
         </Router>
       </Context.Provider>
-    </AuthProvider>
+
+
+
   );
 }
 

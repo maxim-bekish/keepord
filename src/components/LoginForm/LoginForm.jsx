@@ -11,7 +11,7 @@ import { useState } from "react";
 
 import axios from "axios";
 import { loginURL } from "./../../constants/api";
-import { useAuth } from "../../utilities/router/useAuth";
+//import { useAuth } from "../../utilities/router/useAuth";
 
 const SignUpSchema = yup.object().shape({
   email: yup
@@ -30,7 +30,7 @@ export default function LoginForm(props) {
   const navigate = useNavigate();
 
   const location = useLocation();
-  const { signIn } = useAuth();
+  //const { signIn } = useAuth();
 
   const fromPage = location.state?.from?.pathname || "/";
   const {
@@ -59,7 +59,8 @@ export default function LoginForm(props) {
           document.cookie = `access=${response.data.access};max-age=3600`;
           document.cookie = `refresh=${response.data.refresh};max-age=${date}`;
           console.log("signIn");
-          signIn(true, () => navigate(fromPage, { replace: true }));
+          navigate(fromPage, { replace: true })
+          //signIn(true, () => navigate(fromPage, { replace: true }));
           reset();
         }
       })

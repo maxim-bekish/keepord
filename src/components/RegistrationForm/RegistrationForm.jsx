@@ -35,7 +35,7 @@ export default function Registration_form(props) {
       password: data.password,
       first_name: data.firstName,
     };
-    console.log(data);
+    console.log(newUser);
     axios
       .post(signUpURL, newUser, {
         headers: {
@@ -59,7 +59,6 @@ export default function Registration_form(props) {
       })
       .catch((error) => {
         console.log(error);
-        //  debugger
         if (error.response?.status === 401) {
           reset();
           return <p>Ошибка {error.response?.status}</p>;
